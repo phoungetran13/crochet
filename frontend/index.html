@@ -65,7 +65,7 @@
     box-shadow: 0 2px 10px rgba(255,93,162,0.08);
   }
   .site-header-inner {
-    max-width: 1080px;
+    max-width: 1180px;
     margin: 0 auto;
     padding: 0.85rem 1.25rem;
     display: flex;
@@ -73,6 +73,40 @@
     justify-content: space-between;
     gap: 1rem;
     flex-wrap: wrap;
+  }
+  .auth-cluster {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-left: 0.8rem;
+    padding-left: 0.8rem;
+    border-left: 1px solid var(--border);
+  }
+  .nav-btn-pro {
+    color: var(--accent-dark);
+    font-size: 0.82rem;
+  }
+  .auth-btn {
+    margin-top: 0;
+    font-size: 0.86rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 700;
+  }
+  .auth-btn-ghost {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+    box-shadow: none;
+  }
+  .auth-btn-ghost:hover { background: var(--accent-soft); filter: none; }
+  .auth-btn-solid {
+    background: var(--teal, #3f7d68);
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(63,125,104,0.3);
+  }
+  @media (max-width: 720px) {
+    .auth-cluster { width: 100%; justify-content: flex-start; padding-top: 0.6rem; margin: 0.3rem 0 0; border-left: none; border-top: 1px solid var(--border); }
   }
   .site-logo {
     display: flex;
@@ -520,6 +554,110 @@
     .nav-btn { width: 100%; text-align: left; border-radius: 9px; }
   }
 
+  /* ---- Trang chu ---- */
+  .home-hero {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 1.5rem 0 3rem;
+    flex-wrap: wrap;
+  }
+  .home-hero-text { flex: 1 1 380px; min-width: 300px; }
+  .home-hero-text .badge {
+    display: inline-block;
+    font-size: 0.74rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    background: var(--accent-soft);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 1.1rem;
+    font-weight: 700;
+  }
+  .home-hero-text h1 {
+    font-size: 2.6rem;
+    line-height: 1.15;
+    margin: 0 0 1.1rem;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  .home-hero-text h1 .accent-word { color: var(--accent); }
+  .home-hero-text p {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.65;
+    max-width: 46ch;
+    margin: 0 0 0.9rem;
+  }
+  .home-hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-top: 1.4rem; }
+  .home-hero-actions button { margin-top: 0; }
+
+  .home-hero-media {
+    flex: 1 1 320px;
+    min-width: 280px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  .home-hero-photo {
+    width: min(78vw, 380px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid var(--surface);
+    box-shadow: 0 20px 50px rgba(255,93,162,0.25), 0 0 0 2px var(--accent-soft);
+  }
+  .home-hero-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .home-hero-float {
+    position: absolute;
+    bottom: -1rem;
+    left: -0.5rem;
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 4px solid var(--surface);
+    box-shadow: var(--shadow);
+    transform: rotate(-6deg);
+  }
+
+  .home-strip { padding: 1.5rem 0 3rem; border-top: 1px solid var(--border); }
+  .home-strip h2 {
+    font-size: 1.4rem;
+    margin: 0 0 0.4rem;
+    text-align: center;
+  }
+  .home-strip .lesson-intro { text-align: center; max-width: 50ch; margin-left: auto; margin-right: auto; }
+  .home-strip-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1.6rem;
+  }
+  .home-strip-grid figure { margin: 0; }
+  .home-strip-grid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 14px;
+    display: block;
+    box-shadow: var(--shadow);
+  }
+  .home-strip-grid figcaption {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+  .home-strip-cta { text-align: center; margin-top: 1.8rem; }
+  .home-strip-cta button { margin-top: 0; }
+  @media (max-width: 720px) {
+    .home-hero { padding-top: 0.5rem; }
+    .home-hero-text h1 { font-size: 2.1rem; }
+    .home-strip-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   /* ---- Trang Hoc moc len ---- */
   .lesson-intro { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 1.2rem; }
   .lesson-grid {
@@ -825,30 +963,81 @@
 
 <header class="site-header">
   <div class="site-header-inner">
-    <a class="site-logo" href="#" data-tab="generator">
+    <a class="site-logo" href="#" data-tab="home">
       <span class="logo-mark"><img src="assets/logo.jpg" alt="Lenly logo" /></span>
       LENLY STUDIO
     </a>
     <button class="menu-toggle" id="menuToggle" aria-label="Mở menu" aria-expanded="false">☰</button>
     <nav class="main-nav" id="mainNav">
-      <button class="nav-btn active" data-tab="generator">✨ Tạo chart</button>
-      <button class="nav-btn" data-tab="learn">🎓 Học móc len</button>
-      <button class="nav-btn" data-tab="gallery">💡 Công thức độc lạ</button>
-      <button class="nav-btn" data-tab="pro">✨ Gói Pro</button>
-      <button class="nav-btn" data-tab="login">🔐 Đăng nhập</button>
+      <button class="nav-btn active" data-tab="home">Trang chủ</button>
+      <button class="nav-btn" data-tab="learn">Khóa học miễn phí</button>
+      <button class="nav-btn" data-tab="gallery">Mẫu móc</button>
+      <button class="nav-btn" data-tab="generator">Tạo chart</button>
+      <div class="auth-cluster">
+        <button class="nav-btn nav-btn-pro" data-tab="pro">✨ Gói Pro</button>
+        <button class="auth-btn auth-btn-ghost" data-tab="login">Đăng nhập</button>
+        <button class="auth-btn auth-btn-solid" data-tab="login" data-auth-goto="register">Đăng ký</button>
+      </div>
     </nav>
   </div>
 </header>
 
 <main>
 
+<div id="tab-home" class="tab-panel">
+  <section class="home-hero">
+    <div class="home-hero-text">
+      <span class="badge">🧶 Cộng đồng những người yêu thích móc len</span>
+      <h1>Chào mừng bạn đến với <span class="accent-word">Lenly!</span></h1>
+      <p>Không cần loay hoay kẻ ô hay tính toán đau đầu, chúng tôi giúp bạn tự động chuyển đổi ảnh sản phẩm thành chart móc len và công thức chi tiết chỉ với vài cú click.</p>
+      <p>Khám phá thư viện mẫu móc gợi ý từ cơ bản đến nâng cao, học từng bước cực kỳ dễ hiểu — kể cả người mới bắt đầu.</p>
+      <div class="home-hero-actions">
+        <button data-goto-tab="generator">Tạo chart ngay</button>
+        <button class="secondary" data-goto-tab="learn">Hướng dẫn cho người mới</button>
+      </div>
+    </div>
+    <div class="home-hero-media">
+      <div class="home-hero-photo">
+        <img src="assets/photos/yarn-balls-hero.jpg" alt="Những cuộn len nhiều màu sắc" />
+      </div>
+      <img class="home-hero-float" src="assets/photos/amigurumi-bunny.jpg" alt="Thú bông móc len hình thỏ" />
+    </div>
+  </section>
+
+  <section class="home-strip">
+    <h2>Được móc nên từ chính len thật</h2>
+    <p class="lesson-intro">Một vài thành phẩm từ cộng đồng — nguồn cảm hứng cho mẫu bạn sắp tạo.</p>
+    <div class="home-strip-grid">
+      <figure>
+        <img src="assets/photos/amigurumi-elephant.jpg" alt="Thú bông móc len hình voi" />
+        <figcaption>Thú bông amigurumi</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/photos/amigurumi-cactus.jpg" alt="Chậu xương rồng móc len mini" />
+        <figcaption>Đồ trang trí mini</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/photos/crochet-throw-closeup.jpg" alt="Cận cảnh mũi móc chăn len hồng" />
+        <figcaption>Chi tiết mũi đan</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/photos/crochet-desk-cozy.jpg" alt="Góc làm việc với len đang móc dở" />
+        <figcaption>Góc móc len mỗi ngày</figcaption>
+      </figure>
+    </div>
+    <div class="home-strip-cta">
+      <button class="secondary" data-goto-tab="gallery">Xem thêm mẫu móc →</button>
+    </div>
+  </section>
+</div>
+
+<div id="tab-generator" class="tab-panel hidden">
+
 <header class="hero">
   <span class="badge">LENLY STUDIO</span>
   <h1>Tạo chart móc len từ ảnh</h1>
   <p>Upload ảnh sản phẩm, chọn kiểu và nhập số đo — hệ thống sinh chart + công thức móc chi tiết theo từng mảnh.</p>
 </header>
-
-<div id="tab-generator" class="tab-panel">
 
 <section class="card">
   <h2><span class="step-label">1</span>Ảnh sản phẩm</h2>
@@ -1113,9 +1302,10 @@
     <div class="footer-col">
       <h4>Điều hướng</h4>
       <ul>
+        <li><a href="#" data-tab="home">Trang chủ</a></li>
+        <li><a href="#" data-tab="learn">Khóa học miễn phí</a></li>
+        <li><a href="#" data-tab="gallery">Mẫu móc</a></li>
         <li><a href="#" data-tab="generator">Tạo chart</a></li>
-        <li><a href="#" data-tab="learn">Học móc len</a></li>
-        <li><a href="#" data-tab="gallery">Công thức độc lạ</a></li>
         <li><a href="#" data-tab="pro">Gói Pro</a></li>
         <li><a href="#" data-tab="login">Đăng nhập</a></li>
       </ul>
@@ -1128,7 +1318,10 @@
       </ul>
     </div>
   </div>
-  <div class="footer-bottom">© <span id="footerYear"></span> Lenly Studio. Demo giao diện — chưa kết nối thanh toán thật.</div>
+  <div class="footer-bottom">
+    © <span id="footerYear"></span> Lenly Studio. Demo giao diện — chưa kết nối thanh toán thật.<br>
+    <small style="opacity:0.75;">Ảnh minh hoạ: Tahki Cotton Classic ảnh của meknits (CC BY 2.0) · Amigurumi Elephant ảnh của רחל1 (CC BY-SA 4.0) · Amigurumi Cactus ảnh của Lskbrown (CC BY 3.0) · Conejita Amigurumi ảnh của Creativa Atelier (CC BY-SA 4.0) · Closeup of Hazel's throw ảnh của Aileen's Pics (CC BY-SA 2.0) — qua Wikimedia Commons.</small>
+  </div>
 </footer>
 
 <!-- Modal quang cao video 15s - hien khi bam "Sinh chart + cong thuc".
@@ -1187,6 +1380,9 @@ document.addEventListener('click', (e) => {
   if (tabLink) {
     e.preventDefault();
     switchTab(tabLink.dataset.tab);
+    if (tabLink.dataset.authGoto === 'register') {
+      document.querySelector('.auth-switch-btn[data-auth-mode="register"]')?.click();
+    }
     $('mainNav')?.classList.remove('open');
     $('menuToggle')?.setAttribute('aria-expanded', 'false');
   }
