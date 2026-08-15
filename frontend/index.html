@@ -669,18 +669,21 @@
     background: var(--surface-alt);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 1.1rem;
+    overflow: hidden;
     cursor: pointer;
-    transition: box-shadow 0.15s, border-color 0.15s;
+    transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
   }
   .lesson-card:hover { box-shadow: var(--shadow); border-color: var(--accent); transform: translateY(-2px); }
-  .lesson-card:nth-child(6n+1) { background: linear-gradient(145deg, #ffe1f0, #fdf0f6); }
-  .lesson-card:nth-child(6n+2) { background: linear-gradient(145deg, #fff2d6, #fdf0f6); }
-  .lesson-card:nth-child(6n+3) { background: linear-gradient(145deg, #e1fbec, #fdf0f6); }
-  .lesson-card:nth-child(6n+4) { background: linear-gradient(145deg, #e1f1ff, #fdf0f6); }
-  .lesson-card:nth-child(6n+5) { background: linear-gradient(145deg, #f1e7ff, #fdf0f6); }
-  .lesson-card:nth-child(6n+6) { background: linear-gradient(145deg, #ffe6da, #fdf0f6); }
-  .lesson-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .lesson-card-photo { height: 130px; overflow: hidden; }
+  .lesson-card-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lesson-card-body { padding: 1.1rem; }
+  .lesson-card:nth-child(6n+1) .lesson-card-body { background: linear-gradient(145deg, #ffe1f0, #fdf0f6); }
+  .lesson-card:nth-child(6n+2) .lesson-card-body { background: linear-gradient(145deg, #fff2d6, #fdf0f6); }
+  .lesson-card:nth-child(6n+3) .lesson-card-body { background: linear-gradient(145deg, #e1fbec, #fdf0f6); }
+  .lesson-card:nth-child(6n+4) .lesson-card-body { background: linear-gradient(145deg, #e1f1ff, #fdf0f6); }
+  .lesson-card:nth-child(6n+5) .lesson-card-body { background: linear-gradient(145deg, #f1e7ff, #fdf0f6); }
+  .lesson-card:nth-child(6n+6) .lesson-card-body { background: linear-gradient(145deg, #ffe6da, #fdf0f6); }
+  .lesson-icon { font-size: 1.5rem; display: block; margin-bottom: 0.4rem; }
   .lesson-card h3 { font-size: 0.94rem; margin: 0 0 0.4rem; }
   .lesson-card p { font-size: 0.84rem; color: var(--text-dim); line-height: 1.55; margin: 0 0 0.6rem; }
   .read-more-link {
@@ -727,7 +730,32 @@
     border-radius: 8px;
   }
   .article-close:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  .article-hero-photo {
+    width: calc(100% + 3.5rem);
+    margin: -2rem -1.75rem 1.2rem;
+    max-width: none;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px 16px 0 0;
+  }
   .article-body .badge { margin-bottom: 0.8rem; }
+  .ref-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 0.2rem 0 1.2rem;
+    background: var(--surface-alt);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .ref-table th, .ref-table td {
+    padding: 0.5rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .ref-table tr:last-child th, .ref-table tr:last-child td { border-bottom: none; }
+  .ref-table th { color: var(--text-dim); font-weight: 600; width: 34%; white-space: nowrap; }
   .article-body h2 { font-size: 1.3rem; margin: 0 0 0.6rem; padding-right: 1.5rem; }
   .article-body .article-summary { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 1.2rem; }
   .article-body h4 { font-size: 0.92rem; margin: 1.2rem 0 0.5rem; color: var(--accent-dark); }
@@ -764,20 +792,10 @@
   .gallery-card:hover { box-shadow: var(--shadow); border-color: var(--accent); transform: translateY(-2px); }
   .gallery-card .body > .read-more-link { margin-bottom: 0.6rem; }
   .gallery-card .thumb {
-    height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.6rem;
-    background: linear-gradient(135deg, var(--grad-1), var(--grad-3), var(--grad-4), var(--grad-5), var(--grad-6));
-    background-size: 300% 300%;
+    height: 150px;
+    overflow: hidden;
   }
-  .gallery-card:nth-child(6n+1) .thumb { background-position: 0% 0%; }
-  .gallery-card:nth-child(6n+2) .thumb { background-position: 20% 40%; }
-  .gallery-card:nth-child(6n+3) .thumb { background-position: 40% 60%; }
-  .gallery-card:nth-child(6n+4) .thumb { background-position: 60% 20%; }
-  .gallery-card:nth-child(6n+5) .thumb { background-position: 80% 80%; }
-  .gallery-card:nth-child(6n+6) .thumb { background-position: 100% 100%; }
+  .gallery-card .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .gallery-card .body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
   .gallery-card h3 { font-size: 0.92rem; margin: 0 0 0.4rem; }
   .gallery-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; flex: 1; margin: 0 0 0.8rem; }
@@ -1402,7 +1420,9 @@ if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
 const LESSON_ARTICLES = [
   {
     icon: '🔗', tag: 'Cơ bản', title: 'Chain (ch) — Mũi bắt',
+    photo: 'assets/photos/hand-crocheting.jpg', photoAlt: 'Tay đang móc len với nhiều màu chỉ',
     summary: 'Mũi nền tảng của mọi công trình móc len — chuỗi mắt xích làm hàng nền cho mọi mũi khác.',
+    intro: 'Mọi tấm vải móc len trên đời — từ chiếc khăn đầu tiên bạn tập đan cho tới chiếc áo cardigan nhiều mảnh phức tạp nhất — đều bắt đầu từ đúng một thứ: một chuỗi mắt xích chain. Đây là mũi đầu tiên bạn cần thành thạo trước khi học bất kỳ mũi nào khác, vì gần như toàn bộ pattern đều mở đầu bằng dòng chữ "Ch [số] " để tạo hàng nền.',
     steps: [
       'Tạo 1 nút thòng lọng (slip knot) trên kim móc.',
       'Quấn sợi từ sau ra trước qua đầu kim (yarn over).',
@@ -1414,10 +1434,13 @@ const LESSON_ARTICLES = [
       'Đếm nhầm mắt cuối cùng gần kim (nút thòng lọng ban đầu không tính là 1 mắt chain).',
     ],
     tips: 'Đếm lại chuỗi chain ít nhất 2 lần trước khi móc hàng 1 — sai số mắt chain ở bước này sẽ làm lệch toàn bộ chiều rộng thành phẩm.',
+    practice: 'Thực hành: bắt 1 chuỗi 20 chain, đếm lại đúng 3 lần bằng 3 cách khác nhau (đếm xuôi, đếm ngược, đếm cách quãng 5 mắt một) cho tới khi thao tác đếm trở thành phản xạ — kỹ năng này bạn sẽ dùng ở mọi pattern về sau.',
   },
   {
     icon: '●', tag: 'Cơ bản', title: 'Single crochet (sc) — Mũi đơn',
+    photo: 'assets/photos/crochet-throw-closeup.jpg', photoAlt: 'Cận cảnh mũi móc len dày trên chăn hồng',
     summary: 'Mũi thấp nhất, chắc và dày — nền tảng cho khăn, mũ, thú bông (amigurumi).',
+    intro: 'Nếu chain là "hạt giống" thì single crochet (sc) là mũi vải thật sự đầu tiên bạn tạo ra. Vải từ sc rất dày và kín, gần như không có khe hở — đó là lý do gần như 100% pattern thú bông (amigurumi) và rất nhiều mẫu mũ, túi xách chỉ dùng duy nhất mũi này.',
     steps: [
       'Đưa kim vào mũi tiếp theo (xuyên qua cả 2 sợi trên đỉnh mũi, trừ khi pattern ghi khác).',
       'Quấn sợi qua kim, kéo 1 vòng lên qua mũi đó — lúc này có 2 vòng trên kim.',
@@ -1429,10 +1452,13 @@ const LESSON_ARTICLES = [
       'Bỏ sót mũi cuối hàng — luôn đếm số mũi sau mỗi hàng để phát hiện sớm.',
     ],
     tips: 'sc tạo vải dày, kín — rất hợp để móc phụ kiện cần độ bền như túi, đế giày, thú bông.',
+    practice: 'Thực hành: móc 1 hình vuông 15x15 mũi toàn bằng sc. Đây chính là bài tập gauge swatch bạn sẽ cần cho bài học "Gauge" bên dưới — một công đôi việc.',
   },
   {
     icon: '◐', tag: 'Trung bình', title: 'Half double crochet (hdc) — Mũi nửa kép',
+    photo: 'assets/photos/beanie-making.jpg', photoAlt: 'Người phụ nữ đang móc mũ beanie truyền thống bằng tay',
     summary: 'Mũi cao trung bình, lên hàng nhanh hơn sc — hay dùng cho áo, chăn, khăn choàng dày dặn.',
+    intro: 'Sau khi quen tay với sc, hdc là bước nâng cấp tự nhiên tiếp theo: vải lên nhanh hơn đáng kể (ít hàng hơn cho cùng chiều cao) mà vẫn giữ được độ dày, không bị thưa như dc. Rất nhiều pattern áo sweater/pullover chọn hdc làm mũi chính vì lý do này — móc cả một chiếc áo bằng sc sẽ rất lâu và vải quá dày nặng.',
     steps: [
       'Quấn sợi qua kim trước khi đưa kim vào mũi tiếp theo (lúc này có 2 vòng + mũi vừa lấy = 3 vòng trên kim).',
       'Đưa kim vào mũi, quấn sợi, kéo 1 vòng lên — bây giờ có 3 vòng trên kim.',
@@ -1444,10 +1470,13 @@ const LESSON_ARTICLES = [
       'Chain turning quá ít (chain 1) khiến mép hàng bị kéo lệch, không thẳng.',
     ],
     tips: 'hdc là lựa chọn cân bằng giữa tốc độ đan và độ dày vải — phù hợp cho người mới muốn lên sản phẩm nhanh mà vải vẫn chắc.',
+    practice: 'Thực hành: móc lại đúng hình vuông gauge swatch nhưng đổi từ sc sang hdc, rồi so sánh — bạn sẽ thấy rõ hdc lên hàng nhanh hơn nhưng vải mềm và giãn hơn sc.',
   },
   {
     icon: '◑', tag: 'Trung bình', title: 'Double crochet (dc) — Mũi kép',
+    photo: 'assets/photos/yarn-balls-hero.jpg', photoAlt: 'Nhiều cuộn len màu sắc xếp trong khay',
     summary: 'Mũi cao, vải rủ mềm hơn — hay dùng cho váy, áo khoác, chân váy bồng.',
+    intro: 'dc là mũi cao gấp đôi sc, tạo ra tấm vải thưa và rủ mềm hơn hẳn — chính đặc tính "rủ" này khiến dc trở thành lựa chọn hàng đầu cho các mẫu váy xòe, áo khoác nhẹ. Trong bộ công thức của Lenly, mọi mẫu váy (đơn hoặc bèo tầng) đều dùng dc làm mũi chính cho phần thân vì lý do tương tự.',
     steps: [
       'Quấn sợi qua kim, đưa kim vào mũi tiếp theo (4 vòng trên kim: 1 sợi quấn + mũi vừa lấy + 2 vòng cũ).',
       'Quấn sợi, kéo qua 2 vòng đầu tiên trên kim — còn lại 2 vòng.',
@@ -1459,10 +1488,13 @@ const LESSON_ARTICLES = [
       'Quên tính chain 3 đầu hàng là 1 mũi dc khi đếm tổng số mũi.',
     ],
     tips: 'dc lên hàng rất nhanh và vải rủ đẹp — nhưng vải thưa hơn sc/hdc nên không hợp làm phần chịu lực (quai túi, đế mũ).',
+    practice: 'Thực hành: móc 1 dải dc dài khoảng 10 hàng rồi cầm lên để tấm vải rủ tự nhiên — cảm nhận độ mềm/thưa khác hẳn so với mẫu sc bạn đã móc trước đó.',
   },
   {
     icon: '➖', tag: 'Kỹ thuật', title: 'Slip stitch (sl st) — Mũi trượt',
+    photo: 'assets/photos/crochet-desk-cozy.jpg', photoAlt: 'Góc bàn làm việc với len đang móc dở và kim móc',
     summary: 'Không tạo độ cao — dùng để nối vòng, di chuyển vị trí, hoặc làm viền mảnh gọn.',
+    intro: 'sl st là mũi "âm thầm" nhất trong 5 mũi cơ bản — nó không tạo thêm chiều cao cho vải, nên thường bị người mới bỏ qua. Nhưng thiếu sl st thì hầu như không pattern đan vòng tròn (mũ, thú bông, viền cổ áo) nào hoàn thiện được, vì đây chính là mũi dùng để "khép vòng" mỗi khi kết thúc 1 round.',
     steps: [
       'Đưa kim vào mũi hoặc điểm cần nối.',
       'Quấn sợi qua kim.',
@@ -1474,10 +1506,13 @@ const LESSON_ARTICLES = [
       'Dùng sl st thay cho sc ở phần cần độ dày (sl st gần như phẳng, không có "thân" mũi như sc).',
     ],
     tips: 'sl st là mũi lý tưởng để làm viền cổ áo (neckband), viền tay (cuff) mỏng gọn, ôm sát mà không làm vải dày cộm.',
+    practice: 'Thực hành: móc 1 vòng tròn nhỏ bằng sc (khoảng 6 vòng theo kiểu amigurumi), sau đó tự khép vòng cuối bằng sl st — đây chính xác là kỹ thuật đỉnh mũ trong mọi pattern mũ bucket/beanie của Lenly.',
   },
   {
     icon: '📏', tag: 'Kiến thức nền', title: 'Gauge — Mật độ đan',
+    photo: 'assets/photos/crochet-throw-closeup.jpg', photoAlt: 'Cận cảnh các mũi đan đều nhau trên chăn len',
     summary: 'Số mũi và số hàng bạn đan được trong 10×10cm — yếu tố quyết định sản phẩm có đúng size hay không.',
+    intro: 'Đây là bài học quan trọng nhất trong toàn bộ danh sách — quan trọng hơn cả việc biết móc mũi nào. Lenly Studio dùng đúng 2 con số bạn đo ở đây (gauge_stitches_per_10cm và gauge_rows_per_10cm) làm đầu vào để tính toán mọi chart và công thức. Nhập sai gauge, mọi con số khác trong app dù tính đúng thuật toán vẫn sẽ ra sai kích thước thật.',
     steps: [
       'Đan 1 mẫu thử hình vuông khoảng 12x12cm bằng đúng sợi + kim + mũi bạn sẽ dùng cho sản phẩm thật.',
       'Đặt mẫu thử phẳng trên bàn, không kéo giãn.',
@@ -1490,6 +1525,7 @@ const LESSON_ARTICLES = [
       'Đo mẫu thử khi đang kéo căng vải bằng tay — luôn đo khi vải nằm tự nhiên, không kéo giãn.',
     ],
     tips: 'Mỗi người đan chặt/lỏng tay khác nhau dù dùng cùng loại kim và sợi — gauge của bạn có thể khác gauge ghi trên nhãn sợi, vì vậy luôn tự đo, đừng dùng số gauge có sẵn của người khác.',
+    practice: 'Thực hành: lấy lại đúng mẫu thử sc bạn móc ở bài "Single crochet" phía trên, đo và nhập thử vào ô Gauge ở trang Tạo chart — xem thử số mũi/hàng app tính ra thay đổi thế nào khi bạn đổi 18 thành 20 mũi/10cm.',
   },
 ];
 
@@ -1498,10 +1534,13 @@ function renderLessons() {
   if (!grid) return;
   grid.innerHTML = LESSON_ARTICLES.map((item, idx) => `
     <div class="lesson-card" data-open-lesson="${idx}">
-      <div class="lesson-icon">${item.icon}</div>
-      <h3>${item.title}</h3>
-      <p>${item.summary}</p>
-      <span class="read-more-link">Xem hướng dẫn chi tiết →</span>
+      <div class="lesson-card-photo"><img src="${item.photo}" alt="${item.photoAlt}" loading="lazy" /></div>
+      <div class="lesson-card-body">
+        <span class="lesson-icon">${item.icon}</span>
+        <h3>${item.title}</h3>
+        <p>${item.summary}</p>
+        <span class="read-more-link">Xem hướng dẫn chi tiết →</span>
+      </div>
     </div>
   `).join('');
 }
@@ -1511,15 +1550,18 @@ function openLessonArticle(idx) {
   const item = LESSON_ARTICLES[idx];
   if (!item) return;
   $('articleModalBody').innerHTML = `
+    <img class="article-hero-photo" src="${item.photo}" alt="${item.photoAlt}" />
     <span class="badge">${item.tag}</span>
     <h2>${item.icon} ${item.title}</h2>
-    <p class="article-summary">${item.summary}</p>
+    <p class="article-summary">${item.intro}</p>
     <h4>Các bước thực hiện</h4>
     <ol>${item.steps.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4>Lỗi thường gặp</h4>
     <ul>${item.mistakes.map(s => `<li>${s}</li>`).join('')}</ul>
-    <h4>Mẹo</h4>
+    <h4>Mẹo từ Lenly</h4>
     <p>${item.tips}</p>
+    <h4>Bài tập thực hành</h4>
+    <p>${item.practice}</p>
     <div class="article-modal-actions">
       <button class="secondary" data-goto-tab="generator" id="articleGotoGenerator">Bắt đầu tạo chart →</button>
     </div>
@@ -1535,73 +1577,94 @@ function openLessonArticle(idx) {
 const GALLERY_PRESETS = [
   {
     icon: '🧢', tag: 'Dễ làm', title: 'Bucket hat sọc ngang',
+    photo: 'assets/photos/yarn-balls-hero.jpg', photoAlt: 'Nhiều cuộn len màu sắc gợi ý phối sọc ngang',
     desc: 'Mũ vành loe phối 2-3 màu sọc ngang, hợp dạo phố mùa hè. Upload ảnh mũ sọc màu bạn thích để chart tự bắt màu theo hàng.',
+    intro: 'Mẫu này lấy cảm hứng từ pattern "Easy Crochet Baby Bucket Hat" (Bernat, mã BRC0216-033199M) trong thư viện tài liệu của Lenly — một trong những cách dựng bucket hat gọn và chuẩn nhất: đan từ đỉnh xuống, hoàn toàn bằng single crochet, tăng mũi theo đúng cấp số nhân học được ở trường phái amigurumi.',
+    reference: { name: 'Easy Crochet Baby Bucket Hat', source: 'Bernat® (BRC0216-033199M)', skill: 'Dễ', gauge: '20 sc và 22 hàng = 10×10cm', materials: 'Bernat® Softee® Cotton — sợi cotton mềm, hút ẩm tốt, hợp mũ mùa hè' },
     construction: [
-      'Đỉnh mũ bắt đầu từ magic ring, mỗi vòng tăng đều mũi theo tỉ lệ chuẩn (vòng sau nhiều hơn vòng trước 1 lượng cố định) cho tới khi đỉnh phẳng đạt đúng chu vi đầu.',
-      'Chuyển sang đan thẳng, không tăng không giảm, nhiều vòng liên tiếp để tạo chiều cao phần thân ôm đầu.',
-      'Vào phần vành: đan 1 vòng tăng mũi chỉ vào move loop sau (back loop only) — kỹ thuật này tạo 1 đường "gấp nếp" tự nhiên, giúp vành bẻ ra ngoài rõ rệt thay vì tăng dần đều làm mũ phồng tròn.',
-      'Tiếp tục tăng mũi đều ở 1-2 vòng cuối để vành loe rộng ra, kết thúc bằng 1 vòng sl st bo viền cho mép vành gọn, không quăn mép.',
+      'Bắt đầu từ magic ring ở đỉnh, móc 7 sc vào vòng. Từ vòng 2 trở đi tăng mũi theo cấp số cộng đều (vòng 2: 14 sc, vòng 3: 21 sc... mỗi vòng thêm đúng 7 sc) — đây chính xác là cách pattern gốc tăng mũi để đỉnh mũ luôn phẳng, không bị gợn sóng hay quá phồng.',
+      'Đến khi đỉnh đạt đủ đường kính (pattern gốc dừng tăng ở vòng 12, đạt 84 sc), chuyển sang đan thân: 1 vòng đầu móc vào move loop sau (back loop only) để tạo đường gấp nếp rõ, rồi các vòng sau móc cả 2 sợi (both loops) liên tục cho tới khi đạt chiều cao ôm đầu mong muốn.',
+      'Vào phần vành (brim): tăng mũi đều vào front loop only ở vòng đầu tiên của vành, xen kẽ vài vòng đan thẳng không tăng, rồi lại tăng — lặp lại nhịp "tăng rồi đan thẳng" 2-3 lần để vành xòe rộng dần ra thay vì loe đột ngột.',
+      'Kết thúc, cắt chỉ và giấu đầu sợi. Nếu muốn sọc ngang nhiều màu như ảnh minh hoạ, chỉ cần đổi màu sợi ở đầu mỗi vòng thân/vành theo chu kỳ đều — đúng nguyên lý pixel chart mà Lenly dùng để đọc ảnh sọc màu của bạn.',
     ],
-    why: 'App đọc đúng thứ tự và độ dày từng dải màu trong ảnh bạn upload, rồi tự quy đổi thành pixel chart theo hàng — nên bạn có thể thử với bất kỳ ảnh mũ sọc màu nào mình thích, không giới hạn ở 1 bảng màu cố định.',
+    why: 'App đọc đúng thứ tự và độ dày từng dải màu trong ảnh bạn upload, rồi tự quy đổi thành pixel chart theo hàng — nên bạn có thể thử với bất kỳ ảnh mũ sọc màu nào mình thích, không giới hạn ở 1 bảng màu cố định. Cách tăng mũi (7-14-21-28...) trong công thức sinh ra ở app cũng dựa trên đúng tỉ lệ chuẩn này.',
     preset: { garment: 'mu', subtype: 'bucket', chartType: 'pixel', fields: { head_circumference_cm: 56, hat_height_cm: 14, bucket_brim_width_cm: 6 } },
   },
   {
     icon: '🧣', tag: 'Người mới', title: 'Khăn than dài viền tua rua',
+    photo: 'assets/photos/crochet-desk-cozy.jpg', photoAlt: 'Khăn len đang móc dở trên bàn làm việc ấm cúng',
     desc: 'Khăn than cổ điển, đan xuyên suốt 1 màu hoặc phối màu theo ảnh — thêm tua rua 2 đầu cho sinh động.',
+    intro: 'Mẫu này dựa trên "Effortless Scarf" (Patons®, mã PAC0125-001079M) — đúng như tên gọi, đây là một trong những cách móc khăn than dễ nhất cho người mới vì chỉ lặp đi lặp lại 2 hàng duy nhất suốt cả chiếc khăn, không tăng không giảm mũi.',
+    reference: { name: 'Effortless Scarf', source: 'Patons® (PAC0125-001079M)', skill: 'Mới bắt đầu', gauge: '9 mũi và 10 hàng = 15×15cm (mẫu Seed Stitch)', materials: 'Patons® Classic Wool Bulky — sợi len dày, lên khăn nhanh, ấm' },
     construction: [
-      'Khác với đa số món khác (đan theo bề ngang), khăn than thường được đan theo chiều dọc (lengthwise) — chain 1 hàng ngắn bằng đúng bề rộng khăn, rồi đan tiếp cho tới khi đạt chiều dài mong muốn.',
+      'Khác với đa số món khác (đan theo bề ngang), khăn than được đan theo chiều dọc (lengthwise): chain 1 hàng dài bằng đúng chiều dài khăn mong muốn (pattern gốc chain 140), sau đó đan theo bề rộng khăn cho tới khi đạt đủ 15cm.',
+      'Mũi chính là Seed Stitch — mẫu xen kẽ 1 sc, chain 1, bỏ 1 mũi, lặp lại — tạo bề mặt lấm tấm hạt vừa mềm vừa không bị cuộn mép như đan sc trơn thuần tuý, không cần biên riêng.',
       'Muốn có hiệu ứng caro/kẻ ô thay vì trơn 1 màu: đan xen kẽ 2-3 màu theo chu kỳ hàng cố định, giữ nguyên sợi màu không dùng bằng cách "giấu" nó dọc theo mép hàng (carry yarn) để không phải cắt nối liên tục.',
-      'Kết thúc, cắt sợi thành từng đoạn dài bằng nhau, gộp vài sợi lại, gập đôi và móc luồn qua mép 2 đầu khăn để tạo tua rua — cắt tỉa đều cho gọn.',
+      'Kết thúc, cắt sợi thành từng đoạn 35cm, gộp 3 sợi lại làm 1 chùm, gập đôi và móc luồn qua mép 2 đầu khăn để tạo tua rua — cắt tỉa đều cho gọn, đúng bước "Fringe" trong pattern gốc.',
     ],
-    why: 'Chọn "symbol chart" trong app để có hướng dẫn từng hàng bằng chữ, đúng chiều rộng/dài bạn nhập — đây là kỹ thuật đan lengthwise thật, không phải cách rút gọn.',
+    why: 'Chọn "symbol chart" trong app để có hướng dẫn từng hàng bằng chữ, đúng chiều rộng/dài bạn nhập — đây là kỹ thuật đan lengthwise thật từ pattern thương mại, không phải cách rút gọn cho dễ code.',
     preset: { garment: 'khan', subtype: null, chartType: 'symbol', fields: { scarf_width_cm: 22, scarf_length_cm: 170 } },
   },
   {
     icon: '🧥', tag: 'Nâng cao', title: 'Cardigan viền nẹp nút độc lạ',
+    photo: 'assets/photos/hand-crocheting.jpg', photoAlt: 'Tay đang móc từng mảnh áo bằng len nhiều màu',
     desc: 'Áo khoác cardigan đủ bộ: thân, tay, viền cổ, viền tay, nẹp cài nút — dùng đúng kỹ thuật ribbing co giãn như pattern thương mại thật.',
+    intro: 'Mẫu tham khảo từ "Simply Perfect Crochet Cardigan" (Caron®, mã CAC0129-39605M) — một cardigan cài nút đầy đủ 6 size (XS/S đến 4/5XL), dùng đúng kỹ thuật ribbing co giãn thật (không phải rib dệt kim giả lập) và mẫu vải checkerboard sc/dc xen kẽ đặc trưng.',
+    reference: { name: 'Simply Perfect Crochet Cardigan', source: 'Caron® (CAC0129-39605M)', skill: 'Dễ – Trung bình', gauge: '13 mũi và 11 hàng = 10×10cm (mẫu hoạ tiết)', materials: 'Caron® Simply Soft® — 5 nút bấm ⌀2cm, móc H/8 (5mm)' },
     construction: [
-      'Thân áo thường đan liền 1 mảnh (thân trước + thân sau nối liền 2 bên hông) từ gấu lên tới nách, sau đó mới "chia" ra để đan riêng vai và cổ.',
-      'Tới đoạn nách: chia thân thành 3 phần — vai trái, thân sau, vai phải — mỗi phần đan riêng, phần cổ áo giảm mũi dần đều mỗi hàng (2 mũi gộp thành 1 ở mép cổ) để tạo đường chữ V hoặc tròn tự nhiên.',
-      '2 tay áo đan phẳng riêng biệt, có thể phối màu theo dạng hoạ tiết lặp (nếu dùng pixel chart từ ảnh) rồi khâu/nối vào thân ở bước hoàn thiện.',
-      'Viền nẹp, viền cổ và viền tay dùng kỹ thuật đan vào "cọc trước/cọc sau" (front-post/back-post) xen kẽ — tạo các đường gân dọc co giãn thật sự như rib dệt kim, ôm sát hơn hẳn so với đan trơn thường.',
-      'Đơm nút và làm khuyết nút ở 2 bên nẹp sau khi đã ghép xong toàn bộ các mảnh.',
+      'Mỗi mảnh (Thân sau, Vạt trước trái, Vạt trước phải, Tay áo) bắt đầu từ 1 dải ribbing dệt ngang: chain 10, sau đó chỉ móc scbl (single crochet vào move loop sau) liên tục hàng này qua hàng khác — chính kỹ thuật scbl lặp lại này tạo các đường gân dọc co giãn thật, không phải hàng rib dệt kim giả.',
+      'Từ cạnh dài của dải ribbing, móc lên 61-103 sc (tuỳ size) rồi chuyển sang mẫu hoạ tiết chính: xen kẽ 1 sc, 1 dc suốt hàng, đảo vị trí sc/dc ở hàng kế tiếp — tạo bề mặt checkerboard có kết cấu dày dặn hơn hẳn đan trơn 1 mũi.',
+      'Vào đoạn nách: bỏ qua 6-18 mũi đầu hàng (tuỳ size) để tạo độ sâu nách, tiếp tục đan thẳng phần thân trên. Vào đoạn cổ: giảm liên tục bằng sc2tog (gộp 2 mũi cuối hàng thành 1) mỗi hàng, sau đó giảm cách hàng — tạo đường vát cổ chữ V tự nhiên dần đều, không bị gãy góc.',
+      'Tay áo cũng bắt đầu từ ribbing, sau đó tăng mũi đối xứng 2 bên mép mỗi vài hàng theo mẫu hoạ tiết để tạo form loe nhẹ từ cổ tay lên vai.',
+      'Hoàn thiện: ghép vai trước, rồi móc liền 1 dải nẹp/viền cổ chạy suốt từ gấu vạt phải, vòng qua cổ, xuống gấu vạt trái — tại vạt phải, chừa 5 lỗ khuyết nút (ch 2, bỏ 2 sc) cách đều nhau ngay trên chính dải nẹp này, không móc rời.',
     ],
-    why: 'App tự tách riêng từng mảnh (thân trái/phải/sau, 2 tay) kèm hướng dẫn ghép nối cuối cùng, đúng như cách 1 pattern thương mại thật được trình bày — phần nẹp cài nút và số lượng nút do bạn tự quyết theo sở thích.',
+    why: 'App tự tách riêng từng mảnh (thân trái/phải/sau, 2 tay) kèm hướng dẫn ghép nối cuối cùng, đúng như cách pattern Simply Perfect Cardigan thật được trình bày — phần nẹp cài nút và số lượng nút do bạn tự quyết theo sở thích, còn tỉ lệ tăng giảm mũi ở nách/cổ áp dụng đúng logic sc2tog như pattern gốc.',
     preset: { garment: 'ao', subtype: 'cardigan', chartType: 'symbol', fields: { chest_circumference_cm: 92, body_length_cm: 58, sleeve_length_cm: 56 } },
   },
   {
     icon: '👗', tag: 'Dạo phố', title: 'Váy bèo gấu xòe',
-    desc: 'Váy đan liền 1 mảnh theo vòng tròn, gấu xòe bằng kỹ thuật shell-stitch tạo độ bồng bềnh tự nhiên.',
+    photo: 'assets/photos/amigurumi-bunny.jpg', photoAlt: 'Thú bông móc len mặc váy hồng bồng bềnh',
+    desc: 'Váy đan liền 1 mảnh theo vòng tròn, gấu xòe bằng kỹ thuật cluster-stitch tạo độ bồng bềnh tự nhiên.',
+    intro: 'Mẫu tham khảo từ "Crochet Ruffle Skirt" của Meladora\'s Creations — một pattern rất được cộng đồng yêu thích nhờ kỹ thuật cluster stitch (mũi chùm) tạo độ phồng tự nhiên cho phần thân, kết hợp mũi dc bắt chéo ở gấu để tạo hiệu ứng ruffle (bèo) sóng lượn thật, không phải chỉ tăng mũi phẳng đơn thuần.',
+    reference: { name: 'Crochet Ruffle Skirt', source: "Meladora's Creations", skill: 'Trung bình', gauge: 'Theo số đo vòng eo/hông thực tế của người mặc', materials: 'Sợi cotton hoặc acrylic vừa, có thể phối biến màu (variegated) cho phần bèo' },
     construction: [
-      'Thân váy đan liên tục theo vòng tròn (không phải đan thẳng rồi khâu ống) từ eo xuống, giữ nguyên số mũi đều theo số đo vòng eo/hông.',
-      'Tới đoạn gấu, chuyển sang mẫu lặp dạng vỏ sò (shell): móc nhiều mũi dc dồn vào cùng 1 điểm, bỏ qua vài mũi kế tiếp rồi lặp lại — chính khoảng "dồn rồi bỏ" này tạo ra các đường lượn sóng tự nhiên thay vì xòe phẳng đơn điệu.',
-      'Có thể lặp thêm 1-2 vòng shell chồng lên nhau (mũi dồn của vòng sau rơi vào đúng khoảng bỏ của vòng trước) để tăng thêm tầng bèo và độ bồng bềnh.',
-      'Muốn co giãn ôm vừa nhiều vòng eo, có thể đan thêm 1 hàng lỗ nhỏ ở vòng eo để luồn dây thun qua.',
+      'Thân váy đan liên tục theo vòng tròn từ eo xuống bằng cluster stitch: mỗi chùm gồm 3 mũi dc chưa hoàn thiện móc dồn vào 3 mũi liên tiếp của hàng dưới (yarn over, kéo lên, kéo qua 2 vòng — lặp lại đúng 3 lần), rồi kéo qua toàn bộ 7 vòng trên kim cùng lúc và chain 2 để kết 1 chùm.',
+      'Vòng cluster kế tiếp móc vào đúng khoảng ch-2 phía trên (không móc vào thân chùm) — cách xếp lớp "chùm trên khoảng trống" này là điều tạo nên bề mặt gợn phồng đặc trưng, lặp lại nhiều vòng cho tới khi phần hông đạt chiều dài mong muốn.',
+      'Sang phần gấu (ruffle thật sự): chuyển từ cluster sang mũi dc bắt chéo, móc vào move loop sau (back loop only) của 3 mũi liên tiếp rồi bắt chéo dc qua lại — chính kỹ thuật back-loop-only này khiến gấu bung xoè ra theo từng lớp sóng thay vì xoè phẳng đơn điệu.',
+      'Có thể đổi màu mỗi 5 vòng ở phần gấu (pattern gốc đổi sang màu trắng mỗi vòng thứ 5, còn lại dùng sợi biến màu) để các lớp bèo tách bạch rõ hơn bằng mắt.',
+      'Vòng eo trên cùng có thể đan thêm 1 hàng lỗ nhỏ để luồn dây thun, giúp váy co giãn ôm vừa nhiều số đo khác nhau.',
     ],
-    why: 'App tính số tầng bèo theo chiều dài váy bạn nhập, để bạn kiểm soát được độ xòe mong muốn — đây là kỹ thuật shell-stitch thật dùng trong các pattern váy móc thương mại.',
+    why: 'App tính số tầng bèo theo chiều dài váy bạn nhập, để bạn kiểm soát được độ xòe mong muốn — nguyên lý "chùm trên khoảng trống rồi chuyển sang dc bắt chéo back-loop" chính là kỹ thuật thật trong pattern Ruffle Skirt, không phải shell-stitch rút gọn.',
     preset: { garment: 'vay', subtype: 'beo', chartType: 'symbol', fields: { waist_circumference_cm: 68, skirt_length_cm: 42, ruffle_tiers: 1 } },
   },
   {
-    icon: '👒', tag: 'Ấm áp', title: 'Beanie ôm đầu tối giản',
-    desc: 'Mũ len ôm đầu 1 màu trơn hoặc theo ảnh, đan nhanh gọn — quà tặng dễ thương cho mùa đông.',
+    icon: '👒', tag: 'Ấm áp', title: 'Beanie plaid phối 3 màu',
+    photo: 'assets/photos/beanie-making.jpg', photoAlt: 'Người phụ nữ đang móc mũ beanie bằng tay trên phố',
+    desc: 'Mũ len ôm đầu phối 3 màu kiểu plaid (caro), đan nhanh gọn — quà tặng dễ thương cho mùa đông.',
+    intro: 'Mẫu tham khảo từ "Plaid Slouchy Beanie" (Patons®, mã PAC0316-001103M) — một chiếc mũ phối 3 màu (A/B/C) theo khối màu xen kẽ tạo hiệu ứng plaid/caro, đan từ vành lên đỉnh bằng hdc, có sẵn 3 size trẻ em (4-6-8 tuổi) trong pattern gốc.',
+    reference: { name: 'Plaid Slouchy Beanie', source: 'Patons® (PAC0316-001103M)', skill: 'Trung bình', gauge: '17 sc và 20 hàng = 10×10cm', materials: 'Patons® Classic Wool DK Superwash — 3 màu tương phản A/B/C' },
     construction: [
-      'Đỉnh mũ đan từ magic ring, tăng đều mũi mỗi vòng theo đúng tỉ lệ như bucket hat, cho tới khi đạt chu vi đầu mong muốn — khác biệt là dừng tăng ngay khi đạt chu vi, không có đoạn tăng riêng cho vành.',
-      'Đan thẳng liên tục không tăng giảm cho tới khi đạt chiều cao mong muốn, để phần thân ôm sát đầu tự nhiên nhờ độ co giãn của mũi đan.',
-      'Kết thúc bằng 1-2 vòng đan vào move loop sau (back loop only) hoặc kỹ thuật rib front-post/back-post ở mép cuối, giúp viền mũ bám chắc vào trán, không bị tuột khi đội.',
+      'Khác với bucket hat (đan từ đỉnh xuống), mũ này đan từ vành lên: chain nối thành 1 vòng tròn lớn, móc 4-5 vòng sc trơn 1 màu để tạo viền ôm trán chắc chắn.',
+      'Chuyển sang hdc và bắt đầu đổi màu theo khối 4 mũi một: móc 4 hdc màu B, 4 hdc màu C, lặp lại quanh vòng — sợi màu không dùng được "giấu" (carry) lỏng phía sau các mũi đang móc để không phải cắt nối liên tục, đổi phiên màu B/C mỗi vài vòng tạo hiệu ứng caro.',
+      'Vào phần giảm đỉnh: giảm mũi bằng hdc2tog (gộp 2 mũi thành 1) xen kẽ giữ đúng nhịp màu, lặp lại nhiều vòng giảm liên tiếp cho tới khi chỉ còn khoảng 1/4 số mũi ban đầu, rồi rút chỉ chặt qua các mũi cuối để đóng đỉnh gọn.',
+      'Hoàn thiện viền: móc 1 vòng reverse sc (mũi đơn ngược — móc từ trái sang phải thay vì phải sang trái như thường lệ) vào các mắt chain nền còn lại, tạo đường viền xoắn thừng gọn đẹp thay vì để mép chain trơn.',
     ],
-    why: 'Vì cấu trúc đơn giản và ít mảnh, đây thường là món đầu tiên người mới có thể hoàn thành trọn vẹn trong 1-2 buổi tối — phù hợp để luyện tay trước khi thử các món nhiều mảnh hơn như áo, váy.',
+    why: 'Vì cấu trúc đơn giản và ít mảnh, đây thường là món đầu tiên người mới có thể hoàn thành trọn vẹn trong 1-2 buổi tối — phối màu theo khối như pattern Plaid Slouchy Beanie cũng là cách dễ nhất để thử phối màu mà không cần đọc pixel chart phức tạp.',
     preset: { garment: 'mu', subtype: 'beanie', chartType: 'pixel', fields: { head_circumference_cm: 55, hat_height_cm: 20 } },
   },
   {
     icon: '👚', tag: 'Basic', title: 'Sweater chui đầu form rộng',
+    photo: 'assets/photos/crochet-throw-closeup.jpg', photoAlt: 'Cận cảnh bề mặt vải móc len dày dặn màu hồng',
     desc: 'Áo sweater oversize dễ phối đồ, đủ các mảnh (thân, tay, viền cổ, viền tay, viền gấu) đúng cấu trúc pattern thương mại.',
+    intro: 'Mẫu tham khảo từ "Getting Cozy Crochet Pullover" (Red Heart®, mã RHC0829-39282M) — đúng như tên gọi, đây là một sweater form rộng thoải mái, dùng hdc làm mũi chính cho thân/tay và kỹ thuật front-post/back-post double crochet (Dcfp/Dcbp) thật cho các viền co giãn.',
+    reference: { name: 'Getting Cozy Crochet Pullover', source: 'Red Heart® (RHC0829-39282M)', skill: 'Dễ – Trung bình', gauge: '12 hdc và 9 hàng = 10×10cm (móc cỡ lớn)', materials: 'Red Heart® Super Saver® Jazzy — sợi acrylic dày dặn, ấm' },
     construction: [
-      'Thân trước và thân sau đan riêng thành 2 mảnh chữ nhật phẳng — với form oversize, chiều rộng mỗi mảnh được cộng thêm khoảng dư (ease) so với đúng 1/2 số đo vòng ngực thật, thay vì đan sát khít như áo ôm body.',
-      '2 tay áo đan phẳng riêng, form ống đều từ nách xuống cổ tay (không thắt bo ở cổ tay như áo bó).',
+      'Thân trước và thân sau đan riêng thành 2 mảnh chữ nhật phẳng bằng hdc — với form oversize, chiều rộng mỗi mảnh được cộng thêm khoảng dư (ease) so với đúng 1/2 số đo vòng ngực thật, thay vì đan sát khít như áo ôm body.',
+      '2 tay áo đan phẳng riêng, form ống đều từ nách xuống cổ tay bằng cùng mũi hdc, giữ gauge đồng nhất với thân để khi ghép không bị lệch độ dày vải.',
       'Ghép vai (khâu hoặc sl st nối 2 mép vai trước/sau), sau đó đặt tay áo vào đúng vị trí nách rồi khâu viền quanh — với form rộng, đường nách thường để thẳng thay vì vát cong như áo ôm.',
-      'Viền cổ, viền gấu tay và viền gấu thân hoàn thiện bằng kỹ thuật rib (front-post/back-post hoặc back loop only) để các mép co giãn nhẹ, ôm gọn hơn phần thân rộng phía trên.',
+      'Viền cổ, viền gấu tay và viền gấu thân hoàn thiện bằng kỹ thuật dc cọc trước/cọc sau thật (Dcfp: móc vòng quanh thân cọc từ phía trước; Dcbp: móc từ phía sau) xen kẽ đều — tạo các đường gân dọc co giãn y hệt rib dệt kim, ôm gọn hơn hẳn so với đan trơn hay chỉ move loop sau.',
     ],
-    why: 'App tách sweater thành các mảnh độc lập (thân trước/sau, 2 tay, các viền) và tính riêng độ rộng oversize theo số đo bạn nhập — bạn có thể thử nhiều mức độ rộng khác nhau chỉ bằng cách đổi 1 con số.',
+    why: 'App tách sweater thành các mảnh độc lập (thân trước/sau, 2 tay, các viền) và tính riêng độ rộng oversize theo số đo bạn nhập — bạn có thể thử nhiều mức độ rộng khác nhau chỉ bằng cách đổi 1 con số, đúng tinh thần "Cozy" (thoải mái, không ôm sát) của pattern gốc.',
     preset: { garment: 'ao', subtype: 'sweater', chartType: 'symbol', fields: { chest_circumference_cm: 100, body_length_cm: 60, sleeve_length_cm: 58 } },
   },
 ];
@@ -1611,7 +1674,7 @@ function renderGallery() {
   if (!grid) return;
   grid.innerHTML = GALLERY_PRESETS.map((item, idx) => `
     <div class="gallery-card" data-open-gallery="${idx}">
-      <div class="thumb">${item.icon}</div>
+      <div class="thumb"><img src="${item.photo}" alt="${item.photoAlt}" loading="lazy" /></div>
       <div class="body">
         <span class="tag">${item.tag}</span>
         <h3>${item.title}</h3>
@@ -1627,15 +1690,25 @@ renderGallery();
 function openGalleryArticle(idx) {
   const item = GALLERY_PRESETS[idx];
   if (!item) return;
+  const ref = item.reference;
   $('articleModalBody').innerHTML = `
+    <img class="article-hero-photo" src="${item.photo}" alt="${item.photoAlt}" />
     <span class="badge">${item.tag}</span>
     <h2>${item.icon} ${item.title}</h2>
-    <p class="article-summary">${item.desc}</p>
+    <p class="article-summary">${item.intro}</p>
+    <table class="ref-table">
+      <tbody>
+        <tr><th>Nguồn cảm hứng</th><td>${ref.name} — ${ref.source}</td></tr>
+        <tr><th>Độ khó</th><td>${ref.skill}</td></tr>
+        <tr><th>Gauge gốc</th><td>${ref.gauge}</td></tr>
+        <tr><th>Chất liệu gợi ý</th><td>${ref.materials}</td></tr>
+      </tbody>
+    </table>
     <h4>Cách dựng form (construction)</h4>
     <ol>${item.construction.map(s => `<li>${s}</li>`).join('')}</ol>
     <h4>Vì sao chọn cách làm này</h4>
     <p>${item.why}</p>
-    <small class="hint">Số mũi/hàng cụ thể sẽ được hệ thống tự tính riêng theo ảnh và số đo bạn nhập ở bước "Thử ngay" — không sao chép số liệu từ bất kỳ pattern có sẵn nào.</small>
+    <small class="hint">Số mũi/hàng cụ thể sẽ được hệ thống tự tính riêng theo ảnh và số đo bạn nhập ở bước "Thử ngay", dựa theo đúng tỉ lệ kỹ thuật của pattern tham khảo — không sao chép nguyên văn hướng dẫn từng hàng của tác giả gốc.</small>
     <div class="article-modal-actions">
       <button data-apply-preset="${idx}" data-close-article-first="1">Thử ngay — điền sẵn thông số →</button>
     </div>
