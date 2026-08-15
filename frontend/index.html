@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Crochet Chart Studio</title>
+<link rel="icon" type="image/jpeg" href="assets/logo.jpg" />
+<style>
+  :root {
+    --bg: #fdf3ff;
+    --surface: #ffffff;
+    --surface-alt: #fdf0f6;
+    --border: #f0d9ee;
+    --text: #2c2420;
+    --text-dim: #7a6f63;
+    --accent: #ff5da2;
+    --accent-dark: #d63384;
+    --accent-soft: #ffe1f0;
+    --success-bg: #e3fbe9;
+    --success-text: #1f8a45;
+    --info-bg: #e6f3ff;
+    --info-text: #0b63c5;
+    --warn-bg: #fff6e5;
+    --warn-text: #8a5a12;
+    --radius: 16px;
+    --shadow: 0 2px 4px rgba(214,51,132,0.06), 0 10px 30px rgba(255,93,162,0.12);
+    --grad-1: #ff5da2;
+    --grad-2: #ff8a5b;
+    --grad-3: #ffd23f;
+    --grad-4: #38d9a9;
+    --grad-5: #4fa8ff;
+    --grad-6: #a78bfa;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: var(--text);
+    background:
+      radial-gradient(circle at 8% 12%, rgba(255,93,162,0.16), transparent 42%),
+      radial-gradient(circle at 92% 18%, rgba(79,168,255,0.16), transparent 40%),
+      radial-gradient(circle at 15% 88%, rgba(56,217,169,0.16), transparent 40%),
+      radial-gradient(circle at 90% 85%, rgba(255,210,63,0.18), transparent 40%),
+      var(--bg);
+    background-attachment: fixed;
+    line-height: 1.5;
+  }
+
+  main {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  /* ---- Header / thanh menu chinh ---- */
+  header.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: linear-gradient(90deg, #fff0f7, #fff8ec, #eefcf5, #eef6ff);
+    border-bottom: 2px solid var(--accent-soft);
+    box-shadow: 0 2px 10px rgba(255,93,162,0.08);
+  }
+  .site-header-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0.85rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .site-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    letter-spacing: 0.01em;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #fff;
+    color: #fff;
+    font-size: 1.05rem;
+    box-shadow: 0 2px 8px rgba(255,93,162,0.35);
+    overflow: hidden;
+  }
+  .logo-mark img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .menu-toggle {
+    display: none;
+    margin: 0;
+    width: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 0.4rem 0.6rem;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  header.hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 2rem 1rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #fff0f7 0%, #fff8ea 35%, #ecfdf3 65%, #eef6ff 100%);
+    border: 1px solid var(--accent-soft);
+    position: relative;
+    overflow: hidden;
+  }
+  header.hero::before {
+    content: '🧶 🧵 🌈 🧶 🎀 🧵';
+    position: absolute;
+    top: -0.6rem;
+    left: 0;
+    right: 0;
+    font-size: 1.4rem;
+    opacity: 0.25;
+    letter-spacing: 1.2rem;
+    text-align: center;
+    pointer-events: none;
+  }
+  header.hero .badge {
+    display: inline-block;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: linear-gradient(90deg, var(--grad-1), var(--grad-2));
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 0.9rem;
+    font-weight: 700;
+  }
+  header.hero h1 {
+    font-size: 2.1rem;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+    background: linear-gradient(90deg, var(--grad-1), var(--grad-5));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  header.hero p {
+    color: var(--text-dim);
+    font-size: 0.98rem;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  .step-label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-5));
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    margin-right: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  section.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid;
+    border-image: linear-gradient(90deg, var(--grad-1), var(--grad-3), var(--grad-4), var(--grad-5)) 1;
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  section.card > h2 {
+    display: flex;
+    align-items: center;
+    font-size: 1.05rem;
+    margin: 0 0 1.1rem;
+  }
+
+  h1, h2, h3 { font-family: inherit; }
+  h3 { font-size: 1rem; margin: 0 0 0.6rem; color: var(--text); }
+
+  label { display: block; margin: 0.9rem 0 0.3rem; font-size: 0.86rem; font-weight: 600; color: var(--text); }
+  label:first-of-type { margin-top: 0; }
+  small.hint { display: block; color: var(--text-dim); font-size: 0.78rem; margin-top: 0.2rem; }
+
+  input, select {
+    width: 100%;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.92rem;
+    font-family: inherit;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+
+  .file-drop {
+    border: 2px dashed var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: center;
+    background: var(--surface-alt);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .file-drop:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .file-drop input[type=file] { display: none; }
+  .file-drop-label { font-size: 0.9rem; color: var(--text-dim); }
+  .file-drop-label strong { color: var(--accent-dark); }
+
+  #preview, #backPreview {
+    max-width: 180px;
+    max-height: 180px;
+    border-radius: 10px;
+    margin-top: 0.9rem;
+    display: block;
+    border: 1px solid var(--border);
+    object-fit: cover;
+  }
+
+  .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .row > div { flex: 1; min-width: 160px; }
+
+  button {
+    margin-top: 1.1rem;
+    padding: 0.7rem 1.4rem;
+    cursor: pointer;
+    background: linear-gradient(90deg, var(--grad-1), var(--grad-2));
+    color: #fff;
+    border: none;
+    border-radius: 9px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    font-family: inherit;
+    box-shadow: 0 3px 10px rgba(255,93,162,0.3);
+    transition: filter 0.15s, transform 0.1s;
+  }
+  button:hover { filter: brightness(1.08); }
+  button:active { transform: scale(0.98); }
+  button.secondary {
+    background: var(--surface);
+    color: var(--accent-dark);
+    border: 1px solid var(--accent);
+  }
+  button.secondary:hover { background: var(--accent-soft); }
+
+  #classifyResult {
+    font-size: 0.86rem;
+    color: var(--text-dim);
+    white-space: pre-wrap;
+    margin-top: 0.9rem;
+    padding: 0 0.1rem;
+  }
+  #classifyResult:empty { display: none; }
+
+  .score-bars { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.35rem; }
+  .score-row { display: flex; align-items: center; gap: 0.6rem; font-size: 0.8rem; }
+  .score-row .label { width: 4.5rem; flex-shrink: 0; color: var(--text-dim); }
+  .score-row .bar-track { flex: 1; background: var(--surface-alt); border-radius: 6px; height: 8px; overflow: hidden; }
+  .score-row .bar-fill { height: 100%; background: var(--accent); border-radius: 6px; }
+  .score-row .pct { width: 2.6rem; text-align: right; color: var(--text-dim); }
+
+  .pixel-grid {
+    display: grid;
+    gap: 0;
+    margin-top: 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    width: fit-content;
+  }
+  .pixel-grid div { width: 9px; height: 9px; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 0.8rem; margin-top: 0.6rem; }
+  td, th { border: 1px solid var(--border); padding: 5px 8px; text-align: left; }
+  th { background: var(--surface-alt); font-weight: 600; }
+
+  .hidden { display: none !important; }
+
+  pre {
+    white-space: pre-wrap;
+    background: var(--surface-alt);
+    padding: 0.9rem 1rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+    font-family: "SF Mono", "Menlo", monospace;
+    line-height: 1.55;
+  }
+
+  .notes, .assembly {
+    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+  }
+  .notes { color: var(--warn-text); background: var(--warn-bg); }
+  .assembly { color: var(--info-text); background: var(--info-bg); }
+  .assembly strong { display: block; margin-bottom: 0.4rem; }
+
+  .schematic-box {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .schematic-box h3 { text-align: left; }
+  .schematic-box svg { max-width: 100%; height: auto; }
+
+  .piece-card {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    margin: 1rem 0;
+    background: var(--surface-alt);
+  }
+  .piece-card .dims {
+    display: inline-block;
+    font-size: 0.74rem;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.1rem 0.55rem;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+    font-weight: 500;
+    vertical-align: middle;
+  }
+  .piece-card h3 { display: inline-block; margin: 0; }
+
+  details { margin-top: 0.6rem; }
+  summary {
+    cursor: pointer;
+    font-size: 0.84rem;
+    color: var(--accent-dark);
+    font-weight: 600;
+    padding: 0.3rem 0;
+  }
+
+  /* ---- Dang nhap / Dang ky ---- */
+  .auth-switch {
+    display: flex;
+    gap: 0.4rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.25rem;
+    margin-bottom: 1.2rem;
+  }
+  .auth-switch-btn {
+    flex: 1;
+    margin-top: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    font-weight: 600;
+    font-size: 0.86rem;
+    border-radius: 999px;
+    padding: 0.5rem 0.6rem;
+  }
+  .auth-switch-btn.active { background: var(--accent); color: #fff; }
+  .demo-account-box {
+    margin-top: 1.3rem;
+    padding: 0.9rem 1rem;
+    background: var(--info-bg);
+    color: var(--info-text);
+    border-radius: 10px;
+    font-size: 0.82rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  .demo-account-box code {
+    background: rgba(255,255,255,0.6);
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-size: 0.8rem;
+  }
+  .demo-account-box button { margin-top: 0.2rem; }
+  .pro-badge {
+    display: inline-block;
+    margin-left: 0.5rem;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    vertical-align: middle;
+  }
+
+  /* ---- Footer chuan: nhieu cot + dong copyright ---- */
+  footer.site-footer {
+    margin-top: 3rem;
+    background: var(--surface-alt);
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 2.5rem 1.25rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 2rem;
+  }
+  .footer-col h4 {
+    margin: 0 0 0.8rem;
+    font-size: 0.86rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .footer-col p {
+    color: var(--text-dim);
+    font-size: 0.86rem;
+    margin: 0 0 0.6rem;
+  }
+  .footer-col ul { list-style: none; margin: 0; padding: 0; }
+  .footer-col li { margin-bottom: 0.55rem; }
+  .footer-col a {
+    color: var(--text-dim);
+    text-decoration: none;
+    font-size: 0.86rem;
+    background: none;
+    padding: 0;
+  }
+  .footer-col a:hover { color: var(--accent-dark); text-decoration: underline; }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.7rem;
+  }
+  .footer-social { display: flex; gap: 0.6rem; margin-top: 0.4rem; }
+  .footer-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    font-size: 0.95rem;
+  }
+  .footer-social a:hover { background: var(--accent-soft); }
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    padding: 1rem 1.25rem;
+  }
+  @media (max-width: 640px) {
+    .footer-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+
+  /* ---- Dieu huong tab (menu trong header) ---- */
+  .main-nav {
+    display: flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+  }
+  .nav-btn {
+    margin-top: 0;
+    background: transparent;
+    color: var(--text-dim);
+    border: 1px solid transparent;
+    padding: 0.5rem 0.85rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    border-radius: 999px;
+  }
+  .nav-btn:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  .nav-btn.active { background: linear-gradient(90deg, var(--grad-1), var(--grad-5)); color: #fff; border-color: transparent; }
+  .tab-panel.hidden { display: none; }
+  @media (max-width: 720px) {
+    .menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+    .main-nav {
+      display: none;
+      width: 100%;
+      flex-direction: column;
+      gap: 0.2rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.5rem;
+    }
+    .main-nav.open { display: flex; }
+    .nav-btn { width: 100%; text-align: left; border-radius: 9px; }
+  }
+
+  /* ---- Trang Hoc moc len ---- */
+  .lesson-intro { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 1.2rem; }
+  .lesson-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .lesson-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.1rem;
+    cursor: pointer;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .lesson-card:hover { box-shadow: var(--shadow); border-color: var(--accent); transform: translateY(-2px); }
+  .lesson-card:nth-child(6n+1) { background: linear-gradient(145deg, #ffe1f0, #fdf0f6); }
+  .lesson-card:nth-child(6n+2) { background: linear-gradient(145deg, #fff2d6, #fdf0f6); }
+  .lesson-card:nth-child(6n+3) { background: linear-gradient(145deg, #e1fbec, #fdf0f6); }
+  .lesson-card:nth-child(6n+4) { background: linear-gradient(145deg, #e1f1ff, #fdf0f6); }
+  .lesson-card:nth-child(6n+5) { background: linear-gradient(145deg, #f1e7ff, #fdf0f6); }
+  .lesson-card:nth-child(6n+6) { background: linear-gradient(145deg, #ffe6da, #fdf0f6); }
+  .lesson-icon { font-size: 1.8rem; margin-bottom: 0.5rem; }
+  .lesson-card h3 { font-size: 0.94rem; margin: 0 0 0.4rem; }
+  .lesson-card p { font-size: 0.84rem; color: var(--text-dim); line-height: 1.55; margin: 0 0 0.6rem; }
+  .read-more-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent-dark);
+  }
+
+  /* ---- Modal bai viet chi tiet (Hoc moc len / Cong thuc doc la) ---- */
+  .article-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 22, 16, 0.5);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3vh 1rem;
+    z-index: 200;
+    overflow-y: auto;
+  }
+  .article-modal.hidden { display: none; }
+  .article-modal-inner {
+    background: var(--surface);
+    border-radius: 16px;
+    max-width: 640px;
+    width: 100%;
+    padding: 2rem 1.75rem 1.75rem;
+    position: relative;
+    box-shadow: var(--shadow);
+  }
+  .article-close {
+    position: absolute;
+    top: 0.7rem;
+    right: 0.8rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--text-dim);
+    width: auto;
+    margin: 0;
+    padding: 0.25rem 0.6rem;
+    border-radius: 8px;
+  }
+  .article-close:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  .article-body .badge { margin-bottom: 0.8rem; }
+  .article-body h2 { font-size: 1.3rem; margin: 0 0 0.6rem; padding-right: 1.5rem; }
+  .article-body .article-summary { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 1.2rem; }
+  .article-body h4 { font-size: 0.92rem; margin: 1.2rem 0 0.5rem; color: var(--accent-dark); }
+  .article-body ol, .article-body ul { font-size: 0.88rem; line-height: 1.7; color: var(--text); padding-left: 1.3rem; margin: 0; }
+  .article-body ol li, .article-body ul li { margin-bottom: 0.35rem; }
+  .article-modal-actions { margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .article-modal-actions button { margin-top: 0; }
+  .tips-list { font-size: 0.88rem; line-height: 1.7; color: var(--text); padding-left: 1.3rem; }
+  .cta-box {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background: var(--accent-soft);
+    border-radius: 12px;
+    text-align: center;
+  }
+  .cta-box p { margin: 0 0 0.6rem; font-weight: 600; color: var(--accent-dark); }
+
+  /* ---- Trang Cong thuc doc la ---- */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.1rem;
+  }
+  .gallery-card {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .gallery-card:hover { box-shadow: var(--shadow); border-color: var(--accent); transform: translateY(-2px); }
+  .gallery-card .body > .read-more-link { margin-bottom: 0.6rem; }
+  .gallery-card .thumb {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.6rem;
+    background: linear-gradient(135deg, var(--grad-1), var(--grad-3), var(--grad-4), var(--grad-5), var(--grad-6));
+    background-size: 300% 300%;
+  }
+  .gallery-card:nth-child(6n+1) .thumb { background-position: 0% 0%; }
+  .gallery-card:nth-child(6n+2) .thumb { background-position: 20% 40%; }
+  .gallery-card:nth-child(6n+3) .thumb { background-position: 40% 60%; }
+  .gallery-card:nth-child(6n+4) .thumb { background-position: 60% 20%; }
+  .gallery-card:nth-child(6n+5) .thumb { background-position: 80% 80%; }
+  .gallery-card:nth-child(6n+6) .thumb { background-position: 100% 100%; }
+  .gallery-card .body { padding: 1rem; flex: 1; display: flex; flex-direction: column; }
+  .gallery-card h3 { font-size: 0.92rem; margin: 0 0 0.4rem; }
+  .gallery-card p { font-size: 0.82rem; color: var(--text-dim); line-height: 1.5; flex: 1; margin: 0 0 0.8rem; }
+  .gallery-card .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: var(--accent-dark);
+    background: var(--accent-soft);
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+  }
+
+
+  /* ---- Quang cao ---- */
+  .ad-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ad-modal-inner {
+    position: relative;
+    width: min(90vw, 640px);
+  }
+  .ad-modal video {
+    width: 100%;
+    max-height: 80vh;
+    border-radius: 10px;
+    background: #000;
+    display: block;
+  }
+  .ad-badge {
+    position: absolute;
+    top: -0.9rem;
+    left: 0.2rem;
+    font-size: 0.72rem;
+    color: #cfcfcf;
+    background: rgba(0,0,0,0.6);
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+  }
+  .ad-countdown {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.6);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ad-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+    border: none;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    margin-top: 0;
+  }
+  .ad-close:hover { background: rgba(0,0,0,0.9); }
+
+  .ad-banner {
+    margin-top: 1.5rem;
+    padding: 0.6rem;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.8rem;
+  }
+  .ad-banner img {
+    width: 100%;
+    height: clamp(70px, 16vw, 140px);
+    object-fit: cover;
+    object-position: center;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+  }
+  .ad-banner .ad-banner-placeholder { display: none; padding: 0.5rem; }
+  .ad-banner.ad-banner-empty img { display: none; }
+  .ad-banner.ad-banner-empty .ad-banner-placeholder { display: block; }
+
+  /* ---- Trang Goi Pro (sac so) ---- */
+  #tab-pro .card {
+    background: linear-gradient(160deg, #fff0f7 0%, #fff8ea 30%, #ecfdf3 60%, #eef6ff 100%);
+    border: none;
+    position: relative;
+    overflow: hidden;
+  }
+  #tab-pro .card::before {
+    content: '✨';
+    position: absolute;
+    font-size: 6rem;
+    opacity: 0.12;
+    top: -1.5rem;
+    right: -1rem;
+  }
+
+  /* ---- Modal thanh toan MoMo (demo/fake) ---- */
+  .momo-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 22, 16, 0.55);
+    z-index: 300;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .momo-modal.hidden { display: none; }
+  .momo-modal-inner {
+    background: var(--surface);
+    border-radius: 20px;
+    max-width: 380px;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    text-align: center;
+  }
+  .momo-header {
+    background: linear-gradient(90deg, #a50064, #d82d8b);
+    color: #fff;
+    padding: 1.1rem 1rem;
+    font-weight: 800;
+    font-size: 1.05rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+  .momo-body { padding: 1.5rem 1.5rem 1.75rem; }
+  .momo-amount { font-size: 1.6rem; font-weight: 800; color: #a50064; margin: 0.3rem 0 0.9rem; }
+  .momo-qr {
+    width: 170px;
+    height: 170px;
+    margin: 0 auto 1rem;
+    border-radius: 12px;
+    border: 2px dashed #d82d8b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2rem;
+    background: repeating-conic-gradient(#f6e4ef 0% 25%, #ffffff 0% 50%) 0 0 / 20px 20px;
+  }
+  .momo-status { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.4rem; }
+  .momo-spinner {
+    width: 1.1rem;
+    height: 1.1rem;
+    border: 2px solid #f0c6de;
+    border-top-color: #a50064;
+    border-radius: 50%;
+    display: inline-block;
+    animation: momo-spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+  }
+  @keyframes momo-spin { to { transform: rotate(360deg); } }
+  .momo-success { color: var(--success-text); font-weight: 700; }
+  .momo-note { font-size: 0.74rem; color: var(--text-dim); margin-top: 1rem; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-logo" href="#" data-tab="generator">
+      <span class="logo-mark"><img src="assets/logo.jpg" alt="Lenly logo" /></span>
+      LENLY STUDIO
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Mở menu" aria-expanded="false">☰</button>
+    <nav class="main-nav" id="mainNav">
+      <button class="nav-btn active" data-tab="generator">✨ Tạo chart</button>
+      <button class="nav-btn" data-tab="learn">🎓 Học móc len</button>
+      <button class="nav-btn" data-tab="gallery">💡 Công thức độc lạ</button>
+      <button class="nav-btn" data-tab="pro">✨ Gói Pro</button>
+      <button class="nav-btn" data-tab="login">🔐 Đăng nhập</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<header class="hero">
+  <span class="badge">LENLY STUDIO</span>
+  <h1>Tạo chart móc len từ ảnh</h1>
+  <p>Upload ảnh sản phẩm, chọn kiểu và nhập số đo — hệ thống sinh chart + công thức móc chi tiết theo từng mảnh.</p>
+</header>
+
+<div id="tab-generator" class="tab-panel">
+
+<section class="card">
+  <h2><span class="step-label">1</span>Ảnh sản phẩm</h2>
+
+  <input id="apiBase" type="hidden" value="" />
+
+  <label>Ảnh (mũ / áo / váy / khăn)</label>
+  <small class="hint">Chụp rõ nét, ánh sáng đều, sản phẩm chiếm phần lớn khung hình để nhận diện chính xác nhất.</small>
+  <label class="file-drop" for="imageInput" style="margin-top:0.5rem;">
+    <input type="file" id="imageInput" accept="image/*" />
+    <span class="file-drop-label"><strong>Chọn ảnh</strong> hoặc kéo thả vào đây</span>
+  </label>
+  <img id="preview" class="hidden" />
+
+  <button id="classifyBtn">Nhận diện loại sản phẩm</button>
+  <div id="classifyResult"></div>
+
+  <div id="backImageGroup" class="hidden" style="margin-top: 1rem;">
+    <label>Ảnh mặt sau (tùy chọn — chỉ dùng cho Áo)</label>
+    <small class="hint">Upload thêm ảnh chụp mặt sau để pixel chart của "Thân sau" chính xác thay vì dùng màu ước lượng.</small>
+    <label class="file-drop" for="backImageInput" style="margin-top:0.5rem;">
+      <input type="file" id="backImageInput" accept="image/*" />
+      <span class="file-drop-label"><strong>Chọn ảnh mặt sau</strong> (không bắt buộc)</span>
+    </label>
+    <img id="backPreview" class="hidden" />
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="step-label">2</span>Loại sản phẩm &amp; số đo</h2>
+
+  <label for="garmentType">Loại sản phẩm</label>
+  <select id="garmentType">
+    <option value="khan">Khăn</option>
+    <option value="mu">Mũ</option>
+    <option value="ao">Áo</option>
+    <option value="vay">Váy</option>
+  </select>
+
+  <div id="subtype-mu" class="subtype-group hidden">
+    <label for="subtype_mu">Kiểu mũ</label>
+    <select id="subtype_mu">
+      <option value="beanie">Beanie (mũ ôm đầu)</option>
+      <option value="bucket">Bucket hat (mũ vành loe)</option>
+    </select>
+  </div>
+  <div id="subtype-ao" class="subtype-group hidden">
+    <label for="subtype_ao">Kiểu áo</label>
+    <select id="subtype_ao">
+      <option value="sweater">Sweater (áo chui đầu)</option>
+      <option value="cardigan">Cardigan (áo khoác cài nút)</option>
+    </select>
+  </div>
+  <div id="subtype-vay" class="subtype-group hidden">
+    <label for="subtype_vay">Kiểu váy</label>
+    <select id="subtype_vay">
+      <option value="don">Váy đơn (thẳng/xòe nhẹ)</option>
+      <option value="beo">Váy bèo (nhiều tầng)</option>
+    </select>
+  </div>
+
+  <label for="chartType">Kiểu chart</label>
+  <select id="chartType">
+    <option value="symbol">Symbol chart (ký hiệu mũi đan)</option>
+    <option value="pixel">Pixel/màu chart (C2C)</option>
+  </select>
+
+  <div class="row">
+    <div>
+      <label>Gauge — số mũi / 10cm</label>
+      <small class="hint">Đan thử mẫu 12x12cm rồi đếm số mũi trong 10cm.</small>
+      <input type="number" id="gaugeStitches" value="18" />
+    </div>
+    <div>
+      <label>Gauge — số hàng / 10cm</label>
+      <small class="hint">Đếm số hàng trong 10cm của mẫu đan thử.</small>
+      <input type="number" id="gaugeRows" value="20" />
+    </div>
+  </div>
+
+  <div id="fields-khan" class="measurement-group">
+    <div class="row">
+      <div><label>Rộng khăn (cm)</label><input type="number" id="scarf_width_cm" value="20" /></div>
+      <div><label>Dài khăn (cm)</label><input type="number" id="scarf_length_cm" value="150" /></div>
+    </div>
+  </div>
+
+  <div id="fields-mu" class="measurement-group hidden">
+    <div class="row">
+      <div><label>Chu vi đầu (cm)</label><input type="number" id="head_circumference_cm" value="55" /></div>
+      <div><label>Chiều cao mũ (cm)</label><input type="number" id="hat_height_cm" value="20" /></div>
+    </div>
+    <div class="row">
+      <div><label>Độ loe vành (cm) — chỉ cho bucket</label><input type="number" id="bucket_brim_width_cm" value="5" /></div>
+    </div>
+  </div>
+
+  <div id="fields-ao" class="measurement-group hidden">
+    <div class="row">
+      <div><label>Vòng ngực (cm)</label><input type="number" id="chest_circumference_cm" value="90" /></div>
+      <div><label>Dài thân áo (cm)</label><input type="number" id="body_length_cm" value="55" /></div>
+    </div>
+    <div class="row">
+      <div><label>Dài tay áo (cm)</label><input type="number" id="sleeve_length_cm" value="55" /></div>
+      <div><label>Vòng bắp tay (cm)</label><input type="number" id="sleeve_width_cm" placeholder="để trống sẽ tự ước lượng" /></div>
+    </div>
+  </div>
+
+  <div id="fields-vay" class="measurement-group hidden">
+    <div class="row">
+      <div><label>Vòng eo (cm)</label><input type="number" id="waist_circumference_cm" value="70" /></div>
+      <div><label>Vòng hông (cm) — chỉ cho váy đơn</label><input type="number" id="hip_circumference_cm" value="95" /></div>
+    </div>
+    <div class="row">
+      <div><label>Dài váy (cm)</label><input type="number" id="skirt_length_cm" value="45" /></div>
+      <div><label>Số tầng bèo — chỉ cho váy bèo</label><input type="number" id="ruffle_tiers" value="3" /></div>
+    </div>
+  </div>
+
+  <button id="generateBtn">Sinh chart + công thức</button>
+</section>
+
+<section id="resultSection" class="card hidden">
+  <h2><span class="step-label">3</span>Kết quả</h2>
+  <div id="materialsBox" class="schematic-box hidden">
+    <h3>Nguyên liệu (MATERIALS)</h3>
+    <ul id="materialsList" style="margin:0; padding-left:1.2rem; font-size:0.88rem; line-height:1.6;"></ul>
+  </div>
+  <div id="schematicBox" class="schematic-box hidden">
+    <h3>Sơ đồ kích thước</h3>
+    <div id="schematicSvg"></div>
+  </div>
+  <div id="notesBox" class="notes hidden"></div>
+  <details id="abbrevBox" class="hidden" style="margin-bottom: 1rem;">
+    <summary>Chú giải ký hiệu (ABBREVIATIONS)</summary>
+    <table id="abbrevTable" style="margin-top:0.5rem;"><tbody></tbody></table>
+  </details>
+  <div id="assemblyBox" class="assembly hidden"></div>
+
+  <div id="piecesContainer"></div>
+</section>
+
+</div><!-- /tab-generator -->
+
+<div id="tab-learn" class="tab-panel hidden">
+  <section class="card">
+    <h2>🎓 Học móc len cho người mới bắt đầu</h2>
+    <p class="lesson-intro">Chưa từng cầm kim móc bao giờ? Bắt đầu từ đây — nắm 5 mũi cơ bản này là đọc hiểu được hầu hết mọi chart trong app. Bấm vào từng thẻ để xem hướng dẫn chi tiết từng bước.</p>
+
+    <div class="lesson-grid" id="lessonGrid"></div>
+
+    <h3 style="margin-top:2rem;">Mẹo cho người mới</h3>
+    <ul class="tips-list">
+      <li>Bắt đầu với sợi cotton/acrylic màu sáng, dễ nhìn rõ từng mũi — tránh sợi lông xù (mohair) khi mới học.</li>
+      <li>Dùng kim móc cỡ 4-5mm để tập trước — dễ luồn sợi, không quá chật tay.</li>
+      <li>Đan thử khăn vuông đơn giản (chỉ toàn sc hoặc hdc) trước khi thử áo/mũ có tăng giảm mũi.</li>
+      <li>Luôn đếm lại số mũi cuối mỗi hàng — lệch 1 mũi ở hàng đầu sẽ lệch cả tấm vải về sau.</li>
+      <li>Đừng đan quá chặt tay lúc mới học — hơi lỏng tay một chút, đan quen sẽ tự đều lại.</li>
+    </ul>
+
+    <div class="cta-box">
+      <p>Đã nắm cơ bản? Thử tạo chart đầu tiên của bạn ngay.</p>
+      <button class="secondary" data-goto-tab="generator">Bắt đầu tạo chart →</button>
+    </div>
+  </section>
+</div>
+
+<div id="tab-gallery" class="tab-panel hidden">
+  <section class="card">
+    <h2>💡 Công thức độc lạ</h2>
+    <p class="lesson-intro">Vài gợi ý thiết kế thú vị được cộng đồng yêu thích — bấm "Thử ngay" để tự động điền sẵn thông số, bạn chỉ cần upload ảnh của mình.</p>
+
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+</div>
+
+<div id="tab-login" class="tab-panel hidden">
+  <section class="card" style="max-width:420px;margin-left:auto;margin-right:auto;">
+    <h2 id="authTitle">🔐 Đăng nhập</h2>
+    <p class="lesson-intro" id="loginIntro">Đăng nhập để lưu lịch sử chart và nâng cấp gói Pro. Tài khoản được lưu thật vào database ở backend.</p>
+
+    <div id="loginForm">
+      <div class="auth-switch">
+        <button type="button" class="auth-switch-btn active" data-auth-mode="login">Đăng nhập</button>
+        <button type="button" class="auth-switch-btn" data-auth-mode="register">Đăng ký</button>
+      </div>
+
+      <label for="authEmail">Email</label>
+      <input id="authEmail" type="email" placeholder="ban@vidu.com" />
+      <label for="authPassword">Mật khẩu</label>
+      <input id="authPassword" type="password" placeholder="••••••••" />
+
+      <button id="authSubmitBtn" style="margin-top:1.1rem;">Đăng nhập</button>
+      <div id="authError" class="hidden" style="color:var(--warn-text);background:var(--warn-bg);padding:0.6rem 0.8rem;border-radius:9px;font-size:0.84rem;margin-top:0.8rem;"></div>
+
+      <div class="demo-account-box">
+        <span>Tài khoản demo đã có sẵn gói Pro:</span>
+        <code>pro@lenly.vn / demo123</code>
+        <button type="button" id="fillDemoProBtn" class="secondary">Điền sẵn &amp; đăng nhập</button>
+      </div>
+    </div>
+
+    <div id="loggedInView" class="hidden">
+      <div class="info-box" style="background:var(--success-bg);color:var(--success-text);padding:0.9rem 1rem;border-radius:9px;margin-top:0.5rem;">
+        Đã đăng nhập với <strong id="loggedInEmail"></strong>
+        <span id="loggedInProBadge" class="pro-badge hidden">✨ PRO</span>
+      </div>
+      <button id="logoutBtn" class="secondary" style="margin-top:1rem;">Đăng xuất</button>
+    </div>
+  </section>
+</div>
+
+<div id="tab-pro" class="tab-panel hidden">
+  <section class="card" style="max-width:460px;margin-left:auto;margin-right:auto;text-align:center;">
+    <h2 style="justify-content:center;">✨ Gói Pro</h2>
+    <p class="lesson-intro">Mở khoá không giới hạn số lần sinh chart, ưu tiên xử lý ảnh nhanh hơn và hỗ trợ ưu tiên.</p>
+
+    <div style="font-size:2rem;font-weight:800;color:var(--accent-dark);margin:0.8rem 0 0.2rem;">150.000đ<span style="font-size:0.9rem;font-weight:600;color:var(--text-dim);">/tháng</span></div>
+    <small class="hint" style="margin-bottom:1rem;">Demo — bỏ qua bước thanh toán thật, bấm đăng ký là kích hoạt ngay.</small>
+
+    <ul style="text-align:left;color:var(--text-dim);font-size:0.9rem;line-height:1.8;margin:1.2rem 0;padding-left:1.2rem;">
+      <li>Không giới hạn số lần sinh chart / công thức</li>
+      <li>Ưu tiên xử lý ảnh tốc độ cao</li>
+      <li>Lưu lịch sử chart đã tạo</li>
+      <li>Hỗ trợ ưu tiên qua email</li>
+    </ul>
+
+    <div id="proStatusFree">
+      <button id="proSubscribeBtn">💗 Thanh toán qua MoMo — 150.000đ/tháng</button>
+      <small class="hint">Demo — mô phỏng giao diện thanh toán MoMo, không có thanh toán thật nào diễn ra.</small>
+    </div>
+    <div id="proStatusActive" class="hidden">
+      <div class="info-box" style="background:var(--success-bg);color:var(--success-text);padding:0.9rem 1rem;border-radius:9px;">
+        🎉 Tài khoản của bạn đã là Pro (demo)
+      </div>
+      <button id="proCancelBtn" class="secondary" style="margin-top:1rem;">Huỷ gói Pro (demo)</button>
+    </div>
+  </section>
+</div>
+
+<!-- Banner quang cao dang anh - dat file anh vao frontend/ads/banner.jpg (hoac .png),
+     sua duong dan href ben duoi thanh link muon dan nguoi xem toi khi ho bam vao anh -->
+<div class="ad-banner">
+  <a href="https://www.facebook.com/phungkhanhlinhofficial/posts/pfbid0WSYyxQ4TEMHPEntXTA7b6X7RgwRELdoqe4jdJwvK5ztRupm8X6kZ2BfHAJVbuNK7l" target="_blank" rel="noopener">
+    <img id="adBannerImg" src="ads/banner.jpg" alt="Quảng cáo" onerror="this.closest('.ad-banner').classList.add('ad-banner-empty')" />
+  </a>
+  <span class="ad-banner-placeholder">Quảng cáo · đặt ảnh banner vào frontend/ads/banner.jpg</span>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-col">
+      <div class="footer-brand"><span class="logo-mark" style="width:1.7rem;height:1.7rem;font-size:0.9rem;"><img src="assets/logo.jpg" alt="Lenly logo" /></span>LENLY STUDIO</div>
+      <p>Bạn khó móc, có chúng tôi lo. Sinh chart móc len và công thức chi tiết từ ảnh sản phẩm — nhanh, chính xác, dễ theo dõi.</p>
+      <div class="footer-social">
+        <a href="https://www.facebook.com/phungkhanhlinhofficial/" target="_blank" rel="noopener" title="Facebook">f</a>
+        <a href="mailto:hello@lenlystudio.com" title="Email">✉</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Điều hướng</h4>
+      <ul>
+        <li><a href="#" data-tab="generator">Tạo chart</a></li>
+        <li><a href="#" data-tab="learn">Học móc len</a></li>
+        <li><a href="#" data-tab="gallery">Công thức độc lạ</a></li>
+        <li><a href="#" data-tab="pro">Gói Pro</a></li>
+        <li><a href="#" data-tab="login">Đăng nhập</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Liên hệ</h4>
+      <ul>
+        <li><a href="mailto:hello@lenlystudio.com">hello@lenlystudio.com</a></li>
+        <li><a href="https://www.facebook.com/phungkhanhlinhofficial/" target="_blank" rel="noopener">Facebook Fanpage</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">© <span id="footerYear"></span> Lenly Studio. Demo giao diện — chưa kết nối thanh toán thật.</div>
+</footer>
+
+<!-- Modal quang cao video 15s - hien khi bam "Sinh chart + cong thuc".
+     Thay src cua the <video> ben duoi bang file video quang cao cua ban
+     (vd: dat file vao frontend/ads/ad-video.mp4 roi doi src="ads/ad-video.mp4"). -->
+<div id="adModal" class="ad-modal hidden">
+  <div class="ad-modal-inner">
+    <span class="ad-badge">Quảng cáo</span>
+    <video id="adVideo" src="ads/ad-video.mp4" playsinline></video>
+    <div id="adCountdown" class="ad-countdown">15</div>
+    <button id="adCloseBtn" class="ad-close hidden" title="Đóng quảng cáo">×</button>
+  </div>
+</div>
+
+<!-- Modal thanh toan MoMo (FAKE/DEMO) - tu dong bao thanh cong sau ~5 giay, khong ket noi MoMo that -->
+<div id="momoModal" class="momo-modal hidden">
+  <div class="momo-modal-inner">
+    <div class="momo-header"><span>💗</span> Thanh toán qua Ví MoMo</div>
+    <div class="momo-body">
+      <div class="momo-status">Quét mã để thanh toán</div>
+      <div class="momo-amount">150.000đ</div>
+      <div class="momo-qr">📱</div>
+      <div id="momoStatusText" class="momo-status"><span class="momo-spinner"></span>Đang chờ xác nhận thanh toán...</div>
+      <div class="momo-note">Đây là mô phỏng giao diện MoMo cho mục đích demo — không có giao dịch thật nào được thực hiện.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal bai viet chi tiet - dung chung cho "Hoc moc len" va "Cong thuc doc la" -->
+<div id="articleModal" class="article-modal hidden">
+  <div class="article-modal-inner">
+    <button id="articleCloseBtn" class="article-close" title="Đóng">×</button>
+    <div id="articleModalBody" class="article-body"></div>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let selectedImageFile = null;
+let backImageFile = null;
+
+const GARMENT_LABELS = { mu: 'Mũ', ao: 'Áo', vay: 'Váy', khan: 'Khăn' };
+
+// ==================== DIEU HUONG TAB ====================
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-panel').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+  const panel = document.getElementById('tab-' + tabName);
+  const btn = document.querySelector(`.nav-btn[data-tab="${tabName}"]`);
+  if (panel) panel.classList.remove('hidden');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.addEventListener('click', (e) => {
+  const tabLink = e.target.closest('[data-tab]');
+  if (tabLink) {
+    e.preventDefault();
+    switchTab(tabLink.dataset.tab);
+    $('mainNav')?.classList.remove('open');
+    $('menuToggle')?.setAttribute('aria-expanded', 'false');
+  }
+  const gotoBtn = e.target.closest('[data-goto-tab]');
+  if (gotoBtn) switchTab(gotoBtn.dataset.gotoTab);
+});
+
+$('menuToggle')?.addEventListener('click', () => {
+  const open = $('mainNav').classList.toggle('open');
+  $('menuToggle').setAttribute('aria-expanded', String(open));
+});
+
+const footerYearEl = $('footerYear');
+if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
+
+// ==================== HOC MOC LEN (bai viet chi tiet) ====================
+const LESSON_ARTICLES = [
+  {
+    icon: '🔗', tag: 'Cơ bản', title: 'Chain (ch) — Mũi bắt',
+    summary: 'Mũi nền tảng của mọi công trình móc len — chuỗi mắt xích làm hàng nền cho mọi mũi khác.',
+    steps: [
+      'Tạo 1 nút thòng lọng (slip knot) trên kim móc.',
+      'Quấn sợi từ sau ra trước qua đầu kim (yarn over).',
+      'Kéo sợi vừa quấn xuyên qua vòng đang có trên kim — bạn vừa tạo 1 mắt chain.',
+      'Lặp lại bước 2-3 cho đến khi đủ số mắt chain pattern yêu cầu.',
+    ],
+    mistakes: [
+      'Bắt chain quá chặt tay khiến hàng 1 rất khó móc kim vào — nên bắt lỏng tay hơn bình thường 1 chút.',
+      'Đếm nhầm mắt cuối cùng gần kim (nút thòng lọng ban đầu không tính là 1 mắt chain).',
+    ],
+    tips: 'Đếm lại chuỗi chain ít nhất 2 lần trước khi móc hàng 1 — sai số mắt chain ở bước này sẽ làm lệch toàn bộ chiều rộng thành phẩm.',
+  },
+  {
+    icon: '●', tag: 'Cơ bản', title: 'Single crochet (sc) — Mũi đơn',
+    summary: 'Mũi thấp nhất, chắc và dày — nền tảng cho khăn, mũ, thú bông (amigurumi).',
+    steps: [
+      'Đưa kim vào mũi tiếp theo (xuyên qua cả 2 sợi trên đỉnh mũi, trừ khi pattern ghi khác).',
+      'Quấn sợi qua kim, kéo 1 vòng lên qua mũi đó — lúc này có 2 vòng trên kim.',
+      'Quấn sợi qua kim lần nữa, kéo qua cả 2 vòng cùng lúc — hoàn tất 1 mũi sc.',
+      'Lặp lại cho hết hàng, sau đó chain 1 và lật vải để bắt đầu hàng mới.',
+    ],
+    mistakes: [
+      'Quên chain 1 (turning chain) trước khi lật hàng — hàng mới sẽ thấp hơn bình thường.',
+      'Bỏ sót mũi cuối hàng — luôn đếm số mũi sau mỗi hàng để phát hiện sớm.',
+    ],
+    tips: 'sc tạo vải dày, kín — rất hợp để móc phụ kiện cần độ bền như túi, đế giày, thú bông.',
+  },
+  {
+    icon: '◐', tag: 'Trung bình', title: 'Half double crochet (hdc) — Mũi nửa kép',
+    summary: 'Mũi cao trung bình, lên hàng nhanh hơn sc — hay dùng cho áo, chăn, khăn choàng dày dặn.',
+    steps: [
+      'Quấn sợi qua kim trước khi đưa kim vào mũi tiếp theo (lúc này có 2 vòng + mũi vừa lấy = 3 vòng trên kim).',
+      'Đưa kim vào mũi, quấn sợi, kéo 1 vòng lên — bây giờ có 3 vòng trên kim.',
+      'Quấn sợi qua kim lần nữa, kéo qua cả 3 vòng cùng lúc trong 1 lần kéo — hoàn tất 1 mũi hdc.',
+      'Chain 2 (turning chain chuẩn cho hdc) trước khi lật hàng mới.',
+    ],
+    mistakes: [
+      'Quên quấn sợi trước khi đưa kim vào mũi (nhầm với sc) — mũi sẽ ra sc chứ không phải hdc.',
+      'Chain turning quá ít (chain 1) khiến mép hàng bị kéo lệch, không thẳng.',
+    ],
+    tips: 'hdc là lựa chọn cân bằng giữa tốc độ đan và độ dày vải — phù hợp cho người mới muốn lên sản phẩm nhanh mà vải vẫn chắc.',
+  },
+  {
+    icon: '◑', tag: 'Trung bình', title: 'Double crochet (dc) — Mũi kép',
+    summary: 'Mũi cao, vải rủ mềm hơn — hay dùng cho váy, áo khoác, chân váy bồng.',
+    steps: [
+      'Quấn sợi qua kim, đưa kim vào mũi tiếp theo (4 vòng trên kim: 1 sợi quấn + mũi vừa lấy + 2 vòng cũ).',
+      'Quấn sợi, kéo qua 2 vòng đầu tiên trên kim — còn lại 2 vòng.',
+      'Quấn sợi lần nữa, kéo qua 2 vòng còn lại — hoàn tất 1 mũi dc.',
+      'Chain 3 (turning chain chuẩn cho dc, tính như 1 mũi dc đầu hàng) trước khi lật hàng.',
+    ],
+    mistakes: [
+      'Kéo qua cả 3-4 vòng cùng lúc thay vì làm 2 lần kéo riêng — mũi sẽ bị sai độ cao, chart lệch form.',
+      'Quên tính chain 3 đầu hàng là 1 mũi dc khi đếm tổng số mũi.',
+    ],
+    tips: 'dc lên hàng rất nhanh và vải rủ đẹp — nhưng vải thưa hơn sc/hdc nên không hợp làm phần chịu lực (quai túi, đế mũ).',
+  },
+  {
+    icon: '➖', tag: 'Kỹ thuật', title: 'Slip stitch (sl st) — Mũi trượt',
+    summary: 'Không tạo độ cao — dùng để nối vòng, di chuyển vị trí, hoặc làm viền mảnh gọn.',
+    steps: [
+      'Đưa kim vào mũi hoặc điểm cần nối.',
+      'Quấn sợi qua kim.',
+      'Kéo sợi qua đồng thời cả mũi vải và vòng đang có trên kim, trong 1 lần kéo duy nhất.',
+      'Lặp lại để nối liền 1 đường, hoặc dùng ngắt quãng để di chuyển kim tới vị trí mới mà không tăng độ cao.',
+    ],
+    mistakes: [
+      'Đan sl st quá chặt tay — vì không có độ giãn, sl st chặt sẽ làm viền/mép bị co rúm.',
+      'Dùng sl st thay cho sc ở phần cần độ dày (sl st gần như phẳng, không có "thân" mũi như sc).',
+    ],
+    tips: 'sl st là mũi lý tưởng để làm viền cổ áo (neckband), viền tay (cuff) mỏng gọn, ôm sát mà không làm vải dày cộm.',
+  },
+  {
+    icon: '📏', tag: 'Kiến thức nền', title: 'Gauge — Mật độ đan',
+    summary: 'Số mũi và số hàng bạn đan được trong 10×10cm — yếu tố quyết định sản phẩm có đúng size hay không.',
+    steps: [
+      'Đan 1 mẫu thử hình vuông khoảng 12x12cm bằng đúng sợi + kim + mũi bạn sẽ dùng cho sản phẩm thật.',
+      'Đặt mẫu thử phẳng trên bàn, không kéo giãn.',
+      'Dùng thước đo đúng 10cm theo chiều ngang, đếm số mũi trong khoảng đó (= gauge_stitches_per_10cm).',
+      'Đo tiếp 10cm theo chiều dọc, đếm số hàng (= gauge_rows_per_10cm).',
+      'Nhập 2 số này vào app ở bước "Số đo" — công thức sẽ tự tính lại số mũi/hàng cho đúng kích thước bạn nhập.',
+    ],
+    mistakes: [
+      'Bỏ qua bước đan mẫu thử vì "ngại mất thời gian" — đây là lỗi phổ biến nhất khiến sản phẩm bị sai size hoàn toàn.',
+      'Đo mẫu thử khi đang kéo căng vải bằng tay — luôn đo khi vải nằm tự nhiên, không kéo giãn.',
+    ],
+    tips: 'Mỗi người đan chặt/lỏng tay khác nhau dù dùng cùng loại kim và sợi — gauge của bạn có thể khác gauge ghi trên nhãn sợi, vì vậy luôn tự đo, đừng dùng số gauge có sẵn của người khác.',
+  },
+];
+
+function renderLessons() {
+  const grid = $('lessonGrid');
+  if (!grid) return;
+  grid.innerHTML = LESSON_ARTICLES.map((item, idx) => `
+    <div class="lesson-card" data-open-lesson="${idx}">
+      <div class="lesson-icon">${item.icon}</div>
+      <h3>${item.title}</h3>
+      <p>${item.summary}</p>
+      <span class="read-more-link">Xem hướng dẫn chi tiết →</span>
+    </div>
+  `).join('');
+}
+renderLessons();
+
+function openLessonArticle(idx) {
+  const item = LESSON_ARTICLES[idx];
+  if (!item) return;
+  $('articleModalBody').innerHTML = `
+    <span class="badge">${item.tag}</span>
+    <h2>${item.icon} ${item.title}</h2>
+    <p class="article-summary">${item.summary}</p>
+    <h4>Các bước thực hiện</h4>
+    <ol>${item.steps.map(s => `<li>${s}</li>`).join('')}</ol>
+    <h4>Lỗi thường gặp</h4>
+    <ul>${item.mistakes.map(s => `<li>${s}</li>`).join('')}</ul>
+    <h4>Mẹo</h4>
+    <p>${item.tips}</p>
+    <div class="article-modal-actions">
+      <button class="secondary" data-goto-tab="generator" id="articleGotoGenerator">Bắt đầu tạo chart →</button>
+    </div>
+  `;
+  openArticleModal();
+}
+
+// ==================== CONG THUC DOC LA (bai viet gioi thieu y tuong + preset) ====================
+// Luu y: day la bai viet gioi thieu Y TUONG THIET KE va KY THUAT o muc tong
+// quan (khong phai pattern chi tiet tung hang/tung mui kieu thuong mai). So
+// mui/hang thuc te se do he thong tinh rieng theo anh + so do nguoi dung
+// nhap khi bam "Thu ngay", khong lay tu bat ky pattern co san nao.
+const GALLERY_PRESETS = [
+  {
+    icon: '🧢', tag: 'Dễ làm', title: 'Bucket hat sọc ngang',
+    desc: 'Mũ vành loe phối 2-3 màu sọc ngang, hợp dạo phố mùa hè. Upload ảnh mũ sọc màu bạn thích để chart tự bắt màu theo hàng.',
+    construction: [
+      'Đỉnh mũ bắt đầu từ magic ring, mỗi vòng tăng đều mũi theo tỉ lệ chuẩn (vòng sau nhiều hơn vòng trước 1 lượng cố định) cho tới khi đỉnh phẳng đạt đúng chu vi đầu.',
+      'Chuyển sang đan thẳng, không tăng không giảm, nhiều vòng liên tiếp để tạo chiều cao phần thân ôm đầu.',
+      'Vào phần vành: đan 1 vòng tăng mũi chỉ vào move loop sau (back loop only) — kỹ thuật này tạo 1 đường "gấp nếp" tự nhiên, giúp vành bẻ ra ngoài rõ rệt thay vì tăng dần đều làm mũ phồng tròn.',
+      'Tiếp tục tăng mũi đều ở 1-2 vòng cuối để vành loe rộng ra, kết thúc bằng 1 vòng sl st bo viền cho mép vành gọn, không quăn mép.',
+    ],
+    why: 'App đọc đúng thứ tự và độ dày từng dải màu trong ảnh bạn upload, rồi tự quy đổi thành pixel chart theo hàng — nên bạn có thể thử với bất kỳ ảnh mũ sọc màu nào mình thích, không giới hạn ở 1 bảng màu cố định.',
+    preset: { garment: 'mu', subtype: 'bucket', chartType: 'pixel', fields: { head_circumference_cm: 56, hat_height_cm: 14, bucket_brim_width_cm: 6 } },
+  },
+  {
+    icon: '🧣', tag: 'Người mới', title: 'Khăn than dài viền tua rua',
+    desc: 'Khăn than cổ điển, đan xuyên suốt 1 màu hoặc phối màu theo ảnh — thêm tua rua 2 đầu cho sinh động.',
+    construction: [
+      'Khác với đa số món khác (đan theo bề ngang), khăn than thường được đan theo chiều dọc (lengthwise) — chain 1 hàng ngắn bằng đúng bề rộng khăn, rồi đan tiếp cho tới khi đạt chiều dài mong muốn.',
+      'Muốn có hiệu ứng caro/kẻ ô thay vì trơn 1 màu: đan xen kẽ 2-3 màu theo chu kỳ hàng cố định, giữ nguyên sợi màu không dùng bằng cách "giấu" nó dọc theo mép hàng (carry yarn) để không phải cắt nối liên tục.',
+      'Kết thúc, cắt sợi thành từng đoạn dài bằng nhau, gộp vài sợi lại, gập đôi và móc luồn qua mép 2 đầu khăn để tạo tua rua — cắt tỉa đều cho gọn.',
+    ],
+    why: 'Chọn "symbol chart" trong app để có hướng dẫn từng hàng bằng chữ, đúng chiều rộng/dài bạn nhập — đây là kỹ thuật đan lengthwise thật, không phải cách rút gọn.',
+    preset: { garment: 'khan', subtype: null, chartType: 'symbol', fields: { scarf_width_cm: 22, scarf_length_cm: 170 } },
+  },
+  {
+    icon: '🧥', tag: 'Nâng cao', title: 'Cardigan viền nẹp nút độc lạ',
+    desc: 'Áo khoác cardigan đủ bộ: thân, tay, viền cổ, viền tay, nẹp cài nút — dùng đúng kỹ thuật ribbing co giãn như pattern thương mại thật.',
+    construction: [
+      'Thân áo thường đan liền 1 mảnh (thân trước + thân sau nối liền 2 bên hông) từ gấu lên tới nách, sau đó mới "chia" ra để đan riêng vai và cổ.',
+      'Tới đoạn nách: chia thân thành 3 phần — vai trái, thân sau, vai phải — mỗi phần đan riêng, phần cổ áo giảm mũi dần đều mỗi hàng (2 mũi gộp thành 1 ở mép cổ) để tạo đường chữ V hoặc tròn tự nhiên.',
+      '2 tay áo đan phẳng riêng biệt, có thể phối màu theo dạng hoạ tiết lặp (nếu dùng pixel chart từ ảnh) rồi khâu/nối vào thân ở bước hoàn thiện.',
+      'Viền nẹp, viền cổ và viền tay dùng kỹ thuật đan vào "cọc trước/cọc sau" (front-post/back-post) xen kẽ — tạo các đường gân dọc co giãn thật sự như rib dệt kim, ôm sát hơn hẳn so với đan trơn thường.',
+      'Đơm nút và làm khuyết nút ở 2 bên nẹp sau khi đã ghép xong toàn bộ các mảnh.',
+    ],
+    why: 'App tự tách riêng từng mảnh (thân trái/phải/sau, 2 tay) kèm hướng dẫn ghép nối cuối cùng, đúng như cách 1 pattern thương mại thật được trình bày — phần nẹp cài nút và số lượng nút do bạn tự quyết theo sở thích.',
+    preset: { garment: 'ao', subtype: 'cardigan', chartType: 'symbol', fields: { chest_circumference_cm: 92, body_length_cm: 58, sleeve_length_cm: 56 } },
+  },
+  {
+    icon: '👗', tag: 'Dạo phố', title: 'Váy bèo gấu xòe',
+    desc: 'Váy đan liền 1 mảnh theo vòng tròn, gấu xòe bằng kỹ thuật shell-stitch tạo độ bồng bềnh tự nhiên.',
+    construction: [
+      'Thân váy đan liên tục theo vòng tròn (không phải đan thẳng rồi khâu ống) từ eo xuống, giữ nguyên số mũi đều theo số đo vòng eo/hông.',
+      'Tới đoạn gấu, chuyển sang mẫu lặp dạng vỏ sò (shell): móc nhiều mũi dc dồn vào cùng 1 điểm, bỏ qua vài mũi kế tiếp rồi lặp lại — chính khoảng "dồn rồi bỏ" này tạo ra các đường lượn sóng tự nhiên thay vì xòe phẳng đơn điệu.',
+      'Có thể lặp thêm 1-2 vòng shell chồng lên nhau (mũi dồn của vòng sau rơi vào đúng khoảng bỏ của vòng trước) để tăng thêm tầng bèo và độ bồng bềnh.',
+      'Muốn co giãn ôm vừa nhiều vòng eo, có thể đan thêm 1 hàng lỗ nhỏ ở vòng eo để luồn dây thun qua.',
+    ],
+    why: 'App tính số tầng bèo theo chiều dài váy bạn nhập, để bạn kiểm soát được độ xòe mong muốn — đây là kỹ thuật shell-stitch thật dùng trong các pattern váy móc thương mại.',
+    preset: { garment: 'vay', subtype: 'beo', chartType: 'symbol', fields: { waist_circumference_cm: 68, skirt_length_cm: 42, ruffle_tiers: 1 } },
+  },
+  {
+    icon: '👒', tag: 'Ấm áp', title: 'Beanie ôm đầu tối giản',
+    desc: 'Mũ len ôm đầu 1 màu trơn hoặc theo ảnh, đan nhanh gọn — quà tặng dễ thương cho mùa đông.',
+    construction: [
+      'Đỉnh mũ đan từ magic ring, tăng đều mũi mỗi vòng theo đúng tỉ lệ như bucket hat, cho tới khi đạt chu vi đầu mong muốn — khác biệt là dừng tăng ngay khi đạt chu vi, không có đoạn tăng riêng cho vành.',
+      'Đan thẳng liên tục không tăng giảm cho tới khi đạt chiều cao mong muốn, để phần thân ôm sát đầu tự nhiên nhờ độ co giãn của mũi đan.',
+      'Kết thúc bằng 1-2 vòng đan vào move loop sau (back loop only) hoặc kỹ thuật rib front-post/back-post ở mép cuối, giúp viền mũ bám chắc vào trán, không bị tuột khi đội.',
+    ],
+    why: 'Vì cấu trúc đơn giản và ít mảnh, đây thường là món đầu tiên người mới có thể hoàn thành trọn vẹn trong 1-2 buổi tối — phù hợp để luyện tay trước khi thử các món nhiều mảnh hơn như áo, váy.',
+    preset: { garment: 'mu', subtype: 'beanie', chartType: 'pixel', fields: { head_circumference_cm: 55, hat_height_cm: 20 } },
+  },
+  {
+    icon: '👚', tag: 'Basic', title: 'Sweater chui đầu form rộng',
+    desc: 'Áo sweater oversize dễ phối đồ, đủ các mảnh (thân, tay, viền cổ, viền tay, viền gấu) đúng cấu trúc pattern thương mại.',
+    construction: [
+      'Thân trước và thân sau đan riêng thành 2 mảnh chữ nhật phẳng — với form oversize, chiều rộng mỗi mảnh được cộng thêm khoảng dư (ease) so với đúng 1/2 số đo vòng ngực thật, thay vì đan sát khít như áo ôm body.',
+      '2 tay áo đan phẳng riêng, form ống đều từ nách xuống cổ tay (không thắt bo ở cổ tay như áo bó).',
+      'Ghép vai (khâu hoặc sl st nối 2 mép vai trước/sau), sau đó đặt tay áo vào đúng vị trí nách rồi khâu viền quanh — với form rộng, đường nách thường để thẳng thay vì vát cong như áo ôm.',
+      'Viền cổ, viền gấu tay và viền gấu thân hoàn thiện bằng kỹ thuật rib (front-post/back-post hoặc back loop only) để các mép co giãn nhẹ, ôm gọn hơn phần thân rộng phía trên.',
+    ],
+    why: 'App tách sweater thành các mảnh độc lập (thân trước/sau, 2 tay, các viền) và tính riêng độ rộng oversize theo số đo bạn nhập — bạn có thể thử nhiều mức độ rộng khác nhau chỉ bằng cách đổi 1 con số.',
+    preset: { garment: 'ao', subtype: 'sweater', chartType: 'symbol', fields: { chest_circumference_cm: 100, body_length_cm: 60, sleeve_length_cm: 58 } },
+  },
+];
+
+function renderGallery() {
+  const grid = $('galleryGrid');
+  if (!grid) return;
+  grid.innerHTML = GALLERY_PRESETS.map((item, idx) => `
+    <div class="gallery-card" data-open-gallery="${idx}">
+      <div class="thumb">${item.icon}</div>
+      <div class="body">
+        <span class="tag">${item.tag}</span>
+        <h3>${item.title}</h3>
+        <p>${item.desc}</p>
+        <span class="read-more-link">Xem bài viết chi tiết →</span>
+        <button class="secondary" data-apply-preset="${idx}">Thử ngay →</button>
+      </div>
+    </div>
+  `).join('');
+}
+renderGallery();
+
+function openGalleryArticle(idx) {
+  const item = GALLERY_PRESETS[idx];
+  if (!item) return;
+  $('articleModalBody').innerHTML = `
+    <span class="badge">${item.tag}</span>
+    <h2>${item.icon} ${item.title}</h2>
+    <p class="article-summary">${item.desc}</p>
+    <h4>Cách dựng form (construction)</h4>
+    <ol>${item.construction.map(s => `<li>${s}</li>`).join('')}</ol>
+    <h4>Vì sao chọn cách làm này</h4>
+    <p>${item.why}</p>
+    <small class="hint">Số mũi/hàng cụ thể sẽ được hệ thống tự tính riêng theo ảnh và số đo bạn nhập ở bước "Thử ngay" — không sao chép số liệu từ bất kỳ pattern có sẵn nào.</small>
+    <div class="article-modal-actions">
+      <button data-apply-preset="${idx}" data-close-article-first="1">Thử ngay — điền sẵn thông số →</button>
+    </div>
+  `;
+  openArticleModal();
+}
+
+function openArticleModal() {
+  $('articleModal').classList.remove('hidden');
+}
+function closeArticleModal() {
+  $('articleModal').classList.add('hidden');
+}
+$('articleCloseBtn')?.addEventListener('click', closeArticleModal);
+$('articleModal')?.addEventListener('click', (e) => {
+  if (e.target.id === 'articleModal') closeArticleModal();
+});
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeArticleModal();
+});
+
+document.addEventListener('click', (e) => {
+  const lessonCard = e.target.closest('[data-open-lesson]');
+  if (lessonCard) { openLessonArticle(lessonCard.dataset.openLesson); return; }
+
+  const galleryCard = e.target.closest('[data-open-gallery]');
+  if (galleryCard && !e.target.closest('[data-apply-preset]')) {
+    openGalleryArticle(galleryCard.dataset.openGallery);
+    return;
+  }
+});
+
+document.addEventListener('click', (e) => {
+  const presetBtn = e.target.closest('[data-apply-preset]');
+  if (!presetBtn) return;
+  if (presetBtn.dataset.closeArticleFirst) closeArticleModal();
+  const item = GALLERY_PRESETS[presetBtn.dataset.applyPreset];
+  if (!item) return;
+
+  $('garmentType').value = item.preset.garment;
+  updateSubtypeVisibility();
+  if (item.preset.subtype) {
+    const subSelect = $('subtype_' + item.preset.garment);
+    if (subSelect) subSelect.value = item.preset.subtype;
+  }
+  $('chartType').value = item.preset.chartType;
+  for (const [fieldId, value] of Object.entries(item.preset.fields)) {
+    const el = $(fieldId);
+    if (el) el.value = value;
+  }
+  switchTab('generator');
+});
+
+// ==================== DANG NHAP / DANG KY (that, luu vao database SQLite o backend) ====================
+function apiBaseUrl() {
+  return window.location.protocol.startsWith('http')
+    ? window.location.origin
+    : 'http://127.0.0.1:8000';
+}
+
+function getToken() {
+  return localStorage.getItem('lenly_token');
+}
+function setToken(token) {
+  if (token) localStorage.setItem('lenly_token', token);
+  else localStorage.removeItem('lenly_token');
+}
+
+let currentUser = null; // { email, is_pro } hoac null neu chua dang nhap
+
+async function authFetch(path, options = {}) {
+  const headers = Object.assign({}, options.headers);
+  const token = getToken();
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  return fetch(apiBaseUrl() + path, Object.assign({}, options, { headers }));
+}
+
+async function refreshCurrentUser() {
+  const token = getToken();
+  if (!token) { currentUser = null; renderAuthUI(); return; }
+  try {
+    const res = await authFetch('/api/auth/me');
+    if (!res.ok) { setToken(null); currentUser = null; }
+    else currentUser = await res.json();
+  } catch {
+    currentUser = null;
+  }
+  renderAuthUI();
+}
+
+function renderAuthUI() {
+  const loggedIn = !!currentUser;
+  $('loginForm')?.classList.toggle('hidden', loggedIn);
+  $('loggedInView')?.classList.toggle('hidden', !loggedIn);
+  if (loggedIn) {
+    $('loggedInEmail').textContent = currentUser.email;
+    $('loggedInProBadge')?.classList.toggle('hidden', !currentUser.is_pro);
+  }
+  renderProState();
+}
+
+let authMode = 'login';
+document.querySelectorAll('.auth-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    authMode = btn.dataset.authMode;
+    document.querySelectorAll('.auth-switch-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $('authSubmitBtn').textContent = authMode === 'login' ? 'Đăng nhập' : 'Đăng ký';
+    $('authTitle').textContent = authMode === 'login' ? '🔐 Đăng nhập' : '📝 Đăng ký';
+    $('authError')?.classList.add('hidden');
+  });
+});
+
+function showAuthError(message) {
+  const box = $('authError');
+  if (!box) return;
+  box.textContent = message;
+  box.classList.remove('hidden');
+}
+
+$('authSubmitBtn')?.addEventListener('click', async () => {
+  const email = $('authEmail').value.trim();
+  const password = $('authPassword').value;
+  $('authError')?.classList.add('hidden');
+  if (!email || !password) { showAuthError('Nhập đầy đủ email và mật khẩu.'); return; }
+
+  const btn = $('authSubmitBtn');
+  const original = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Đang xử lý...';
+  try {
+    const path = authMode === 'login' ? '/api/auth/login' : '/api/auth/register';
+    const res = await fetch(apiBaseUrl() + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.detail || 'Lỗi không xác định');
+    setToken(data.token);
+    currentUser = { email: data.email, is_pro: data.is_pro };
+    renderAuthUI();
+  } catch (err) {
+    showAuthError(err.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = original;
+  }
+});
+
+$('fillDemoProBtn')?.addEventListener('click', async () => {
+  $('authEmail').value = 'pro@lenly.vn';
+  $('authPassword').value = 'demo123';
+  authMode = 'login';
+  document.querySelectorAll('.auth-switch-btn').forEach(b => b.classList.toggle('active', b.dataset.authMode === 'login'));
+  $('authSubmitBtn').textContent = 'Đăng nhập';
+  $('authTitle').textContent = '🔐 Đăng nhập';
+  $('authSubmitBtn')?.click();
+});
+
+$('logoutBtn')?.addEventListener('click', async () => {
+  await authFetch('/api/auth/logout', { method: 'POST' }).catch(() => {});
+  setToken(null);
+  currentUser = null;
+  renderAuthUI();
+});
+
+// ==================== GOI PRO (demo, bo qua thanh toan that nhung trang thai luu that trong DB) ====================
+function renderProState() {
+  const active = !!(currentUser && currentUser.is_pro);
+  $('proStatusFree')?.classList.toggle('hidden', active);
+  $('proStatusActive')?.classList.toggle('hidden', !active);
+}
+
+const MOMO_FAKE_DELAY_MS = 5000;
+
+function showMomoModal() {
+  const modal = $('momoModal');
+  const statusText = $('momoStatusText');
+  statusText.innerHTML = '<span class="momo-spinner"></span>Đang chờ xác nhận thanh toán...';
+  modal.classList.remove('hidden');
+}
+function hideMomoModal() {
+  $('momoModal').classList.add('hidden');
+}
+
+$('proSubscribeBtn')?.addEventListener('click', async () => {
+  if (!currentUser) {
+    alert('Hãy đăng nhập (hoặc đăng ký) trước khi đăng ký gói Pro.');
+    switchTab('login');
+    return;
+  }
+
+  showMomoModal();
+
+  // FAKE thanh toan MoMo (demo) - khong ket noi cong thanh toan that, tu dong
+  // bao "thanh cong" sau MOMO_FAKE_DELAY_MS roi moi goi API kich hoat Pro that.
+  setTimeout(async () => {
+    try {
+      const res = await authFetch('/api/auth/subscribe-pro', { method: 'POST' });
+      if (!res.ok) {
+        $('momoStatusText').textContent = 'Không thể đăng ký gói Pro.';
+        setTimeout(hideMomoModal, 1500);
+        return;
+      }
+      const data = await res.json();
+      currentUser.is_pro = data.is_pro;
+      renderAuthUI();
+      $('momoStatusText').innerHTML = '<span class="momo-success">✅ Thanh toán thành công!</span>';
+      setTimeout(() => {
+        hideMomoModal();
+        alert('Đăng ký gói Pro thành công (demo — không có thanh toán thật). Từ giờ bạn sẽ không phải xem quảng cáo khi sinh chart.');
+      }, 1200);
+    } catch {
+      $('momoStatusText').textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
+      setTimeout(hideMomoModal, 1500);
+    }
+  }, MOMO_FAKE_DELAY_MS);
+});
+
+$('proCancelBtn')?.addEventListener('click', async () => {
+  const res = await authFetch('/api/auth/cancel-pro', { method: 'POST' });
+  if (!res.ok) { alert('Không thể huỷ gói Pro.'); return; }
+  const data = await res.json();
+  currentUser.is_pro = data.is_pro;
+  renderAuthUI();
+});
+
+refreshCurrentUser();
+
+// Neu trang duoc phuc vu qua http(s) tu chinh backend (deploy chung 1
+// service), goi API cung origin luon. Neu mo truc tiep bang file:// (dev
+// local, chua deploy), mac dinh tro ve backend localhost.
+$('apiBase').value = window.location.protocol.startsWith('http')
+  ? window.location.origin
+  : 'http://127.0.0.1:8000';
+
+$('imageInput').addEventListener('change', (e) => {
+  selectedImageFile = e.target.files[0] || null;
+  if (selectedImageFile) {
+    $('preview').src = URL.createObjectURL(selectedImageFile);
+    $('preview').classList.remove('hidden');
+  }
+});
+
+$('backImageInput').addEventListener('change', (e) => {
+  backImageFile = e.target.files[0] || null;
+  if (backImageFile) {
+    $('backPreview').src = URL.createObjectURL(backImageFile);
+    $('backPreview').classList.remove('hidden');
+  }
+});
+
+function updateSubtypeVisibility() {
+  document.querySelectorAll('.measurement-group').forEach(el => el.classList.add('hidden'));
+  document.querySelectorAll('.subtype-group').forEach(el => el.classList.add('hidden'));
+  const g = $('garmentType').value;
+  $('fields-' + g).classList.remove('hidden');
+  const sub = $('subtype-' + g);
+  if (sub) sub.classList.remove('hidden');
+  $('backImageGroup').classList.toggle('hidden', g !== 'ao');
+}
+$('garmentType').addEventListener('change', updateSubtypeVisibility);
+updateSubtypeVisibility();
+
+function currentSubtype() {
+  const g = $('garmentType').value;
+  const el = $('subtype_' + g);
+  return el ? el.value : null;
+}
+
+$('classifyBtn').addEventListener('click', async () => {
+  if (!selectedImageFile) { alert('Hãy chọn ảnh trước'); return; }
+  const form = new FormData();
+  form.append('image', selectedImageFile);
+  $('classifyResult').textContent = 'Đang nhận diện...';
+  try {
+    const res = await fetch($('apiBase').value + '/api/classify', { method: 'POST', body: form });
+    if (!res.ok) throw new Error((await res.json()).detail || 'Lỗi không xác định');
+    const data = await res.json();
+
+    const scores = (data.diagnostics && data.diagnostics.scores) || {};
+    const bars = Object.entries(scores)
+      .sort((a, b) => b[1] - a[1])
+      .map(([key, val]) => `
+        <div class="score-row">
+          <span class="label">${GARMENT_LABELS[key] || key}</span>
+          <span class="bar-track"><span class="bar-fill" style="width:${(val * 100).toFixed(0)}%"></span></span>
+          <span class="pct">${(val * 100).toFixed(0)}%</span>
+        </div>`).join('');
+
+    $('classifyResult').innerHTML =
+      `Kết quả: <strong>${GARMENT_LABELS[data.garment_type] || data.garment_type}</strong> ` +
+      `(độ tin cậy ${(data.confidence * 100).toFixed(0)}%)` +
+      `<div class="score-bars">${bars}</div>` +
+      `<small class="hint">Model: ${data.diagnostics.model || 'CLIP zero-shot'}. Bạn vẫn cần tự chọn kiểu (beanie/bucket, sweater/cardigan, váy đơn/bèo) ở bước 2.</small>`;
+
+    $('garmentType').value = data.garment_type;
+    updateSubtypeVisibility();
+  } catch (err) {
+    $('classifyResult').textContent = 'Lỗi: ' + err.message;
+  }
+});
+
+function collectMeasurements() {
+  const garment = $('garmentType').value;
+  const base = {
+    gauge_stitches_per_10cm: parseFloat($('gaugeStitches').value),
+    gauge_rows_per_10cm: parseFloat($('gaugeRows').value),
+  };
+  const fieldMap = {
+    khan: ['scarf_width_cm', 'scarf_length_cm'],
+    mu: ['head_circumference_cm', 'hat_height_cm', 'bucket_brim_width_cm'],
+    ao: ['chest_circumference_cm', 'body_length_cm', 'sleeve_length_cm', 'sleeve_width_cm'],
+    vay: ['waist_circumference_cm', 'hip_circumference_cm', 'skirt_length_cm', 'ruffle_tiers'],
+  };
+  for (const id of fieldMap[garment]) {
+    const el = $(id);
+    if (el.value !== '') base[id] = parseFloat(el.value);
+  }
+  return base;
+}
+
+function renderPixelChart(container, chart) {
+  const grid = document.createElement('div');
+  grid.className = 'pixel-grid';
+  grid.style.gridTemplateColumns = `repeat(${chart.cols}, 9px)`;
+  for (const row of chart.grid) {
+    for (const hex of row) {
+      const cell = document.createElement('div');
+      cell.style.background = hex;
+      grid.appendChild(cell);
+    }
+  }
+  container.appendChild(grid);
+}
+
+function renderSymbolChart(container, chart) {
+  const details = document.createElement('details');
+  const summary = document.createElement('summary');
+  summary.textContent = `Symbol chart (${chart.rounds.length} vòng/hàng) — bấm để xem chi tiết`;
+  details.appendChild(summary);
+  const table = document.createElement('table');
+  table.innerHTML = '<thead><tr><th>Vòng/Hàng</th><th>Hướng dẫn</th><th>Số mũi</th></tr></thead>';
+  const tbody = document.createElement('tbody');
+  for (const r of chart.rounds) {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${r.round_number}</td><td>${r.instruction}</td><td>${r.stitch_count}</td>`;
+    tbody.appendChild(tr);
+  }
+  table.appendChild(tbody);
+  details.appendChild(table);
+  container.appendChild(details);
+}
+
+function renderPieces(data) {
+  const container = $('piecesContainer');
+  container.innerHTML = '';
+  for (const piece of data.pieces) {
+    const card = document.createElement('div');
+    card.className = 'piece-card';
+    card.innerHTML = `<h3>${piece.name}</h3><span class="dims">${piece.width_cm}cm × ${piece.height_cm}cm</span>`;
+
+    const pre = document.createElement('pre');
+    pre.textContent = piece.written_pattern.join('\n');
+    card.appendChild(pre);
+
+    if (piece.symbol_chart) renderSymbolChart(card, piece.symbol_chart);
+    if (piece.pixel_chart) renderPixelChart(card, piece.pixel_chart);
+
+    container.appendChild(card);
+  }
+}
+
+const AD_DURATION_SECONDS = 15;
+
+function showAdThenGenerate() {
+  const modal = $('adModal');
+  const video = $('adVideo');
+  const countdown = $('adCountdown');
+  const closeBtn = $('adCloseBtn');
+
+  closeBtn.classList.add('hidden');
+  countdown.classList.remove('hidden');
+  modal.classList.remove('hidden');
+
+  video.currentTime = 0;
+  video.play().catch(() => {}); // video co the chua ton tai (chua chen file that) - khong chan luong quang cao
+
+  let remaining = AD_DURATION_SECONDS;
+  countdown.textContent = remaining;
+  const timer = setInterval(() => {
+    remaining -= 1;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      countdown.classList.add('hidden');
+      closeBtn.classList.remove('hidden');
+    } else {
+      countdown.textContent = remaining;
+    }
+  }, 1000);
+
+  function closeAd() {
+    clearInterval(timer);
+    video.pause();
+    modal.classList.add('hidden');
+    closeBtn.removeEventListener('click', closeAd);
+    runGenerate();
+  }
+  closeBtn.addEventListener('click', closeAd);
+}
+
+$('generateBtn').addEventListener('click', () => {
+  const chartType = $('chartType').value;
+  if (chartType === 'pixel' && !selectedImageFile) {
+    alert('Pixel chart cần ảnh — hãy chọn ảnh ở bước 1'); return;
+  }
+  const isProUser = !!(currentUser && currentUser.is_pro);
+  if (isProUser) runGenerate();
+  else showAdThenGenerate();
+});
+
+async function runGenerate() {
+  const garment = $('garmentType').value;
+  const chartType = $('chartType').value;
+  const subtype = currentSubtype();
+  if (chartType === 'pixel' && !selectedImageFile) {
+    alert('Pixel chart cần ảnh — hãy chọn ảnh ở bước 1'); return;
+  }
+  const form = new FormData();
+  form.append('garment_type', garment);
+  form.append('chart_type', chartType);
+  if (subtype) form.append('subtype', subtype);
+  form.append('measurements', JSON.stringify(collectMeasurements()));
+  if (selectedImageFile) form.append('image', selectedImageFile);
+  if (garment === 'ao' && backImageFile) form.append('back_image', backImageFile);
+
+  const btn = $('generateBtn');
+  const originalLabel = btn.textContent;
+  btn.textContent = 'Đang sinh chart...';
+  btn.disabled = true;
+
+  try {
+    const res = await fetch($('apiBase').value + '/api/generate', { method: 'POST', body: form });
+    if (!res.ok) throw new Error((await res.json()).detail || 'Lỗi không xác định');
+    const data = await res.json();
+
+    $('resultSection').classList.remove('hidden');
+
+    if (data.materials && data.materials.length) {
+      $('materialsList').innerHTML = data.materials.map(m => `<li>${m}</li>`).join('');
+      $('materialsBox').classList.remove('hidden');
+    } else {
+      $('materialsBox').classList.add('hidden');
+    }
+
+    if (data.schematic_svg) {
+      $('schematicSvg').innerHTML = data.schematic_svg;
+      $('schematicBox').classList.remove('hidden');
+    } else {
+      $('schematicBox').classList.add('hidden');
+    }
+
+    if (data.abbreviations && Object.keys(data.abbreviations).length) {
+      const tbody = $('abbrevTable').querySelector('tbody');
+      tbody.innerHTML = '';
+      for (const [abbr, meaning] of Object.entries(data.abbreviations)) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td><strong>${abbr}</strong></td><td>${meaning}</td>`;
+        tbody.appendChild(tr);
+      }
+      $('abbrevBox').classList.remove('hidden');
+    } else {
+      $('abbrevBox').classList.add('hidden');
+    }
+
+    if (data.notes && data.notes.length) {
+      $('notesBox').innerHTML = data.notes.join('<br>');
+      $('notesBox').classList.remove('hidden');
+    } else {
+      $('notesBox').classList.add('hidden');
+    }
+
+    if (data.assembly_instructions && data.assembly_instructions.length) {
+      $('assemblyBox').innerHTML = '<strong>Hướng dẫn ghép nối</strong>' + data.assembly_instructions.join('<br>');
+      $('assemblyBox').classList.remove('hidden');
+    } else {
+      $('assemblyBox').classList.add('hidden');
+    }
+
+    renderPieces(data);
+    $('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) {
+    alert('Lỗi: ' + err.message);
+  } finally {
+    btn.textContent = originalLabel;
+    btn.disabled = false;
+  }
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: crochet-chart-studio
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: standard
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHONUNBUFFERED
+        value: "1"
