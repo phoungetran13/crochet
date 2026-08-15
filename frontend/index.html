@@ -693,76 +693,75 @@
     color: var(--accent-dark);
   }
 
-  /* ---- Modal bai viet chi tiet (Hoc moc len / Cong thuc doc la) ---- */
-  .article-modal {
-    position: fixed;
-    inset: 0;
-    background: rgba(30, 22, 16, 0.5);
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 3vh 1rem;
-    z-index: 200;
-    overflow-y: auto;
-  }
-  .article-modal.hidden { display: none; }
-  .article-modal-inner {
-    background: var(--surface);
-    border-radius: 16px;
-    max-width: 640px;
-    width: 100%;
-    padding: 2rem 1.75rem 1.75rem;
-    position: relative;
-    box-shadow: var(--shadow);
-  }
-  .article-close {
-    position: absolute;
-    top: 0.7rem;
-    right: 0.8rem;
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    line-height: 1;
-    color: var(--text-dim);
-    width: auto;
-    margin: 0;
-    padding: 0.25rem 0.6rem;
-    border-radius: 8px;
-  }
-  .article-close:hover { background: var(--accent-soft); color: var(--accent-dark); }
+  /* ---- Trang bai viet chi tiet (Hoc moc len / Mau moc) - full page, khong con la modal ---- */
+  .article-back-btn { margin: 0 0 1rem; }
+  .post { max-width: 720px; margin: 0 auto; }
   .article-hero-photo {
-    width: calc(100% + 3.5rem);
-    margin: -2rem -1.75rem 1.2rem;
+    width: calc(100% + 3rem);
+    margin: -1.5rem -1.5rem 1.3rem;
     max-width: none;
-    height: 220px;
+    height: 260px;
     object-fit: cover;
     display: block;
-    border-radius: 16px 16px 0 0;
+    border-radius: 14px 14px 0 0;
   }
-  .article-body .badge { margin-bottom: 0.8rem; }
+  .post .badge { margin-bottom: 0.8rem; }
   .ref-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.82rem;
-    margin: 0.2rem 0 1.2rem;
+    font-size: 0.85rem;
+    margin: 0.6rem 0 1.4rem;
     background: var(--surface-alt);
     border-radius: 10px;
     overflow: hidden;
   }
   .ref-table th, .ref-table td {
-    padding: 0.5rem 0.8rem;
+    padding: 0.55rem 0.85rem;
     text-align: left;
     border-bottom: 1px solid var(--border);
   }
   .ref-table tr:last-child th, .ref-table tr:last-child td { border-bottom: none; }
-  .ref-table th { color: var(--text-dim); font-weight: 600; width: 34%; white-space: nowrap; }
-  .article-body h2 { font-size: 1.3rem; margin: 0 0 0.6rem; padding-right: 1.5rem; }
-  .article-body .article-summary { color: var(--text-dim); font-size: 0.92rem; margin-bottom: 1.2rem; }
-  .article-body h4 { font-size: 0.92rem; margin: 1.2rem 0 0.5rem; color: var(--accent-dark); }
-  .article-body ol, .article-body ul { font-size: 0.88rem; line-height: 1.7; color: var(--text); padding-left: 1.3rem; margin: 0; }
-  .article-body ol li, .article-body ul li { margin-bottom: 0.35rem; }
-  .article-modal-actions { margin-top: 1.5rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
-  .article-modal-actions button { margin-top: 0; }
+  .ref-table th { color: var(--text-dim); font-weight: 600; width: 32%; white-space: nowrap; }
+  .post h2 { font-size: 1.6rem; margin: 0 0 0.6rem; text-wrap: balance; }
+  .post .article-summary { color: var(--text-dim); font-size: 0.98rem; line-height: 1.7; margin-bottom: 1.3rem; }
+  .post h3.post-section { font-size: 1.05rem; margin: 1.8rem 0 0.7rem; color: var(--accent-dark); padding-top: 1.2rem; border-top: 1px solid var(--border); }
+  .post h3.post-section:first-of-type { border-top: none; padding-top: 0; }
+  .post h4.post-subsection { font-size: 0.92rem; margin: 1.1rem 0 0.4rem; color: var(--text); font-weight: 700; }
+  .post p, .post ol, .post ul { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+  .post ol, .post ul { padding-left: 1.3rem; margin: 0 0 0.8rem; }
+  .post ol li, .post ul li { margin-bottom: 0.55rem; }
+  .post .pattern-steps { list-style: none; padding-left: 0; counter-reset: step; }
+  .post .pattern-steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 2.2rem;
+    margin-bottom: 0.7rem;
+  }
+  .post .pattern-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 0.05rem;
+    width: 1.5rem; height: 1.5rem;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    color: var(--accent-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .post .source-note {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    background: var(--surface-alt);
+    border-left: 3px solid var(--accent);
+    padding: 0.7rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    margin: 1.4rem 0;
+  }
+  .article-page-actions { margin-top: 1.8rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .article-page-actions button { margin-top: 0; }
   .tips-list { font-size: 0.88rem; line-height: 1.7; color: var(--text); padding-left: 1.3rem; }
   .cta-box {
     margin-top: 1.5rem;
@@ -1296,6 +1295,11 @@
   </section>
 </div>
 
+<div id="tab-article" class="tab-panel hidden">
+  <button class="secondary article-back-btn" id="articleBackBtn">← Quay lại</button>
+  <article class="card post" id="articleContent"></article>
+</div>
+
 <!-- Banner quang cao dang anh - dat file anh vao frontend/ads/banner.jpg (hoac .png),
      sua duong dan href ben duoi thanh link muon dan nguoi xem toi khi ho bam vao anh -->
 <div class="ad-banner">
@@ -1368,14 +1372,6 @@
   </div>
 </div>
 
-<!-- Modal bai viet chi tiet - dung chung cho "Hoc moc len" va "Cong thuc doc la" -->
-<div id="articleModal" class="article-modal hidden">
-  <div class="article-modal-inner">
-    <button id="articleCloseBtn" class="article-close" title="Đóng">×</button>
-    <div id="articleModalBody" class="article-body"></div>
-  </div>
-</div>
-
 <script>
 const $ = (id) => document.getElementById(id);
 let selectedImageFile = null;
@@ -1393,6 +1389,14 @@ function switchTab(tabName) {
   if (btn) btn.classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
+let articleReturnTab = 'learn';
+function showArticlePage(returnTab) {
+  articleReturnTab = returnTab;
+  switchTab('article');
+}
+$('articleBackBtn')?.addEventListener('click', () => switchTab(articleReturnTab));
+
 document.addEventListener('click', (e) => {
   const tabLink = e.target.closest('[data-tab]');
   if (tabLink) {
@@ -1549,24 +1553,24 @@ renderLessons();
 function openLessonArticle(idx) {
   const item = LESSON_ARTICLES[idx];
   if (!item) return;
-  $('articleModalBody').innerHTML = `
+  $('articleContent').innerHTML = `
     <img class="article-hero-photo" src="${item.photo}" alt="${item.photoAlt}" />
     <span class="badge">${item.tag}</span>
     <h2>${item.icon} ${item.title}</h2>
     <p class="article-summary">${item.intro}</p>
-    <h4>Các bước thực hiện</h4>
+    <h3 class="post-section">Các bước thực hiện</h3>
     <ol>${item.steps.map(s => `<li>${s}</li>`).join('')}</ol>
-    <h4>Lỗi thường gặp</h4>
+    <h3 class="post-section">Lỗi thường gặp</h3>
     <ul>${item.mistakes.map(s => `<li>${s}</li>`).join('')}</ul>
-    <h4>Mẹo từ Lenly</h4>
+    <h3 class="post-section">Mẹo từ Lenly</h3>
     <p>${item.tips}</p>
-    <h4>Bài tập thực hành</h4>
+    <h3 class="post-section">Bài tập thực hành</h3>
     <p>${item.practice}</p>
-    <div class="article-modal-actions">
+    <div class="article-page-actions">
       <button class="secondary" data-goto-tab="generator" id="articleGotoGenerator">Bắt đầu tạo chart →</button>
     </div>
   `;
-  openArticleModal();
+  showArticlePage('learn');
 }
 
 // ==================== CONG THUC DOC LA (bai viet gioi thieu y tuong + preset) ====================
@@ -1589,6 +1593,51 @@ const GALLERY_PRESETS = [
     ],
     why: 'App đọc đúng thứ tự và độ dày từng dải màu trong ảnh bạn upload, rồi tự quy đổi thành pixel chart theo hàng — nên bạn có thể thử với bất kỳ ảnh mũ sọc màu nào mình thích, không giới hạn ở 1 bảng màu cố định. Cách tăng mũi (7-14-21-28...) trong công thức sinh ra ở app cũng dựa trên đúng tỉ lệ chuẩn này.',
     preset: { garment: 'mu', subtype: 'bucket', chartType: 'pixel', fields: { head_circumference_cm: 56, hat_height_cm: 14, bucket_brim_width_cm: 6 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Bernat® Softee® Cotton™ (4.2 oz/120 g; 254 yds/232 m) — Blue Waves (69025), 1 ball</li>
+        <li>Size U.S. E/4 (3.5 mm) crochet hook, hoặc size cần thiết để đạt đúng gauge</li>
+        <li>Yarn needle (kim khâu len). 2 stitch markers (ghim đánh dấu).</li>
+      </ul>
+      <h3 class="post-section">Số đo (Size)</h3>
+      <p>One size to fit head circumference 6/12 mos — 16" [40.5 cm].</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>Approx = Approximately · Beg = Begin(ning) · Ch = Chain(s) · PM = Place marker · Rep = Repeat · Rnd(s) = Round(s) · RS = Right side · Sc = Single crochet · Sl st(s) = Slip stitch(es) · St(s) = Stitch(es)</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <p><em>Notes: Hat is worked from top down. Crown of Hat is worked in a continuous spiral — do not join rnds of top unless otherwise stated; move marker up each rnd to maintain rnd count. Join rnds of Side and Brim with sl st to first st. Beg using magic loop method.</em></p>
+      <h4 class="post-subsection">Crown (Đỉnh mũ)</h4>
+      <ol class="pattern-steps">
+        <li><strong>1st rnd:</strong> Ch 1. 7 sc in ring. 7 sc.</li>
+        <li><strong>2nd rnd:</strong> 2 sc in each sc around. 14 sc.</li>
+        <li><strong>3rd rnd:</strong> *2 sc in next sc. 1 sc in next sc. Rep from * around. 21 sc.</li>
+        <li><strong>4th rnd:</strong> *1 sc in each of next 2 sc. 2 sc in next sc. Rep from * around. 28 sc.</li>
+        <li><strong>5th rnd:</strong> *2 sc in next sc. 1 sc in each of next 3 sc. Rep from * around. 35 sc.</li>
+        <li><strong>6th rnd:</strong> *1 sc in next sc. 2 sc in next sc. 1 sc in each of next 3 sc. Rep from * around. 42 sc.</li>
+        <li><strong>7th rnd:</strong> *2 sc in next sc. 1 sc in each of next 5 sc. Rep from * around. 49 sc.</li>
+        <li><strong>8th rnd:</strong> *1 sc in each of next 4 sc. 2 sc in next sc. 1 sc in each of next 2 sc. Rep from * around. 56 sc.</li>
+        <li><strong>9th rnd:</strong> *2 sc in next sc. 1 sc in each of next 7 sc. Rep from * around. 63 sc.</li>
+        <li><strong>10th rnd:</strong> *1 sc in each of next 3 sc. 2 sc in next sc. 1 sc in each of next 5 sc. Rep from * around. 70 sc.</li>
+        <li><strong>11th rnd:</strong> *2 sc in next sc. 1 sc in each of next 9 sc. Rep from * around. 77 sc.</li>
+        <li><strong>12th rnd:</strong> *1 sc in each of next 6 sc. 2 sc in next sc. 1 sc in each of next 4 sc. Rep from * around. 84 sc. Working in back loop only, join with sl st to first st. PM.</li>
+      </ol>
+      <h4 class="post-subsection">Side (Thân mũ)</h4>
+      <ol class="pattern-steps">
+        <li><strong>1st rnd:</strong> Ch 1. Working in back loops only, 1 sc in each sc around. Join.</li>
+        <li><strong>2nd rnd:</strong> Ch 1. Working in both loops, 1 sc in each sc around. Join. Rep last rnd until work from marker measures 2½" [6.5 cm].</li>
+      </ol>
+      <h4 class="post-subsection">Brim (Vành mũ)</h4>
+      <ol class="pattern-steps">
+        <li><strong>1st rnd:</strong> Ch 1. Working in front loops only, *2 sc in next sc. 1 sc in each of next 2 sc. Rep from * around. Join. 112 sc.</li>
+        <li><strong>2nd and 3rd rnds:</strong> Ch 1. Working in both loops, 1 sc in each sc around. Join.</li>
+        <li><strong>4th rnd:</strong> Ch 1. *2 sc in next sc. 1 sc in each of next 3 sc. Join. 140 sc.</li>
+        <li><strong>5th and 6th rnds:</strong> Ch 1. 1 sc in each sc around. Join.</li>
+        <li><strong>7th rnd:</strong> Ch 1. *2 sc in next sc. 1 sc in each of next 4 sc. Join. 168 sc.</li>
+        <li><strong>8th and 9th rnds:</strong> Ch 1. 1 sc in each sc around. Join.</li>
+        <li><strong>10th rnd:</strong> Ch 1. *2 sc in next sc. 1 sc in each of next 5 sc. Join. 196 sc.</li>
+        <li><strong>11th and 12th rnds:</strong> Ch 1. 1 sc in each sc around. Join. Fasten off.</li>
+      </ol>
+    `,
   },
   {
     icon: '🧣', tag: 'Người mới', title: 'Khăn than dài viền tua rua',
@@ -1604,6 +1653,36 @@ const GALLERY_PRESETS = [
     ],
     why: 'Chọn "symbol chart" trong app để có hướng dẫn từng hàng bằng chữ, đúng chiều rộng/dài bạn nhập — đây là kỹ thuật đan lengthwise thật từ pattern thương mại, không phải cách rút gọn cho dễ code.',
     preset: { garment: 'khan', subtype: null, chartType: 'symbol', fields: { scarf_width_cm: 22, scarf_length_cm: 170 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Patons® Classic Wool Bulky™ (3.5 oz/100 g; 78 yds/71 m) — Navy (89110), 3 balls</li>
+        <li>Size U.S. M/13 (9 mm) crochet hook, hoặc size cần thiết để đạt đúng gauge</li>
+      </ul>
+      <h3 class="post-section">Số đo (Measurements)</h3>
+      <p>Approx 6" [15 cm] wide x 60" [152.5 cm] long.</p>
+      <h3 class="post-section">Gauge</h3>
+      <p>9 sts and 10 rows = 6" [15 cm] in Seed Stitch Pat.</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>Approx = Approximately · Beg = Begin(ning) · Ch = Chain(s) · Pat = Pattern · Rep = Repeat(ing) · RS = Right Side · Sc = Single crochet · Sp(s) = Space(s) · St(s) = Stitch(es) · Tog = Together</p>
+      <h3 class="post-section">Mẫu Seed Stitch (multiple of 2 for foundation row)</h3>
+      <ol class="pattern-steps">
+        <li><strong>Foundation Row:</strong> (RS). 1 sc in 2nd ch from hook. *Ch 1. Skip next ch. 1 sc in next ch. Rep from * to end of chain. Turn.</li>
+        <li><strong>1st row:</strong> Ch 1. 1 sc in first st. 1 sc in next ch-1 sp. *Ch 1. Skip next sc. 1 sc in next ch-1 sp. Rep from * to last st. 1 sc in last st. Turn.</li>
+        <li><strong>2nd row:</strong> Ch 1. 1 sc in first st. *Ch 1. Skip next sc. 1 sc in next ch-1 sp. Rep from * to last st. Ch 1. 1 sc in last st. Turn.</li>
+      </ol>
+      <p>Rep 1st and 2nd rows to form Seed Stitch Pat.</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <p><em>Note: Scarf is worked lengthwise.</em></p>
+      <ol class="pattern-steps">
+        <li>Ch 140. Work in Seed Stitch Pat until Scarf from beg measures approx 6" [15 cm]. Fasten off.</li>
+      </ol>
+      <h4 class="post-subsection">Fringe (Tua rua)</h4>
+      <ol class="pattern-steps">
+        <li>Cut 14" [35.5 cm] lengths of yarn.</li>
+        <li>Taking 3 strands tog, knot into fringe evenly across ends of Scarf. Trim fringe evenly.</li>
+      </ol>
+    `,
   },
   {
     icon: '🧥', tag: 'Nâng cao', title: 'Cardigan viền nẹp nút độc lạ',
@@ -1620,6 +1699,72 @@ const GALLERY_PRESETS = [
     ],
     why: 'App tự tách riêng từng mảnh (thân trái/phải/sau, 2 tay) kèm hướng dẫn ghép nối cuối cùng, đúng như cách pattern Simply Perfect Cardigan thật được trình bày — phần nẹp cài nút và số lượng nút do bạn tự quyết theo sở thích, còn tỉ lệ tăng giảm mũi ở nách/cổ áp dụng đúng logic sc2tog như pattern gốc.',
     preset: { garment: 'ao', subtype: 'cardigan', chartType: 'symbol', fields: { chest_circumference_cm: 92, body_length_cm: 58, sleeve_length_cm: 56 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Caron® Simply Soft® Sunkissed™ (5 oz/141.7 g; 248 yds/227 m) — Plum Tonal (06005): 5 (6-7-8-9-10) balls tuỳ size</li>
+        <li>Size U.S. H/8 (5 mm) Susan Bates® Silvalume® crochet hook, hoặc size cần thiết để đạt đúng gauge</li>
+        <li>4 Susan Bates® stitch markers · 5 x ¾" [2 cm] buttons · Susan Bates® yarn needle</li>
+      </ul>
+      <h3 class="post-section">Số đo (Sizes)</h3>
+      <p>To fit chest: XS/S 28-34" · M 36-38" · L 40-42" · XL 44-46" · 2/3XL 48-54" · 4/5XL 56-62" [71-157.5 cm].<br>
+      Finished chest: XS/S 37" · M 40½" · L 44½" · XL 49" · 2/3XL 55" · 4/5XL 63" [94-160 cm].</p>
+      <h3 class="post-section">Gauge</h3>
+      <p>13 sts and 11 rows = 4" [10 cm] in pattern.</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>Alt = Alternate · Beg = Beginning · Ch = Chain(s) · Cont = Continue(ity) · Dc = Double crochet · Dec = Decrease(ing) · Inc = Increase(ing) · Pat = Pattern · Rem = Remain(ing) · Rep = Repeat · RS = Right side · Sc = Single crochet · Scbl = Single crochet in back loop only · Sc2tog = Draw up a loop in each of next 2 stitches. Yoh and draw through all loops on hook · Sl st = Slip stitch · Sp(s) = Space(s) · St(s) = Stitch(es) · WS = Wrong side · Yoh = Yarn over hook</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <p><em>The instructions are written for XS/S. If changes are necessary for larger size(s) the instructions will be written XS/S (M-L-XL-2/3XL-4/5XL). Numbers for each size are shown in the same color throughout the pattern. When only one number is given in black, it applies to all sizes.</em></p>
+
+      <h4 class="post-subsection">BACK</h4>
+      <ol class="pattern-steps">
+        <li><strong>Ribbing:</strong> Ch 10. 1st row: (RS). 1 sc in 2nd ch from hook. 1 sc in each ch to end of chain. Turn. 9 sc. 2nd row: Ch 1. 1 scbl in each st to end of row. Turn. Rep last row until Ribbing (when slightly stretched) measures 18½ (20¼-22¼-24½-27½-31½)" [47-80 cm], ending on a WS row. Do not fasten off. Do not turn.</li>
+        <li>Next row: (WS). Ch 1. Work 61 (67-73-81-91-103) sc evenly across long edge of Ribbing. Turn.</li>
+        <li><strong>Proceed in pat:</strong> 1st row (RS): Ch 1. 1 sc in first st. *1 dc in next st. 1 sc in next st. Rep from * to end of row. Turn. 2nd row: Ch 3 (counts as dc). *1 sc in next dc. 1 dc in next sc. Rep from * to end of row. Turn. 3rd row: Ch 1. 1 sc in first dc. *1 dc in next sc. 1 sc in next dc. Rep from * to end of row, working last sc in top of ch 3. Turn. Rep last 2 rows for pat until work from lower edge measures 16 (16-16-16½-16½-16½)" [40.5-42 cm], ending on a WS row. Fasten off.</li>
+        <li><strong>Shape armholes:</strong> Next row (RS): Skip first 6 (8-10-12-14-18) sts. Join yarn with sl st to next dc. Ch 1. 1 sc in same sp as last sl st. Pat across next 48 (50-52-56-62-66) sts. Turn. Leave rem sts unworked. Cont even in pat over 49 (51-53-57-63-67) sts until armhole measures 8½ (9-9-9½-10-10½)" [22.5-27.5 cm], ending on a WS row. Fasten off. Turn.</li>
+        <li><strong>Shape shoulders (Right):</strong> Next row (RS): Skip first 6 (6-8-8-10-10) sts. Join yarn with sl st to next dc. Ch 1. 1 sc in same sp as last sl st. Pat across next 36 (38-36-40-42-46) sts. Fasten off. Turn. Leave rem 6 (6-8-8-10-10) sts unworked.</li>
+        <li><strong>Shape shoulders (Left):</strong> Next row: Skip first 7 (7-6-7-8-9) sts. Join yarn with sl st to next st, beg in same sp as last sl st, pat across next 23 (25-25-27-27-29) sts. Fasten off.</li>
+      </ol>
+
+      <h4 class="post-subsection">LEFT FRONT</h4>
+      <ol class="pattern-steps">
+        <li>** <strong>Ribbing:</strong> Ch 10. 1st row (RS): 1 sc in 2nd ch from hook. 1 sc in each ch to end of chain. Turn. 9 sc. 2nd row: Ch 1. 1 scbl in each st to end of row. Turn. Rep last row until Ribbing measures 9 (10-11-12-13½-15½)" [23-39 cm], ending on a WS row. Do not fasten off. Do not turn.</li>
+        <li>Next row (WS): Ch 1. Work 31 (33-37-41-45-51) sc evenly across long edge of Ribbing. Turn.</li>
+        <li>Proceed in pat as for Back (1st–3rd rows) until work from lower edge measures 16 (16-16-16½-16½-16½)" [40.5-42 cm], ending on a WS row. ** Fasten off.</li>
+        <li><strong>Shape armhole:</strong> Next row (RS): Skip first 6 (8-10-12-14-18) sts. Join yarn with sl st to next dc. Ch 1. 1 sc in same sp as last sl st. Pat to end of row. Turn. Work 1 row even in pat.</li>
+        <li><strong>Shape neck:</strong> 1st row (RS): Ch 1. Pat across 23 (23-25-27-29-31) sts. Sc2tog (neck edge). Turn. Leave rem sts unworked. 2nd row: Ch 1. Sc2tog. Pat to end of row. Turn. 3rd row: Ch 1. Pat to last 2 sts. Sc2tog. Turn. Rep last 2 rows twice more. 18 (18-20-22-24-26) sts rem. Work 1 row even in pat. Dec 1 st at neck edge on next row and following alt rows 4 (4-5-6-5-7) times more. 13 (13-14-15-18-18) sts rem. Cont even in pat until armhole measures same length as Back to shoulder, ending on a WS row. Fasten off.</li>
+        <li><strong>Shape shoulder:</strong> Next row (RS): Skip first 6 (6-8-8-10-10) sts. Join yarn with sl st to next dc. Ch 1. 1 sc in same sp as last sl st. Pat to end of row. Fasten off.</li>
+      </ol>
+
+      <h4 class="post-subsection">RIGHT FRONT</h4>
+      <ol class="pattern-steps">
+        <li>Work from ** to ** as given for Left Front. Do not fasten off.</li>
+        <li><strong>Shape armhole:</strong> Next row (RS): Ch 1. Pat to last 6 (8-10-12-14-18) sts. Turn. Leave rem sts unworked. Work 1 row even in pat.</li>
+        <li><strong>Shape neck:</strong> Next row (RS): Ch 1. Sc2tog. Pat to end of row. Turn. Next row: Ch 3. Pat to last 2 sts. Sc2tog. Turn. Next row: Ch 1. Sc2tog. Pat to end of row. Turn. Rep last 2 rows twice more. 18 (18-20-22-24-26) sts rem. Work 1 row even in pat. Dec 1 st at neck edge on next row and following alt rows 4 (4-5-6-5-7) times more. 13 (13-14-15-18-18) sts rem. Cont even in pat until armhole measures same length as Back to shoulder, ending on a WS row.</li>
+        <li><strong>Shape shoulder:</strong> Next row (RS): Ch 1. Pat across first 6 (6-8-8-10-10) sts. Fasten off. Leave rem sts unworked.</li>
+      </ol>
+
+      <h4 class="post-subsection">SLEEVES</h4>
+      <ol class="pattern-steps">
+        <li><strong>Ribbing:</strong> Ch 10. 1st row (RS): 1 sc in 2nd ch from hook. 1 sc in each ch to end of chain. Turn. 9 sc. 2nd row: Ch 1. 1 scbl in each st to end of row. Turn. Rep last row until Ribbing measures 9½ (9½-10-10-10½-10½)" [24.5-26.5 cm], ending on a WS row. Do not fasten off. Do not turn.</li>
+        <li>Next row (WS): Ch 1. Work 31 (31-33-33-35-37) sc evenly across long edge of Ribbing. Turn.</li>
+        <li>Proceed in pat: 1st–3rd rows như Back. 4th row (inc row): Ch 1. (1 sc. 1 dc) in first sc. *1 sc in next dc. 1 dc in next sc. Rep from * to last 2 sts. 1 sc in next dc. (1 dc. 1 sc) in last sc. Turn. 5th row: Ch 3 (counts as dc). *1 sc in next dc. 1 dc in next sc. Rep from * to end of row. Turn. 6th row (inc row): Ch 3 (counts as dc). 1 sc in first dc. *1 dc in next sc. 1 sc in next dc. Rep from * to last 2 sts. 1 dc in next sc. (1 sc. 1 dc) in top of ch 3. Turn. Rep 3rd–6th rows 2 (3-3-4-6-7) times more. 43 (47-49-53-63-69) sts.</li>
+        <li><strong>Sizes XS/S, M, L, XL và 2/3XL:</strong> tiếp tục tăng mũi theo pat thêm vài lượt (xem chi tiết số liệu theo size ở bảng gauge) cho tới khi đạt 55 (59-59-61-65) sts.</li>
+        <li><strong>All sizes:</strong> Cont even in pat until work from lower edge measures 17 (17-17-16½-16-16)" [40.5-43 cm], ending on a WS row. Place markers at each end of last row. Work a further 6 (6-8-10-12-14) rows in pat. Fasten off.</li>
+      </ol>
+
+      <h4 class="post-subsection">FINISHING</h4>
+      <ol class="pattern-steps">
+        <li>Sew shoulder seams.</li>
+        <li><strong>Button and Buttonhole Band:</strong> 1st row (RS): Join yarn with sl st at lower edge of Right Front. Ch 1. Work 62 (62-62-65-65-65) sc evenly up front to first neck dec, 30 (32-32-34-34-36) sc up right front neck edge, 22 (24-24-26-26-28) sc across back neck edge, 30 (32-32-34-34-36) sc down left front neck edge to first neck dec and 62 (62-62-65-65-65) sc down left front neck edge. 206 (212-212-224-224-230) sc. Turn.</li>
+        <li>Place markers for 5 buttonholes on Right Front, having bottom buttonhole ½" [1 cm] above lower edge, top buttonhole ½" [1 cm] below first front dec and rem 3 buttonholes spaced evenly between.</li>
+        <li>2nd row: Ch 1. 1 sc in each sc to end of row. Turn.</li>
+        <li>3rd row: Ch 1. *1 sc in each sc to next buttonhole marker. Ch 2. Skip next 2 sc. Rep from * 4 times more. 1 sc in each sc to end of row. Turn.</li>
+        <li>4th row: Ch 1. 1 sc in each sc and 2 sc in each ch-2 sp to end of row. Turn.</li>
+        <li>5th row: Ch 1. 1 sc in each sc to end of row. Fasten off.</li>
+        <li>Sew in sleeves, placing rows above markers along unworked sts of Front and Back to form square armholes. Sew side and sleeve seams. Sew on buttons to correspond to buttonholes.</li>
+      </ol>
+    `,
   },
   {
     icon: '👗', tag: 'Dạo phố', title: 'Váy bèo gấu xòe',
@@ -1636,6 +1781,44 @@ const GALLERY_PRESETS = [
     ],
     why: 'App tính số tầng bèo theo chiều dài váy bạn nhập, để bạn kiểm soát được độ xòe mong muốn — nguyên lý "chùm trên khoảng trống rồi chuyển sang dc bắt chéo back-loop" chính là kỹ thuật thật trong pattern Ruffle Skirt, không phải shell-stitch rút gọn.',
     preset: { garment: 'vay', subtype: 'beo', chartType: 'symbol', fields: { waist_circumference_cm: 68, skirt_length_cm: 42, ruffle_tiers: 1 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Hook: 5mm hook / US H hook</li>
+        <li>Yarn: 4 skeins sợi worsted weight (4 ply US / 10 ply AU cho size trẻ em — người lớn cần nhiều hơn, phần lớn sợi dùng cho tầng bèo dưới). Bản gốc dùng 3 cuộn màu tím biến sắc (variegated purple) và 1 cuộn màu trắng.</li>
+        <li>Dây thun (elastic band) để luồn vòng eo, và thước dây.</li>
+      </ul>
+      <h3 class="post-section">Chain khởi đầu &amp; Gauge</h3>
+      <p>Vì mỗi người móc chặt/lỏng tay khác nhau, tác giả khuyên không nên chain đúng số như bản gốc mà hãy tự đo: chain 1 số chia hết cho 3 rồi cộng 1 (số +1 vì phải chain thêm 1 để móc vào mắt chain thứ 2 tính từ kim, mũi này sẽ mất ngay sau đó), đo vòng quanh phần hông lớn nhất — thoải mái, không quá chật. Gauge cho phần cluster: 6 sts = 4cm (1½ inch).</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>ch = Chain · sl st = Slip Stitch · st = Stitch · sk = Skip · SC = Single Crochet · DC = Double Crochet</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <ol class="pattern-steps">
+        <li><strong>Bắt đầu:</strong> Sl st to connect to first ch to form a ring, make sure the chain is not twisted. Now using the top of the chain only, sc in all sts around.</li>
+      </ol>
+      <h4 class="post-subsection">Round 1 — Cluster stitch</h4>
+      <p>Clusters are worked in 3 stitches total:</p>
+      <ol class="pattern-steps">
+        <li><strong>Step 1:</strong> YO, go in through first stitch and draw up a loop, YO, pull through two loops only.</li>
+        <li><strong>Step 2:</strong> YO, go in through same stitch and draw up a loop, YO and pull through two loops only.</li>
+        <li><strong>Steps 3 &amp; 4:</strong> YO go in through next stitch and repeat steps one and two — 5 loops on hook.</li>
+        <li><strong>Steps 5 &amp; 6:</strong> Using the third and final stitch, repeat steps one and two again — 7 loops on hook. Now pull through all loops, and chain 2. Repeat this for the whole round without skipping a stitch. If you come to the end with fewer than 3 sts left, do the cluster using 2 or 1 sts — it will right itself next round. Chain one (only on last cluster of row) and slip stitch into top of cluster.</li>
+      </ol>
+      <h4 class="post-subsection">Round 2 trở đi</h4>
+      <p>Work your second row of clusters the same, but instead of single crochets, work in the stitches above the clusters. Continue as many rows as it takes to cover the hips and start of the legs (bản gốc làm 10 hàng cho size trẻ em). Khi phần thân trên đã đạt kích thước mong muốn, chuyển sang phần bèo (ruffle) dưới đây — tác giả đổi màu sang trắng mỗi 5 hàng, còn lại dùng sợi biến màu.</p>
+      <h4 class="post-subsection">BOTTOM OF SKIRT — Round 1</h4>
+      <ol class="pattern-steps">
+        <li>Double crochet using the back loop only into the next three stitches.</li>
+        <li>Then using the front loops of the three double crochets you just made, work one dc in each front stitch, starting with the front of the first dc that you did. Then repeat for whole round.</li>
+      </ol>
+      <h4 class="post-subsection">Rounds 2–9</h4>
+      <p>Second row of ruffles is done the same as the first row, exception is that you skip 2 stitches before starting the next set of crossed dc's. Repeat Round 2 for the bottom of the skirt, for a total of 8 rows (đổi màu sang trắng mỗi 5 hàng nếu muốn phối màu như bản gốc).</p>
+      <h4 class="post-subsection">Round 10 (đổi sang màu viền)</h4>
+      <p>Repeat round 1 — do not skip a stitch. This will give you maximum ruffles at edge.</p>
+      <h4 class="post-subsection">Phần lưng eo — Rounds 1–6</h4>
+      <p>Pivot the skirt and work the waist: sc attachment and do 5 sc's then a decrease. Repeat for row (hoặc 7 sc trước khi giảm nếu muốn vòng eo rộng hơn). Repeat for a total of 6 rounds, sau đó luồn dây thun vào phần lưng eo vừa móc.</p>
+      <div class="source-note">Bản quyền pattern gốc thuộc về Meladora's Creations (© 2024, All Rights Reserved) — tác giả cho phép bán sản phẩm móc từ pattern này kèm dẫn nguồn về trang/kênh của tác giả.</div>
+    `,
   },
   {
     icon: '👒', tag: 'Ấm áp', title: 'Beanie plaid phối 3 màu',
@@ -1651,6 +1834,42 @@ const GALLERY_PRESETS = [
     ],
     why: 'Vì cấu trúc đơn giản và ít mảnh, đây thường là món đầu tiên người mới có thể hoàn thành trọn vẹn trong 1-2 buổi tối — phối màu theo khối như pattern Plaid Slouchy Beanie cũng là cách dễ nhất để thử phối màu mà không cần đọc pixel chart phức tạp.',
     preset: { garment: 'mu', subtype: 'beanie', chartType: 'pixel', fields: { head_circumference_cm: 55, hat_height_cm: 20 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Patons® Classic Wool DK Superwash™ (1.75 oz/50 g; 125 yds/114 m) — Contrast A Dark Grey Heather (12042), Contrast B Gold (12609), Contrast C Medium Grey Heather (12044): 1 ball mỗi màu cho cả 3 size</li>
+        <li>Size U.S. G/6 (4 mm) crochet hook, hoặc size cần thiết để đạt đúng gauge</li>
+      </ul>
+      <h3 class="post-section">Số đo (Sizes)</h3>
+      <p>To fit child 4 (6-8) years. Skill level: Intermediate.</p>
+      <h3 class="post-section">Gauge</h3>
+      <p>17 sc and 20 rows = 4" [10 cm].</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>Ch = Chain(s) · Hdc = Half double crochet · Hdc2tog = (Yoh and draw up a loop in next st) twice. Yoh and draw through all loops on hook · Rem = Remaining · Rep = Repeat · Rnd(s) = Round(s) · Sc = Single crochet · Sl st = Slip stitch · St(s) = Stitch(es) · Yoh = Yarn over hook</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <p><em>Note: Ch 2 at beg of rnd does not count as hdc. Khi đổi màu: work to last 2 loops on hook of first color, draw new color through last 2 loops and proceed. Carry color when not in use loosely across top of previous rnd, work sts around it to avoid stranding.</em></p>
+      <ol class="pattern-steps">
+        <li>With A, ch 64 (72-80). Join with sl st to first ch to form a ring, taking care not to twist ch.</li>
+        <li><strong>1st rnd:</strong> Ch 1. 1 sc in each ch around. Join with sl st to first sc. 64 (72-80) sc.</li>
+        <li><strong>2nd–5th rnds:</strong> Ch 1. 1 sc in each sc around. Join with sl st to first sc. Join B at end of 5th rnd.</li>
+        <li><strong>6th rnd:</strong> Ch 2. (With B, 1 hdc in each of next 4 sc. With C, 1 hdc in each of next 4 sc) 8 (9-10) times. Join B with sl st to first hdc.</li>
+        <li><strong>7th rnd:</strong> Ch 2. (With B, 1 hdc in each of next 4 hdc. With C, 1 hdc in each of next 4 hdc) 8 (9-10) times. Join C with sl st to first hdc.</li>
+        <li><strong>8th and 9th rnds:</strong> Ch 2. (With C, 1 hdc in each of next 4 hdc. With A, 1 hdc in each of next 4 hdc) 8 (9-10) times. Join B at end of 9th rnd with sl st to first hdc.</li>
+        <li><strong>10th rnd:</strong> As 7th rnd. Rep 7th–10th rnds 2 (3-4) time(s) more, then 7th–9th rnds once.</li>
+      </ol>
+      <h4 class="post-subsection">Crown shaping (Giảm đỉnh)</h4>
+      <ol class="pattern-steps">
+        <li><strong>1st rnd:</strong> Ch 2. *With B, 1 hdc in next hdc. Hdc2tog. 1 hdc in next hdc. With C, 1 hdc in next hdc. Hdc2tog. 1 hdc in next hdc. Rep from * 7 (8-9) times more. Join B with sl st to first hdc. 48 (54-60) sts.</li>
+        <li><strong>2nd rnd:</strong> Ch 2. (With B, 1 hdc in each of next 3 sts. With C, 1 hdc in each of next 3 sts) 8 (9-10) times. Join C with sl st to first hdc.</li>
+        <li><strong>3rd rnd:</strong> Ch 2. *With C, 1 hdc in next hdc. Hdc2tog. With A, 1 hdc in next hdc. Hdc2tog. Rep from * 7 (8-9) times more. Join C with sl st to first hdc. 32 (36-40) sts.</li>
+        <li><strong>4th rnd:</strong> Ch 2. (With C, 1 hdc in each of next 2 sts. With A, 1 hdc in each of next 2 sts) 8 (9-10) times. Join B with sl st to first hdc.</li>
+        <li><strong>5th rnd:</strong> Ch 2. *With B, hdc2tog. With C, hdc2tog. Rep from * 7 (8-9) times more. Join B with sl st to first hdc. 16 (18-20) sts.</li>
+        <li><strong>6th rnd:</strong> Ch 2. (With B, 1 hdc next st. With C, 1 hdc in next st) 8 (9-10) times. Join A with sl st to first hdc.</li>
+        <li><strong>7th rnd:</strong> With A, ch 2. (Hdc2tog) 8 (9-10) times. Join with sl st to first hdc. Fasten off leaving a long end. Draw end tightly through rem sts.</li>
+      </ol>
+      <h4 class="post-subsection">Finishing — viền reverse sc</h4>
+      <p>Working in rem loops of foundation ch, join MC with sl st to any loop. Ch 1. Working from left to right instead of right to left as usual, work 1 reverse sc in each loop around. Join with sl st to first sc. Fasten off.</p>
+    `,
   },
   {
     icon: '👚', tag: 'Basic', title: 'Sweater chui đầu form rộng',
@@ -1666,6 +1885,58 @@ const GALLERY_PRESETS = [
     ],
     why: 'App tách sweater thành các mảnh độc lập (thân trước/sau, 2 tay, các viền) và tính riêng độ rộng oversize theo số đo bạn nhập — bạn có thể thử nhiều mức độ rộng khác nhau chỉ bằng cách đổi 1 con số, đúng tinh thần "Cozy" (thoải mái, không ôm sát) của pattern gốc.',
     preset: { garment: 'ao', subtype: 'sweater', chartType: 'symbol', fields: { chest_circumference_cm: 100, body_length_cm: 60, sleeve_length_cm: 58 } },
+    fullPattern: `
+      <h3 class="post-section">Nguyên liệu (Materials)</h3>
+      <ul>
+        <li>Red Heart® Super Saver® Jazzy™ (8.8 oz/250 g; 424 yds/388 m) — Main Color Flower Fields (0010): 3-5 balls tuỳ size</li>
+        <li>Red Heart® Super Saver® (7 oz/198 g; 364 yds/333 m) — Contrast A Soft Navy (0387): 1 ball</li>
+        <li>Size U.S. I/9 [5.5 mm] và U.S. J/10 [6 mm] Susan Bates® Silvalume® crochet hooks (2 cỡ), yarn needle</li>
+      </ul>
+      <h3 class="post-section">Số đo (Sizes)</h3>
+      <p>To fit chest: XS/S 28-34" · M 36-38" · L 40-42" · XL 44-46" · 2/3XL 48-54" · 4/5XL 56-62" [71-157.5 cm].<br>
+      Finished chest: XS/S 42" · M 46" · L 50" · XL 54" · 2/3XL 58" · 4/5XL 64½" [107-164 cm].</p>
+      <h3 class="post-section">Gauge</h3>
+      <p>12 hdc and 9 rows = 4" [10 cm] with larger hook.</p>
+      <h3 class="post-section">Chú giải ký hiệu (Abbreviations)</h3>
+      <p>Approx = Approximately · Beg = Beginning · Ch = Chain(s) · Dc = Double crochet · Dcbp = Yoh, draw up a loop around post of next stitch at back of work (yoh, draw through 2 loops) twice · Dcfp = tương tự nhưng ở phía trước · Hdc = Half double crochet · Hdc2tog = (Yoh, draw up a loop in next st) twice. Yoh, draw through all loops · Inc = Increase · Pat = Pattern · Rep = Repeat · Rem = Remaining · Rnd(s) = Round(s) · RS/WS = Right/Wrong side · Sl st = Slip stitch · Sp(s) = Space(s) · St(s) = Stitch(es) · Yoh = Yarn over hook</p>
+      <h3 class="post-section">Hướng dẫn (Instructions)</h3>
+      <p><em>Note: Ch 2 at beg of row counts as hdc.</em></p>
+      <h4 class="post-subsection">BACK</h4>
+      <ol class="pattern-steps">
+        <li>** <strong>Ribbing:</strong> With A and smaller hook, ch 65 (71-77-83-89-99). Foundation row (RS): 1 dc in 4th ch from hook and each ch to end of chain. Turn. 63 (69-75-81-87-97) dc.</li>
+        <li>1st row (WS): Ch 2. *1 dcfp around next st. 1 dcbp around next st. Rep from * to last 2 sts. 1 dcfp around next st. 1 hdc into top of beg ch-2. Turn.</li>
+        <li>2nd row: Ch 2. *1 dcbp around next st. 1 dcfp around next st. Rep from * to last 2 sts. 1 dcbp around next st. 1 hdc into turning ch-2. Turn. Rep 1st and 2nd rows of Rib Pat until work from beg measures 2½" [6.5 cm], ending on a WS row.</li>
+        <li>Join MC. Break A. Change to larger hook. 1st row (RS): With MC, ch 2 (counts as hdc). 1 hdc in each st to end of row. Turn. 63 (69-75-81-87-97) hdc. Rep last row until work from beg measures 16½" [42 cm], ending on a WS row.</li>
+        <li><strong>Shape armholes:</strong> 1st row (RS): Sl st in each of first 9 (11-13-15-16-19) sts. Ch 2. 1 hdc in each st to last 8 (10-12-14-15-18) sts. Turn. Leave rem sts unworked. **</li>
+        <li>Cont working even on 47 (49-51-53-57-61) hdc until work from beg measures 25 (25½-26-26½-26½-27)" [63.5-68.5 cm], ending on a WS row.</li>
+        <li><strong>Right Back Shoulder Shaping:</strong> 1st row (RS): Ch 2. 1 hdc in each of next 11 (12-13-14-16-18) sts. Turn. Leave rem sts unworked. Cont on 12 (13-14-15-17-19) hdc. 2nd row: Ch 2. Hdc2tog. 1 hdc in each st to end of row. 11 (12-13-14-16-18) hdc rem. Fasten off.</li>
+        <li><strong>Left Back Shoulder Shaping:</strong> 1st row (RS): Skip center back 23 sts after Right Back Shoulder shaping. With larger hook, join MC with sl st in next st. Ch 2. 1 hdc in each st to end of row. Turn. 12 (13-14-15-17-19) hdc. 2nd row: Ch 2. 1 hdc in each st to last 2 sts. Hdc2tog. 11 (12-13-14-16-18) hdc rem. Fasten off.</li>
+      </ol>
+      <h4 class="post-subsection">FRONT</h4>
+      <ol class="pattern-steps">
+        <li>Work from ** to ** as given for Back. Cont working even on 47 (49-51-53-57-61) hdc until work from beg measures 22½ (23-23½-24-24-24½)" [57-62 cm], ending on a WS row.</li>
+        <li><strong>Left Front Shaping:</strong> 1st row (RS): Ch 2. 1 hdc in each of next 15 (16-17-18-20-22) sts. Turn. Leave rem sts unworked. Cont on 16 (17-18-19-21-23) hdc. 2nd row: Sl st in each of first 2 sts. Ch 2. 1 hdc in each st to end of row. Turn. 14 (15-16-17-19-21) hdc. 3rd row: Ch 2. 1 hdc in each st to last 2 sts. Turn. Leave rem sts unworked. 12 (13-14-15-17-19) hdc. 4th row: Ch 2. Hdc2tog. 1 hdc in each st to end of row. Turn. 11 (12-13-14-16-18) hdc. Work even in hdc until Front measures same length as Back to shoulders. Fasten off.</li>
+        <li><strong>Right Front Shaping:</strong> 1st row (RS): Skip center front 15 sts after Left Front shaping. With larger hook, join MC with sl st in next st. Ch 2. 1 hdc in each st to end of row. Turn. 16 (17-18-19-21-23) hdc. 2nd row: Ch 2. 1 hdc in each st to last 2 sts. Turn. Leave rem sts unworked. 14 (15-16-17-19-21) hdc. 3rd row: Sl st in each of first 2 sts. Ch 2. 1 hdc in each st to end of row. Turn. 12 (13-14-15-17-19) hdc. 4th row: Ch 2. 1 hdc in each st to last 2 sts. Hdc2tog. Turn. 11 (12-13-14-16-18) hdc. Work even in hdc until Front measures same length as Back to shoulders. Fasten off.</li>
+      </ol>
+      <h4 class="post-subsection">SLEEVES</h4>
+      <ol class="pattern-steps">
+        <li><strong>Cuff:</strong> With smaller hook and A, ch 33. 1st row (RS): 1 dc in 4th ch from hook and each ch to end of chain. Turn. 31 dc. Work even in Rib Pat as given for Back until work from beg measures 2½" [6.5 cm], ending on a WS row.</li>
+        <li>Join MC. Break A. Change to larger hook. 1st row (RS): With MC, ch 2. 1 hdc in each st to end of row. Turn.</li>
+        <li>2nd row: Ch 2. 1 hdc in each hdc to end of row. Turn.</li>
+        <li>3rd row (inc row): Ch 2. 1 hdc in first hdc (inc made). 1 hdc in each hdc to last hdc. 2 hdc in last hdc (inc made). Turn. 33 hdc.</li>
+        <li>4th row: Ch 2. 1 hdc in each hdc to end of row. Turn. Rep last 2 rows 7 (11-13-17-17-18) times more. 47 (55-59-67-67-69) hdc.</li>
+        <li><strong>Sizes XS/S, M và L:</strong> Next 2 rows đan thẳng, next row tăng 1 mũi mỗi đầu (inc), next 3 rows đan thẳng. Rep 4 rows này 4 (2-1) lần nữa. 57 (61-63) hdc.</li>
+        <li><strong>All sizes:</strong> Đan thẳng cho tới khi Sleeve từ đầu đo được 22½ (23½-23½-23½-23½-23½)" [57-60 cm]. Fasten off. Đặt marker ở 2 mép Sleeve cách đỉnh 3 (3½-4-4½-5½-6)" [7.5-15 cm].</li>
+      </ol>
+      <h4 class="post-subsection">FINISHING</h4>
+      <ol class="pattern-steps">
+        <li>With MC, sew shoulder seams. Sew in Sleeves, đặt mép Sleeve phía trên marker dọc theo các mũi nách chưa móc của Back/Front để tạo nách vuông. Sew side và sleeve seams, đổi sang màu A cho đường may Ribbing và Cuff.</li>
+        <li><strong>Neckband:</strong> 1st rnd (RS): With smaller hook, join A with sl st to neck edge of right shoulder seam. Ch 3 (counts as dc). Work 63 dc evenly spaced around neck edge. Join with sl st to top of ch-3. 64 dc.</li>
+        <li>2nd rnd: Ch 2 (counts as 1 dcbp). *1 dcfp around next st. 1 dcbp around next st. Rep from * to last st. 1 dcfp around next st. Join with sl st to top of ch-2. Rep last rnd for Rib Pat until neckband measures 1½" [4 cm]. Next rnd: Sl st in each st around. Fasten off.</li>
+        <li><strong>Bottom Edging Rnd (RS):</strong> With smaller hook, join A with sl st in first ch of foundation row at either side seam. Sl st in each ch around lower edge of Body Ribbing. Join with sl st in first st. Fasten off.</li>
+        <li><strong>Cuff Edging Rnd (RS):</strong> With smaller hook, join A with sl st in first ch of foundation row of Cuff. Sl st in each ch around Cuff. Join with sl st in first st. Fasten off.</li>
+      </ol>
+    `,
   },
 ];
 
@@ -1691,44 +1962,28 @@ function openGalleryArticle(idx) {
   const item = GALLERY_PRESETS[idx];
   if (!item) return;
   const ref = item.reference;
-  $('articleModalBody').innerHTML = `
+  $('articleContent').innerHTML = `
     <img class="article-hero-photo" src="${item.photo}" alt="${item.photoAlt}" />
     <span class="badge">${item.tag}</span>
     <h2>${item.icon} ${item.title}</h2>
     <p class="article-summary">${item.intro}</p>
     <table class="ref-table">
       <tbody>
-        <tr><th>Nguồn cảm hứng</th><td>${ref.name} — ${ref.source}</td></tr>
+        <tr><th>Nguồn pattern</th><td>${ref.name} — ${ref.source}</td></tr>
         <tr><th>Độ khó</th><td>${ref.skill}</td></tr>
-        <tr><th>Gauge gốc</th><td>${ref.gauge}</td></tr>
-        <tr><th>Chất liệu gợi ý</th><td>${ref.materials}</td></tr>
+        <tr><th>Gauge</th><td>${ref.gauge}</td></tr>
+        <tr><th>Chất liệu / dụng cụ</th><td>${ref.materials}</td></tr>
       </tbody>
     </table>
-    <h4>Cách dựng form (construction)</h4>
-    <ol>${item.construction.map(s => `<li>${s}</li>`).join('')}</ol>
-    <h4>Vì sao chọn cách làm này</h4>
-    <p>${item.why}</p>
-    <small class="hint">Số mũi/hàng cụ thể sẽ được hệ thống tự tính riêng theo ảnh và số đo bạn nhập ở bước "Thử ngay", dựa theo đúng tỉ lệ kỹ thuật của pattern tham khảo — không sao chép nguyên văn hướng dẫn từng hàng của tác giả gốc.</small>
-    <div class="article-modal-actions">
-      <button data-apply-preset="${idx}" data-close-article-first="1">Thử ngay — điền sẵn thông số →</button>
+    ${item.fullPattern}
+    <div class="source-note">Nội dung công thức bên trên được đăng lại đầy đủ, sát theo tài liệu pattern gốc (${ref.name} — ${ref.source}) mà Lenly Studio đã được cấp phép sử dụng.</div>
+    <div class="article-page-actions">
+      <button data-apply-preset="${idx}">Thử ngay — điền sẵn thông số →</button>
+      <button class="secondary" data-goto-tab="generator">Tự tạo chart theo ảnh của bạn →</button>
     </div>
   `;
-  openArticleModal();
+  showArticlePage('gallery');
 }
-
-function openArticleModal() {
-  $('articleModal').classList.remove('hidden');
-}
-function closeArticleModal() {
-  $('articleModal').classList.add('hidden');
-}
-$('articleCloseBtn')?.addEventListener('click', closeArticleModal);
-$('articleModal')?.addEventListener('click', (e) => {
-  if (e.target.id === 'articleModal') closeArticleModal();
-});
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeArticleModal();
-});
 
 document.addEventListener('click', (e) => {
   const lessonCard = e.target.closest('[data-open-lesson]');
@@ -1744,7 +1999,6 @@ document.addEventListener('click', (e) => {
 document.addEventListener('click', (e) => {
   const presetBtn = e.target.closest('[data-apply-preset]');
   if (!presetBtn) return;
-  if (presetBtn.dataset.closeArticleFirst) closeArticleModal();
   const item = GALLERY_PRESETS[presetBtn.dataset.applyPreset];
   if (!item) return;
 
