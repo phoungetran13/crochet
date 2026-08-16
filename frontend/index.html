@@ -1251,7 +1251,7 @@
       <div id="authError" class="hidden" style="color:var(--warn-text);background:var(--warn-bg);padding:0.6rem 0.8rem;border-radius:9px;font-size:0.84rem;margin-top:0.8rem;"></div>
 
       <div class="demo-account-box">
-        <span>Tài khoản demo đã có sẵn gói Pro:</span>
+        <span>Tài khoản có sẵn gói Pro:</span>
         <code>pro@lenly.vn / demo123</code>
         <button type="button" id="fillDemoProBtn" class="secondary">Điền sẵn &amp; đăng nhập</button>
       </div>
@@ -1273,7 +1273,6 @@
     <p class="lesson-intro">Mở khoá không giới hạn số lần sinh chart, ưu tiên xử lý ảnh nhanh hơn và hỗ trợ ưu tiên.</p>
 
     <div style="font-size:2rem;font-weight:800;color:var(--accent-dark);margin:0.8rem 0 0.2rem;">150.000đ<span style="font-size:0.9rem;font-weight:600;color:var(--text-dim);">/tháng</span></div>
-    <small class="hint" style="margin-bottom:1rem;">Demo — bỏ qua bước thanh toán thật, bấm đăng ký là kích hoạt ngay.</small>
 
     <ul style="text-align:left;color:var(--text-dim);font-size:0.9rem;line-height:1.8;margin:1.2rem 0;padding-left:1.2rem;">
       <li>Không giới hạn số lần sinh chart / công thức</li>
@@ -1284,13 +1283,12 @@
 
     <div id="proStatusFree">
       <button id="proSubscribeBtn">💗 Thanh toán qua MoMo — 150.000đ/tháng</button>
-      <small class="hint">Demo — mô phỏng giao diện thanh toán MoMo, không có thanh toán thật nào diễn ra.</small>
     </div>
     <div id="proStatusActive" class="hidden">
       <div class="info-box" style="background:var(--success-bg);color:var(--success-text);padding:0.9rem 1rem;border-radius:9px;">
-        🎉 Tài khoản của bạn đã là Pro (demo)
+        🎉 Tài khoản của bạn đã là Pro
       </div>
-      <button id="proCancelBtn" class="secondary" style="margin-top:1rem;">Huỷ gói Pro (demo)</button>
+      <button id="proCancelBtn" class="secondary" style="margin-top:1rem;">Huỷ gói Pro</button>
     </div>
   </section>
 </div>
@@ -1306,7 +1304,7 @@
   <a href="https://www.facebook.com/phungkhanhlinhofficial/posts/pfbid0WSYyxQ4TEMHPEntXTA7b6X7RgwRELdoqe4jdJwvK5ztRupm8X6kZ2BfHAJVbuNK7l" target="_blank" rel="noopener">
     <img id="adBannerImg" src="ads/banner.jpg" alt="Quảng cáo" onerror="this.closest('.ad-banner').classList.add('ad-banner-empty')" />
   </a>
-  <span class="ad-banner-placeholder">Quảng cáo · đặt ảnh banner vào frontend/ads/banner.jpg</span>
+  <span class="ad-banner-placeholder">Quảng cáo</span>
 </div>
 
 </main>
@@ -1341,7 +1339,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    © <span id="footerYear"></span> Lenly Studio. Demo giao diện — chưa kết nối thanh toán thật.<br>
+    © <span id="footerYear"></span> Lenly Studio. Tất cả các quyền được bảo lưu.<br>
     <small style="opacity:0.75;">Ảnh minh hoạ: Tahki Cotton Classic ảnh của meknits (CC BY 2.0) · Amigurumi Elephant ảnh của רחל1 (CC BY-SA 4.0) · Amigurumi Cactus ảnh của Lskbrown (CC BY 3.0) · Conejita Amigurumi ảnh của Creativa Atelier (CC BY-SA 4.0) · Closeup of Hazel's throw ảnh của Aileen's Pics (CC BY-SA 2.0) — qua Wikimedia Commons.</small>
   </div>
 </footer>
@@ -1367,7 +1365,7 @@
       <div class="momo-amount">150.000đ</div>
       <div class="momo-qr">📱</div>
       <div id="momoStatusText" class="momo-status"><span class="momo-spinner"></span>Đang chờ xác nhận thanh toán...</div>
-      <div class="momo-note">Đây là mô phỏng giao diện MoMo cho mục đích demo — không có giao dịch thật nào được thực hiện.</div>
+      <div class="momo-note">Vui lòng không tắt trình duyệt trong khi giao dịch đang được xử lý.</div>
     </div>
   </div>
 </div>
@@ -2173,7 +2171,7 @@ $('proSubscribeBtn')?.addEventListener('click', async () => {
       $('momoStatusText').innerHTML = '<span class="momo-success">✅ Thanh toán thành công!</span>';
       setTimeout(() => {
         hideMomoModal();
-        alert('Đăng ký gói Pro thành công (demo — không có thanh toán thật). Từ giờ bạn sẽ không phải xem quảng cáo khi sinh chart.');
+        alert('Đăng ký gói Pro thành công! Từ giờ bạn sẽ không phải xem quảng cáo khi sinh chart.');
       }, 1200);
     } catch {
       $('momoStatusText').textContent = 'Có lỗi xảy ra, vui lòng thử lại.';
