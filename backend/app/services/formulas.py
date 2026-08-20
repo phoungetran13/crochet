@@ -81,13 +81,53 @@ def _flat_rectangle_piece(
 # ---------------------------------------------------------------- KHĂN ----
 
 def generate_khan(m: Measurements, subtype: str | None) -> tuple[list[Piece], list[str], list[str]]:
+    """Khan than dan theo chieu doc (lengthwise), mui Seed Stitch - dung
+    dung ky thuat va cau truc cua pattern "Effortless Scarf" (Patons):
+    chain bang chieu DAI khan, dan theo be RONG cho den khi du, moi hang
+    xen ke sc/ch-1 tao be mat lam tam hat, ket thuc bang tua rua 2 dau."""
     if not m.scarf_width_cm or not m.scarf_length_cm:
         raise ValueError("Cần nhập scarf_width_cm và scarf_length_cm")
 
-    piece = _flat_rectangle_piece("Khăn", m.scarf_width_cm, m.scarf_length_cm, m, stitch="sc")
+    # Dan lengthwise: chain theo chieu DAI khan, "hang" la be RONG khan.
+    chain_stitches = _stitches_for_width(m.scarf_length_cm, m.gauge_stitches_per_10cm)
+    if chain_stitches % 2 == 0:
+        chain_stitches += 1  # can le de foundation row (sc, ch1-skip-sc lap lai) khep dung
+    rows = _rows_for_length(m.scarf_width_cm, m.gauge_rows_per_10cm)
+
+    written = [
+        f"[Khăn] Chain {chain_stitches} mũi (bằng chiều dài khăn mong muốn — khăn đan theo chiều dọc).",
+        f"Hàng nền (Foundation Row): sc vào mũi thứ 2 tính từ móc. *Ch 1, bỏ 1 mũi, sc vào mũi kế "
+        f"tiếp*, lặp lại đến hết hàng. Quay đầu.",
+        "Hàng 1: ch 1, sc vào mũi đầu tiên, sc vào khoảng ch-1 kế tiếp. *Ch 1, bỏ qua sc, sc vào "
+        "khoảng ch-1 kế tiếp*, lặp lại đến mũi cuối, sc vào mũi cuối. Quay đầu.",
+        "Hàng 2: ch 1, sc vào mũi đầu tiên. *Ch 1, bỏ qua sc, sc vào khoảng ch-1 kế tiếp*, lặp lại "
+        "đến mũi cuối, ch 1, sc vào mũi cuối. Quay đầu.",
+        f"Lặp lại Hàng 1 và Hàng 2 (mẫu Seed Stitch) cho đến khi khăn đạt đủ bề rộng {m.scarf_width_cm}cm "
+        f"(khoảng {rows} hàng) rồi cắt chỉ.",
+        "Tua rua: cắt sợi thành từng đoạn dài 35cm, gộp 3 sợi thành 1 chùm, gập đôi và móc luồn qua "
+        "mép 2 đầu khăn, chia đều khoảng cách. Cắt tỉa tua rua cho gọn.",
+    ]
+    symbol_rounds = [
+        SymbolRound(round_number=1, instruction=f"Seed Stitch (sc + ch1 xen kẽ) x{chain_stitches} mắt chain", stitch_count=chain_stitches)
+    ]
+    for r in range(2, rows + 1):
+        symbol_rounds.append(
+            SymbolRound(round_number=r, instruction=f"Seed Stitch x{chain_stitches}", stitch_count=chain_stitches)
+        )
+
+    piece = {
+        "name": "Khăn than (đan lengthwise, mẫu Seed Stitch + tua rua)",
+        "width_cm": m.scarf_width_cm,
+        "height_cm": m.scarf_length_cm,
+        "written": written,
+        "symbol_rounds": symbol_rounds,
+        "is_picture_piece": True,
+    }
     notes = [
-        f"Tổng số mũi mỗi hàng: {_stitches_for_width(m.scarf_width_cm, m.gauge_stitches_per_10cm)}.",
-        f"Tổng số hàng: {_rows_for_length(m.scarf_length_cm, m.gauge_rows_per_10cm)}.",
+        f"Số mắt chain khởi đầu (= chiều dài khăn): {chain_stitches}.",
+        f"Số hàng (= chiều rộng khăn): {rows}.",
+        "Mẫu Seed Stitch tham khảo từ pattern \"Effortless Scarf\" (Patons) — bề mặt lấm tấm hạt, "
+        "không cuộn mép, không cần đan biên riêng.",
     ]
     return [piece], [], notes
 
@@ -143,8 +183,35 @@ def generate_mu(m: Measurements, subtype: str | None) -> tuple[list[Piece], list
         return [piece], [], notes
 
     if subtype == "bucket":
+        # Ky thuat dung theo pattern "Easy Crochet Baby Bucket Hat" (Bernat):
+        # dinh moc tang deu tung 1/6 tong so mui moi vong (giong amigurumi),
+        # noi dinh-sang-than bang 1 vong back loop only (tao duong gap nep
+        # tu nhien), than moc ca 2 bong chi, vanh bat dau bang 1 vong tang
+        # vao front loop only roi xen ke vai vong tang deu / vai vong thang.
         side_height = max(m.hat_height_cm - 4, 4)  # dành ~4cm cuối cho vành loe
-        written, symbol_rounds, last_rnd = _hat_crown_and_side(m, total_stitches, side_height)
+        increase_rounds = max(round(total_stitches / 6), 1)
+        written = ["Vòng 1: 7 sc vào magic ring (7 mũi)."]
+        symbol_rounds = [SymbolRound(round_number=1, instruction="7 sc vào magic ring", stitch_count=7)]
+        current = 7
+        for rnd in range(2, increase_rounds + 1):
+            current = min(current + 7, total_stitches)
+            written.append(f"Vòng {rnd}: *2 sc vào 1 mũi, sc đều các mũi còn lại* quanh vòng ({current} mũi).")
+            symbol_rounds.append(SymbolRound(round_number=rnd, instruction="tăng đều +7 mũi", stitch_count=current))
+        written.append(
+            f"Vòng {increase_rounds + 1}: móc vào bọng chỉ sau (back loop only) quanh vòng, sl st đóng vòng "
+            "— vòng này tạo đường gấp nếp giữa đỉnh và thân mũ. PM (đặt ghim đánh dấu)."
+        )
+        symbol_rounds.append(SymbolRound(round_number=increase_rounds + 1, instruction=f"sc back loop only x{total_stitches}", stitch_count=total_stitches))
+        last_rnd = increase_rounds + 1
+
+        side_rows = max(_rows_for_length(side_height, m.gauge_rows_per_10cm), 1)
+        written.append(
+            f"Vòng {last_rnd + 1} - {last_rnd + side_rows}: sc vào cả 2 bọng chỉ (both loops), thẳng không "
+            f"tăng, giữ {total_stitches} mũi mỗi vòng cho đến khi thân mũ đạt {side_height}cm."
+        )
+        for rnd in range(last_rnd + 1, last_rnd + side_rows + 1):
+            symbol_rounds.append(SymbolRound(round_number=rnd, instruction=f"sc x{total_stitches} (không tăng)", stitch_count=total_stitches))
+        last_rnd = last_rnd + side_rows
 
         brim_width = m.bucket_brim_width_cm or 5.0
         brim_extra_stitches = _stitches_for_width(brim_width, m.gauge_stitches_per_10cm)
@@ -154,11 +221,14 @@ def generate_mu(m: Measurements, subtype: str | None) -> tuple[list[Piece], list
         written.append("-- Bắt đầu móc vành loe (brim) --")
         current = total_stitches
         step = max(round(brim_extra_stitches / brim_increase_rounds), 1)
+        first_brim = True
         for i in range(brim_increase_rounds):
             rnd = last_rnd + 1 + i
             current = min(current + step, brim_total)
-            written.append(f"Vòng {rnd}: tăng đều để vành loe ra ({current} mũi).")
+            loop_note = "vào bọng chỉ trước (front loop only), " if first_brim else ""
+            written.append(f"Vòng {rnd}: {loop_note}tăng đều để vành loe ra ({current} mũi).")
             symbol_rounds.append(SymbolRound(round_number=rnd, instruction="tăng đều (vành loe)", stitch_count=current))
+            first_brim = False
         written.append("Kết thúc: sl st đóng vòng, cắt chỉ, giấu đầu chỉ.")
 
         piece = {
@@ -171,6 +241,9 @@ def generate_mu(m: Measurements, subtype: str | None) -> tuple[list[Piece], list
         }
         notes = [
             f"Tổng số mũi thân mũ: {total_stitches}, sau khi loe vành: {brim_total}.",
+            "Kỹ thuật back loop only (nối đỉnh-thân) và front loop only (bắt đầu vành) tham khảo từ "
+            "pattern \"Easy Crochet Baby Bucket Hat\" (Bernat) — tạo đường gấp nếp tự nhiên giữa các "
+            "phần thay vì mũ phồng tròn đều.",
             "Vành bucket hat có thể cần hồ cứng (interfacing) để đứng form khi đội thực tế.",
         ]
         return [piece], [], notes
@@ -216,23 +289,25 @@ def _sleeve_piece(name: str, m: Measurements, stitch: str = "hdc") -> Piece:
 
 
 def _sl_st_ribbing_strip(name: str, fit_description: str, m: Measurements, strip_width_cm: float = 2.5) -> Piece:
-    """Dai vien sl-st ribbing (Neckband/Cuff/Body Edging) - dung dung ky
-    thuat tu pattern ao thuong mai that (Cerulean Cabled Crochet Sweater):
-    moc 1 dai hep bang sl st vao bong chi sau (back loop only), moc dai dan
-    ra theo do vua thuc te ("do khi hoi keo gian nhe vua voi mep can dinh"),
-    vua dan vua dinh vao mep bang mattress stitch - khong tinh truoc so hang
-    vi day la ky thuat "fit-as-you-go", dung nhu tai lieu goc trinh bay."""
+    """Dai vien ribbing (Neckband/Cuff/Body Edging/Button Band) - dung dung
+    ky thuat scbl (single crochet vao bong chi sau) tu pattern ao thuong
+    mai that (vd "Simply Perfect Crochet Cardigan"): moc 1 dai hep, hang 1
+    la sc thuong, tu hang 2 tro di CHI sc vao bong chi SAU lien tuc - chinh
+    nhip lap lai nay tao cac duong gan doc co gian that (khac voi sl st don
+    thuan gan nhu khong co do day). Dai vua dan vua dinh vao mep bang
+    mattress stitch, khong tinh truoc so hang vi day la ky thuat do truc
+    tiep len nguoi/mau khi dan ("fit-as-you-go"), dung nhu tai lieu goc."""
     width_stitches = _stitches_for_width(strip_width_cm, m.gauge_stitches_per_10cm)
     written = [
         f"[{name}] Chain {width_stitches + 1} mũi.",
-        f"Hàng 1: (RS). sl st vào mũi thứ 2 tính từ móc, sl st hết hàng ({width_stitches} mũi).",
-        "Hàng 2 trở đi: ch 1, sl st vào bọng chỉ sau (back loop only) của mỗi mũi hết hàng, quay đầu.",
+        f"Hàng 1: (RS). sc vào mũi thứ 2 tính từ móc, sc hết hàng ({width_stitches} mũi).",
+        "Hàng 2 trở đi: ch 1, scbl (sc vào bọng chỉ sau — back loop only) mỗi mũi hết hàng, quay đầu.",
         f"Lặp lại hàng 2 đến khi dải đo được (khi hơi kéo giãn nhẹ) vừa {fit_description}.",
         "Vừa đan dải vừa đính vào mép tương ứng bằng mattress stitch (giống kỹ thuật Neckband/"
         "Cuff/Body Edging trong pattern áo thương mại thật).",
     ]
     symbol_rounds = [
-        SymbolRound(round_number=1, instruction=f"sl st x{width_stitches} (dải viền, đan đến khi vừa)", stitch_count=width_stitches)
+        SymbolRound(round_number=1, instruction=f"scbl x{width_stitches} (dải viền, đan đến khi vừa)", stitch_count=width_stitches)
     ]
     return {
         "name": name,
@@ -367,60 +442,91 @@ def generate_vay(m: Measurements, subtype: str | None) -> tuple[list[Piece], lis
         return [piece], [], notes
 
     if subtype == "beo":
-        # Kỹ thuật bèo THẬT, tham khảo từ pattern váy ruffle thực tế: móc thân
-        # váy thẳng (dc rounds), rồi CHỈ 1 vòng bèo duy nhất ở gấu bằng cách
-        # lặp *5 dc vào cùng 1 mũi, 1 dc vào mũi kế tiếp* quanh vòng. Lưu ý:
-        # kỹ thuật này làm số mũi tăng gấp ~3 lần chỉ trong 1 vòng - áp dụng
-        # nhiều lần liên tiếp (nhiều "tầng") sẽ khiến số mũi nổ ra phi thực tế
-        # (hàng nghìn mũi/vòng), nên CHỈ áp dụng 1 lần duy nhất ở gấu, đúng
-        # như tài liệu tham khảo, thay vì bịa thêm nhiều tầng chồng lên nhau.
+        # Ky thuat bam sat pattern "Crochet Ruffle Skirt" (Meladora's
+        # Creations): than vay moc bang CLUSTER STITCH (chum 3 mui, moi
+        # chum = 3 lan [YO, mov vao 1 mui, keo len, YO keo qua 2 vong] roi
+        # keo qua ca 7 vong tren kim, chain 2 giua cac chum; vong sau moc
+        # vao dung khoang ch-2 cua vong truoc, khong moc vao than chum).
+        # Gau vay chuyen sang DC BAT CHEO CHI VAO BONG CHI SAU (crossover
+        # dc, back loop only) - day la ky thuat that tao gon xoe tung lop,
+        # KHONG PHAI shell-stitch (5dc cung 1 mui) don gian hoa.
         requested_tiers = m.ruffle_tiers or 1
         total_rows = _rows_for_length(m.skirt_length_cm, m.gauge_rows_per_10cm)
-        body_rows = max(total_rows - 1, 1)
+        cluster_count = max(waist_stitches // 3, 3)
+        body_rows = max(total_rows - 2, 1)
 
-        written = [f"[Váy bèo] Chain {waist_stitches} mũi, nối vòng (không xoắn)."]
+        written = [
+            f"[Váy bèo] Chain {waist_stitches} mũi, sl st nối thành vòng tròn (không xoắn chain). "
+            f"Vòng chuẩn bị: sc vào từng mũi quanh vòng."
+        ]
         symbol_rounds: list[SymbolRound] = []
-        for r in range(1, body_rows + 1):
-            written.append(f"Vòng {r}: ch 2, 1 dc trong mỗi mũi quanh vòng, ss đóng vòng. ({waist_stitches} mũi)")
-            symbol_rounds.append(
-                SymbolRound(round_number=r, instruction=f"dc x{waist_stitches}", stitch_count=waist_stitches)
-            )
+        symbol_rounds.append(SymbolRound(round_number=1, instruction=f"sc x{waist_stitches}", stitch_count=waist_stitches))
 
-        repeats = max(waist_stitches // 2, 1)
-        ruffle_stitches = repeats * 6
-        ruffle_rnd = body_rows + 1
         written.append(
-            f"Vòng {ruffle_rnd} (vòng bèo ở gấu): ch 2. Lặp lại quanh vòng: *5 dc vào cùng 1 mũi, "
-            f"1 dc vào mũi kế tiếp*. ({ruffle_stitches} mũi)"
+            f"Vòng 2 (bắt đầu Cluster Stitch): mỗi cụm gồm 3 mũi — *(YO, móc vào mũi, kéo lên, YO, kéo "
+            "qua 2 vòng) lặp lại đúng 3 lần liên tiếp vào 3 mũi kế nhau, được 7 vòng trên kim, kéo qua "
+            f"cả 7 vòng cùng lúc, ch 2* — lặp lại quanh vòng ({cluster_count} cụm). Sl st vào đỉnh cụm đầu."
         )
-        symbol_rounds.append(
-            SymbolRound(
-                round_number=ruffle_rnd,
-                instruction=f"*5dc cùng 1 mũi, 1dc* x{repeats} lần",
-                stitch_count=ruffle_stitches,
+        symbol_rounds.append(SymbolRound(round_number=2, instruction=f"Cluster stitch x{cluster_count} cụm", stitch_count=cluster_count))
+        for r in range(3, body_rows + 2):
+            written.append(
+                f"Vòng {r}: lặp lại Cluster Stitch, nhưng móc vào đúng khoảng ch-2 phía trên (không móc "
+                f"vào thân cụm của vòng dưới) — tạo lớp gợn phồng chồng lên nhau ({cluster_count} cụm)."
             )
+            symbol_rounds.append(SymbolRound(round_number=r, instruction=f"Cluster stitch (vào ch-2) x{cluster_count} cụm", stitch_count=cluster_count))
+        last_rnd = body_rows + 1
+
+        written.append("-- Chuyển sang phần gấu (ruffle) bằng dc bắt chéo, back loop only --")
+        ruffle_rounds = 3 if requested_tiers <= 1 else min(requested_tiers + 1, 5)
+        skip_count = 0
+        for i in range(ruffle_rounds):
+            rnd = last_rnd + 1 + i
+            if i == 0:
+                written.append(
+                    f"Vòng {rnd} (Round 1 gấu): dc vào bọng chỉ sau (back loop only) của 3 mũi liên tiếp. "
+                    "Sau đó dùng bọng chỉ trước (front loops) của chính 3 mũi dc vừa móc, dc bắt chéo lại "
+                    "vào từng mũi đó (bắt đầu từ mũi dc đầu tiên). Lặp lại quanh vòng, không bỏ mũi nào."
+                )
+            else:
+                skip_count = 2
+                written.append(
+                    f"Vòng {rnd}: lặp lại như Round 1 của gấu, nhưng bỏ qua {skip_count} mũi trước khi bắt "
+                    "đầu mỗi cụm dc bắt chéo kế tiếp."
+                )
+            symbol_rounds.append(SymbolRound(round_number=rnd, instruction="dc bắt chéo, back loop only", stitch_count=cluster_count * 3))
+        last_rnd = last_rnd + ruffle_rounds
+        written.append(
+            f"Vòng {last_rnd + 1} (vòng viền cuối gấu, có thể đổi màu): lặp lại Round 1 của gấu — không bỏ "
+            "mũi nào — để tạo độ bồng tối đa ở mép ngoài."
+        )
+        symbol_rounds.append(SymbolRound(round_number=last_rnd + 1, instruction="dc bắt chéo, back loop only (không bỏ mũi)", stitch_count=cluster_count * 3))
+        last_rnd += 1
+
+        written.append("-- Phần lưng eo --")
+        written.append(
+            "Xoay váy lại, móc phần lưng eo: sc gắn vào mép trên, *5 sc rồi giảm 1 mũi (sc2tog)*, lặp lại "
+            "quanh vòng, tổng cộng 6 vòng — sau đó luồn dây thun vào bên trong để co giãn ôm vừa vòng eo."
         )
         written.append("Kết thúc: sl st đóng vòng, cắt chỉ, giấu đầu chỉ.")
 
+        hem_width_cm = m.hip_circumference_cm or round(m.waist_circumference_cm * 1.2, 1)
         piece = {
-            "name": "Váy bèo (thân thẳng + 1 vòng bèo ở gấu, kỹ thuật shell-stitch)",
-            "width_cm": round(ruffle_stitches / stitches_per_cm, 1),
+            "name": "Váy bèo (thân cluster stitch + gấu dc bắt chéo back-loop, đan vòng tròn)",
+            "width_cm": hem_width_cm,
             "height_cm": m.skirt_length_cm,
             "written": written,
             "symbol_rounds": symbol_rounds,
             "is_picture_piece": True,
         }
         notes = [
-            "Kỹ thuật bèo: *5 dc vào cùng 1 mũi, 1 dc vào mũi kế tiếp* - shell-stitch chuẩn "
-            "(tham khảo từ pattern váy ruffle thực tế), làm số mũi tăng gấp ~3 lần ngay trong 1 vòng.",
+            f"Số cụm cluster mỗi vòng thân: {cluster_count}.",
+            "Kỹ thuật cluster stitch (thân) và dc bắt chéo back-loop-only (gấu) tham khảo trực tiếp từ "
+            "pattern \"Crochet Ruffle Skirt\" (Meladora's Creations) — không phải shell-stitch đơn giản hóa.",
         ]
         if requested_tiers > 1:
             notes.append(
-                f"Bạn chọn {requested_tiers} tầng bèo, nhưng tài liệu tham khảo chỉ mô tả 1 vòng bèo "
-                "duy nhất ở gấu váy (áp dụng nhiều vòng bèo liên tiếp sẽ làm số mũi tăng phi thực tế, "
-                "hàng nghìn mũi/vòng). Đang áp dụng 1 vòng bèo ở gấu - để có nhiều tầng bèo xếp chồng "
-                "thật (kiểu flamenco), cần thiết kế riêng từng tầng như váy may ghép, không nằm trong "
-                "tài liệu tham khảo hiện có."
+                f"Bạn chọn {requested_tiers} tầng bèo — đã tăng số vòng dc bắt chéo ở phần gấu tương ứng "
+                "(mỗi vòng thêm là 1 lớp bèo xếp chồng lên vòng trước)."
             )
         return [piece], [], notes
 
@@ -441,6 +547,7 @@ ABBREVIATIONS = {
     "sc": "single crochet (mũi đơn)",
     "hdc": "half double crochet (mũi nửa kép)",
     "dc": "double crochet (mũi kép)",
+    "scbl": "single crochet vào bọng chỉ sau (single crochet in back loop only)",
     "sl st": "slip stitch (mũi trượt)",
     "rnd": "round (vòng)",
     "st(s)": "stitch(es) (mũi)",
@@ -451,21 +558,43 @@ ABBREVIATIONS = {
 # đan, nhưng đủ để người dùng ước lượng số sợi cần mua).
 _AVG_CM_PER_STITCH = 3.5
 
+# Bang quy doi gauge (so mui / 10cm) -> co kim va do sui len tuong ung -
+# tong hop tu bang gauge chuan cua Craft Yarn Council (giong bang gauge in
+# tren vo cuon len that), dung de LUON dua ra 1 goi y kim cu the thay vi
+# noi "khong the xac dinh truoc".
+_HOOK_GAUGE_TABLE = [
+    (28, "2.25mm (US B/1)", "sợi lace / fingering mảnh"),
+    (24, "3mm (US C/2 - D/3)", "sợi fingering / sport"),
+    (20, "4mm (US G/6)", "sợi sport / DK"),
+    (16, "5mm (US H/8)", "sợi DK / worsted"),
+    (13, "5.5mm (US I/9)", "sợi worsted / aran"),
+    (10, "6.5mm (US K/10.5)", "sợi aran / bulky"),
+    (7, "9mm (US M/13)", "sợi bulky / super bulky"),
+    (0, "10mm (US N/15) trở lên", "sợi super bulky / jumbo"),
+]
+
+
+def _suggest_hook(gauge_stitches_per_10cm: float) -> tuple[str, str]:
+    for threshold, hook, yarn_weight in _HOOK_GAUGE_TABLE:
+        if gauge_stitches_per_10cm >= threshold:
+            return hook, yarn_weight
+    return _HOOK_GAUGE_TABLE[-1][1], _HOOK_GAUGE_TABLE[-1][2]
+
 
 def estimate_materials(pieces: list[Piece], gauge_stitches_per_10cm: float, gauge_rows_per_10cm: float) -> list[str]:
-    """Sinh mục MATERIALS giống các pattern crochet thương mại (tên mục,
-    không phải nội dung chính xác vì không biết loại sợi cụ thể người dùng
-    sẽ dùng - chỉ ước lượng tổng mét sợi cần và nhắc kim/dụng cụ cần có)."""
+    """Sinh mục MATERIALS giống các pattern crochet thương mại: ước lượng
+    tổng mét sợi cần và gợi ý cỡ kim cụ thể theo đúng bảng gauge chuẩn
+    (Craft Yarn Council), thay vì chỉ nói chung chung không xác định được."""
     total_stitches = sum(r.stitch_count for p in pieces for r in p.get("symbol_rounds", []))
     total_length_m = max(round(total_stitches * _AVG_CM_PER_STITCH / 100), 1)
+    hook_size, yarn_weight = _suggest_hook(gauge_stitches_per_10cm)
 
     return [
         f"Sợi: ước lượng cần khoảng {total_length_m}m (dựa trên tổng {total_stitches} mũi, "
-        f"mức tiêu hao trung bình ~{_AVG_CM_PER_STITCH}cm/mũi) - CHỈ MANG TÍNH THAM KHẢO, "
-        "nên mua dư thêm 10-15% vì còn phụ thuộc loại sợi và độ chặt tay đan của bạn.",
-        f"Kim móc: chọn cỡ kim phù hợp để đạt đúng gauge đã nhập "
-        f"({gauge_stitches_per_10cm:g} mũi và {gauge_rows_per_10cm:g} hàng / 10cm) - "
-        "không thể nói trước số mm chính xác nếu chưa biết loại sợi cụ thể, vì gauge phụ "
-        "thuộc cả sợi lẫn kim, nên đan thử mẫu trước để chọn đúng cỡ kim.",
-        "Kim khâu len (để ghép nối các mảnh), kéo cắt chỉ.",
+        f"mức tiêu hao trung bình ~{_AVG_CM_PER_STITCH}cm/mũi) — nên mua dư thêm 10-15% để phòng "
+        "hao hụt khi ghép nối và sửa lỗi.",
+        f"Kim móc: {hook_size} — cỡ kim phù hợp nhất với gauge bạn nhập "
+        f"({gauge_stitches_per_10cm:g} mũi / 10cm), thường dùng với {yarn_weight}. Nếu đan mẫu thử ra "
+        "gauge khác, đổi sang kim to hơn 1 cỡ (đan lỏng hơn) hoặc nhỏ hơn 1 cỡ (đan chặt hơn).",
+        "Kim khâu len (để ghép nối các mảnh), kéo cắt chỉ, ghim đánh dấu (stitch markers).",
     ]
